@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<html class="theme-next gemini use-motion" lang="zh-Hans">
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -93,7 +93,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
+    scheme: 'Gemini',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -259,6 +259,312 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/09/[学习总结]操作系统_进程管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hoi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/09/[学习总结]操作系统_进程管理/" itemprop="url">进程管理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T17:34:12+08:00">
+                2018-07-09
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-11T21:36:32+08:00">
+                2018-07-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>　　进程是进程实体的运行过程，是系统进行资源分配和调度的一个<strong>独立单位</strong>（注意与基本单位的区分）<br>　　进程实现操作系统的并发性和共享性，进程映像由：程序段、相关数据段和PCB构成，其中PCB是进程存在的唯一标志。<br>　　进程的特征包括：动态性、并发性、独立性、异步性、结构性</p>
+<h3 id="进程的转态和转换"><a href="#进程的转态和转换" class="headerlink" title="进程的转态和转换"></a>进程的转态和转换</h3><p>　　进程有以下五种状态：</p>
+<ol>
+<li>运行状态</li>
+<li>就绪状态</li>
+<li>阻塞（等待）状态</li>
+<li>创建状态</li>
+<li>结束状态</li>
+</ol>
+<p>　　五种状态的转化关系如图<br><img src="/images/2-1.png" alt="状态转化"></p>
+<h3 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h3><ol>
+<li><p>进程创建</p>
+<ul>
+<li>为新进程申请PCB</li>
+<li>为进程分配资源</li>
+<li>初始化PCB</li>
+<li>将进程插入到就绪队列</li>
+</ul>
+</li>
+<li><p>进程的终止</p>
+<ul>
+<li>检索PCB，读取进程状态</li>
+<li>若进程处于执行状态，终止该进程的执行</li>
+<li>终止子进程的执行（若有）</li>
+<li>释放该进程拥有的全部资源</li>
+<li>从队列中删除进程PCB</li>
+</ul>
+</li>
+<li><p>进程的阻塞</p>
+<ul>
+<li>找到将要阻塞进程的PCB</li>
+<li>若进程处于运行状态，则保护现场，将其状态转为阻塞状态，停止运行</li>
+<li>将PCB插入相应事件的等待队列</li>
+</ul>
+</li>
+<li><p>进程的唤醒</p>
+<ul>
+<li>找到进程PCB</li>
+<li>将进程从等待队列移出，置为就绪状态</li>
+<li>PCB插入就绪队列，等待调度</li>
+</ul>
+</li>
+<li><p>进程切换</p>
+<ul>
+<li>保存处理机上下文</li>
+<li>更新PCB</li>
+<li>将PCB插入相应队列</li>
+<li>选择另外一个进程，更新PCB</li>
+<li>更新内存管理的数据结构</li>
+<li>恢复处理机上下文</li>
+</ul>
+</li>
+</ol>
+<h3 id="进程的组织"><a href="#进程的组织" class="headerlink" title="进程的组织"></a>进程的组织</h3><ol>
+<li><p>进程控制块<br>　　PCB常驻内存，是进程实体的一部分，是进程存在的唯一标志。PCB主要包含以下内容</p>
+<ol>
+<li>）进程描述信息：PID，UID</li>
+<li>）进程控制和管理信息：进程当前状态、进程优先级</li>
+<li>）资源分配清单</li>
+<li>）处理机相关信息：PWD等</li>
+</ol>
+</li>
+<li><p>程序段<br>　　能被调度到CPU执行的程序代码段</p>
+</li>
+<li><p>数据段<br>　　程序加工处理的原始数据或是程序执行时产生的中间或最终结果</p>
+</li>
+</ol>
+<h3 id="进程的通信"><a href="#进程的通信" class="headerlink" title="进程的通信"></a>进程的通信</h3><ol>
+<li>共享内存：使用PV操作对共享空间进行读/写</li>
+<li>消息传递：直接通信和间接通信</li>
+<li>管道通信：连接读进程和写进程，以实现它们之间的通信，管道通信是半双工通信</li>
+</ol>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><ol>
+<li>线程概念<br>　　线程是轻量级进程，引入目的是为了提高操作系统并发性能。它是程序执行流的最小单元，不拥有系统资源</li>
+</ol>
+<p>２. 进程和线程的比较</p>
+<pre><code>- 调度：线程是独立调度的基本单位，进程是拥有资源的基本单位，同一进程中，线程的切换不会引起进程调度。
+- 拥有资源：进程是拥有资源的基本单位，线程不拥于资源
+- 并发性：进程可并发执行，线程也可并发执行
+- 系统开销：
+- 地址空间和其他资源：进程的地址空间之间相互独立，同一进程的各个线程共享进程资源
+- 通信：进程间通信需要同步和互斥手段，线程间通信可以通过直接读写进程数据段
+</code></pre><ol>
+<li><p>线程的属性</p>
+<ul>
+<li>线程不拥有系统资源</li>
+<li>不同线程可以执行相同程序</li>
+<li>同一进程的线程共享进程资源</li>
+<li>线程是处理机的调度基本单位</li>
+<li>线程生命周期会经历阻塞，、就绪、和运行等各种状态</li>
+</ul>
+</li>
+<li><p>线程实现方式</p>
+<ul>
+<li>用户级线程：对内核透明</li>
+<li>内核级线程</li>
+</ul>
+</li>
+<li><p>多线程模型</p>
+<ul>
+<li>多对一模型：多个用户级线程映射到一个内核级线程，当一个线程在使用内核服务是被阻塞，整个进程都会被阻塞</li>
+<li>一对一模型：一个线程的阻塞妨碍另一个线程继续执行</li>
+<li>多对多模型</li>
+</ul>
+</li>
+</ol>
+<h2 id="处理机调度"><a href="#处理机调度" class="headerlink" title="处理机调度"></a>处理机调度</h2><h3 id="调度的概念"><a href="#调度的概念" class="headerlink" title="调度的概念"></a>调度的概念</h3><ol>
+<li>调度的基本概念<br> 处理机调度是指从就绪队列中，按照一定的算法选择一个进程并将处理机分配给它运行，以实现进程并发地执行</li>
+<li>调度的层级<ul>
+<li>作业调度（高级调度）：从外存挑选作业，为其分配内存、IO设备等资源，并建立进程，使进程获得竞争处理机的机会</li>
+<li>中级调度（内存调度）：将处于挂起状态且已具备运行条件的就绪进程，重新调入内存，挂在就绪队列上</li>
+<li>进程调度（低级调度）：按照某种策略从从就绪队列中选择一个进程，为其分配处理机</li>
+</ul>
+</li>
+</ol>
+<h3 id="进程调度方式"><a href="#进程调度方式" class="headerlink" title="进程调度方式"></a>进程调度方式</h3><ol>
+<li>非剥夺调度方式</li>
+<li>剥夺调度方式</li>
+</ol>
+<h3 id="调度的基本准则"><a href="#调度的基本准则" class="headerlink" title="调度的基本准则"></a>调度的基本准则</h3><ol>
+<li>CPU利用率</li>
+<li>系统吞吐量：单位时间CPU完成的作业数量</li>
+<li>周转时间：从作业提交到作业完成所经历的时间</li>
+<li>等待时间：进程处于等待处理机状态时间之和</li>
+<li>响应时间：从用户提交请求到系统首次响应所用时间</li>
+</ol>
+<h3 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h3><ol>
+<li>先来先服务（FCFS）调度算法</li>
+<li>短作业优先（SJF）调度算法</li>
+<li>优先级调度算法</li>
+<li>高响应比优先调度算法</li>
+<li>时间片轮转调度算法</li>
+<li>多级反馈队列调度算法</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/08/[学习总结]操作系统_操作系统概述/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -296,7 +602,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-10T00:30:04+08:00">
+                2018-07-10
+              </time>
             
           </span>
 
@@ -333,6 +651,25 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
           
 
           
@@ -392,8 +729,13 @@
 <li><p>中断和异常的概念<br>　　通过中断或异常处理，CPU从用户态进入和心态。<br>　　中断：指来自CPU执行指令以外的事件发生，如IO中断、时钟中断<br>　　异常：源自CPU执行指令内部的事件：如地址越界、算法溢出等。<br>　　中断发生在进程之间、异常发生在进程内部。</p>
 </li>
 </ol>
-<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>　　系统调用是用户在程序执行过程中调用操作系统所提供的一些子功能，系统调用运行噪核心态
-　　　　</p>
+<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>　　系统调用是用户在程序执行过程中调用操作系统所提供的一些子功能，系统调用运行在核心态。<br>　　特权指令运行在核心态，访管指令运行在用户态，访管指令用于从用户态切换到核心态。</p>
+<h3 id="操作系统体系结构"><a href="#操作系统体系结构" class="headerlink" title="操作系统体系结构"></a>操作系统体系结构</h3><ol>
+<li>大内核：操作系统的主要功能模块都作为一个紧密联系的整体云心在核心态</li>
+<li>微内核：将内核中的最基本功能保留在内核，将不需要在核心态执行的功能移动到用户态，微内核需要频繁的在核心态和用户态间切换，所有系统开销比较大。</li>
+</ol>
+<h3 id="疑难点"><a href="#疑难点" class="headerlink" title="疑难点"></a>疑难点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">并发与并行</span><br><span class="line">特权指令与非特权指令</span><br></pre></td></tr></table></figure>
+<p>　　　　</p>
 
           
         
@@ -479,7 +821,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-10T00:56:27+08:00">
+                2018-07-10
+              </time>
             
           </span>
 
@@ -517,6 +871,25 @@
           
 
           
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
 
           
 
@@ -539,11 +912,11 @@
 <h3 id="意志力挑战"><a href="#意志力挑战" class="headerlink" title="意志力挑战"></a>意志力挑战</h3><p>　　知行合一是训练意志力的唯一途径,将所学知识结合到实际的意志力训练过程中,才能有效提升意志力,请设定意志力目标并接受意志力挑战。<br>意志力挑战有三种类型<br>1.“我要做”意志力挑战：你想多做并停止拖延的事，这类事有助于提高生活质量。<br>2.“我不要”意志力挑战：妨碍健康、幸福的坏习惯，顽习。<br>3.“我想要”意志力挑战：你最想集中精力完成的重要长远目标，哪种当下的渴望最有可能分散你的注意力，诱惑你远离目标。  </p>
 <h2 id="意志力定义"><a href="#意志力定义" class="headerlink" title="意志力定义"></a>意志力定义</h2><h3 id="什么是意志力"><a href="#什么是意志力" class="headerlink" title="什么是意志力"></a>什么是意志力</h3><p>　　意志力是驾驭“我要做”、“我不要”和“我想要”的力量。<br>　　意志力的第一法则：认识你自己<br>　　在做出一项决定时，大脑默认会选择最简单的，最不需要意志力的路径，你必须意识到此刻需要意志力才能避开一些简单的陷阱。注意力分散的人更容易向诱惑屈服，他们没有意识到在诱惑面前需要意志力而选择了一条最简路径，这条路径通常通往诱惑的陷阱。<br>　　想要更强的自控力需要有更多的自我意识，这意味着你得知道什么样的决定需要意志力，有些决定比较明显：自习时“现在要不要打开手机看朋友圈”，有些则比较隐藏：你是否自习时不带手机，以便不用再纠结自习时要不要看朋友圈。  </p>
 <h3 id="训练意志力"><a href="#训练意志力" class="headerlink" title="训练意志力"></a>训练意志力</h3><p>　　人脑在接受训练方面与肌肉类似，更多的训练能使它更强壮更迅速。<br>　　最基本的训练方法是<strong>冥想</strong>，5分钟训练大脑冥想并专心呼吸是一种有效的冥想技巧。具体方法为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.原地不动，安静坐好</span><br><span class="line">2.注意你的呼吸，将注意力集中在呼吸上</span><br><span class="line">3.感受呼吸，弄清自己是怎样走神的</span><br></pre></td></tr></table></figure></p>
-<h2 id="意志力本能"><a href="#意志力本能" class="headerlink" title="意志力本能"></a>意志力本能</h2><hr>
-<h3 id="三思而后行"><a href="#三思而后行" class="headerlink" title="三思而后行"></a>三思而后行</h3><p>　　面对一件事情的反应有两种：三思而后行反应和应激反应，应激反应意味着加速，冲动而无自制，三思而后行反应意味着减速，抑制冲动，意志力的一项生理学指标是：心率、血压、呼吸频率降低。三思而后行反应有助于让你的身体进入更平静的状态，深呼吸有着同样的效果，在面临意志力挑战时你要做的第一件事通常就是深呼吸，进入平静状态<br>　　三思而后行反应的最佳生理学指标是“心率变异率“，它与心率成反比。当人们感受到压力时，心率被迫保持在一个较高水平，更容易冲动，当人们成功自控时则相反。心率变异率能很好的反应意志力的程度，心率变异率较高的人能更好的集中注意力、避免及时行乐的想法、更好的应对压力。通过冥想练习和呼吸练习有助于提高你的心率变异率。 </p>
+<hr>
+<h2 id="意志力本能"><a href="#意志力本能" class="headerlink" title="意志力本能"></a>意志力本能</h2><h3 id="三思而后行"><a href="#三思而后行" class="headerlink" title="三思而后行"></a>三思而后行</h3><p>　　面对一件事情的反应有两种：三思而后行反应和应激反应，应激反应意味着加速，冲动而无自制，三思而后行反应意味着减速，抑制冲动，意志力的一项生理学指标是：心率、血压、呼吸频率降低。三思而后行反应有助于让你的身体进入更平静的状态，深呼吸有着同样的效果，在面临意志力挑战时你要做的第一件事通常就是深呼吸，进入平静状态<br>　　三思而后行反应的最佳生理学指标是“心率变异率“，它与心率成反比。当人们感受到压力时，心率被迫保持在一个较高水平，更容易冲动，当人们成功自控时则相反。心率变异率能很好的反应意志力的程度，心率变异率较高的人能更好的集中注意力、避免及时行乐的想法、更好的应对压力。通过冥想练习和呼吸练习有助于提高你的心率变异率。 </p>
 <h3 id="意志力良药"><a href="#意志力良药" class="headerlink" title="意志力良药"></a>意志力良药</h3><p>　　呼吸练习：将呼吸频率降低至4~6/s,持续数分钟，时间越长效果越好，但不超过20分钟。该方法的生理学基础是：放慢呼吸能提高心率变异率、有助于你从压力状态调整为自控力状态。<br>　　运动锻炼也是增强自控力生理学基础的良方，<strong>任何能帮助你离开椅子的活动，都能提高你的意志力储备</strong><br>　　良好的睡眠同样有助于意志力的提升，如果你有失眠问题，请考虑一件事：真正的关键不是强迫自己睡觉，而是远离那些让自己没办法睡觉的事。</p>
 <h3 id="自控力的代价"><a href="#自控力的代价" class="headerlink" title="自控力的代价"></a>自控力的代价</h3><p>　　自控力需要能量，放松能让你恢复意志力储备。需要注意的是：<strong>能提高意志力的放松是真正意义上的身心休整</strong>。常见放松方法有：闭眼、深呼吸、绷紧肌肉再放松、握拳、快速转动眼睛。  </p>
-<h3 id="压力"><a href="#压力" class="headerlink" title="压力"></a>压力</h3><p>　　压力是意志力的死敌，它对意志力的消耗最大。压力让你关注即时的短期的目标和结果，自控力则需要你有更广阔的视野。学会管理压力是提高意志力的重要组成部分。调整身心状态，储存能量，从压力中恢复过来的，保证有能量做最好的自己。  </p>
+<h3 id="压力"><a href="#压力" class="headerlink" title="压力"></a>压力</h3><p>　　压力是意志力的死敌，它对意志力的消耗最大。压力让你关注即时的短期的目标和结果，自控力则需要你有更广阔的视野。学会管理压力是提高意志力的重要组成部分。调整身心状态，储存能量，从压力中恢复过来，保证有能量做最好的自己。  </p>
 <h2 id="自控力的极限"><a href="#自控力的极限" class="headerlink" title="自控力的极限"></a>自控力的极限</h2><p>　　自控力像肌肉一样有极限，使用之后会逐渐疲惫，使用过度则会失去力量。一个解决方法是：将意志力用在刀刃上，如果你觉得没有时间和精力去处理“我想要”做的事，就把它安排在意志力最强的时候。自控力存在极限的原因是意志力需要消耗能量，人的能量储存是有限的。同肌肉类似，意志力也可以通过训练得到增强，下面是几种锻炼模式可供参考  </p>
 <ul>
 <li>增强“我不要”的力量：不随便许诺、不执行坏习惯等</li>
@@ -551,176 +924,23 @@
 <li>增强自我监控能力：向电脑的任务管理器一样进行自我监控，认真记录你在各类活动所花费的时间</li>
 </ul>
 <p>　　需要注意的是：如果你想彻底改变坏习惯，最好先找一种简单的方法来训练自控力，而不是设定一个过高的目标。<br>　　长跑运动中有极点一说，但是极点不意味着极限，意志力的极限和身体的极限类似，在我们感到无法坚持的时候，其实意志力并未真正消耗殆尽，疲惫是一种感觉、一种情绪，而不是一种身体反应，它是大脑产生的一种保护机制，一种预警系统，但它并未抵达真正的生理极限——身体的疲惫阈值。所以当你疲惫时，问问自己：<strong>你的疲惫感是真的吗？</strong><br>　　在意志力告急的时候，挖掘“我想要”的力量，有助于恢复能量，你可以思考一下挑战成功的收获，这可以给你带来动力。 </p>
-<h2 id="容忍罪恶：为何善行之后会有恶形"><a href="#容忍罪恶：为何善行之后会有恶形" class="headerlink" title="容忍罪恶：为何善行之后会有恶形"></a>容忍罪恶：为何善行之后会有恶形</h2><hr>
-<h3 id="道德许可效应"><a href="#道德许可效应" class="headerlink" title="道德许可效应"></a>道德许可效应</h3><p>　　当你做善事之后，你会感觉良好，这意味着你更可能相信自己的冲动，而冲动往往会允许你做坏事。道德许可效应不仅会允许我们做坏事，也会让我们错失做善事的机会。道德许可让我们相信：放弃节食、打破预算、多抽根烟这些不良行为是对自己善行的“犒赏”。为了避免道德许可的陷阱，你需要去记住一下几件事：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">　　你会不会以自己的善行为借口，允许自己去做坏事，这是无害的奖励，还是阻碍了你实现更长远的意志力的目标？   </span><br><span class="line">　　不要把支持目标实现的行为误认为目标本身，不是说你做了一件和目标一致的事情，你就不会再面临危险了注意观察一下：你是否因为认为某些积极的行为值得称赞，就忘记了自己实际的目标是什么  </span><br><span class="line">　　你是否把进步当做放松的借口？这可能导致前进一小步后退两大步  </span><br><span class="line">　　当你发现自己用曾经的善行给现在的放纵做辩护时，停下来想一想，当初你为什么拒绝诱惑，而不是你应不应该得到奖励</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="容忍罪恶：为何善行之后会有恶形"><a href="#容忍罪恶：为何善行之后会有恶形" class="headerlink" title="容忍罪恶：为何善行之后会有恶形"></a>容忍罪恶：为何善行之后会有恶形</h2><h3 id="道德许可效应"><a href="#道德许可效应" class="headerlink" title="道德许可效应"></a>道德许可效应</h3><p>　　当你做善事之后，你会感觉良好，这意味着你更可能相信自己的冲动，而冲动往往会允许你做坏事。道德许可效应不仅会允许我们做坏事，也会让我们错失做善事的机会。道德许可让我们相信：放弃节食、打破预算、多抽根烟这些不良行为是对自己善行的“犒赏”。为了避免道德许可的陷阱，你需要去记住一下几件事：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">　　你会不会以自己的善行为借口，允许自己去做坏事，这是无害的奖励，还是阻碍了你实现更长远的意志力的目标？   </span><br><span class="line">　　不要把支持目标实现的行为误认为目标本身，不是说你做了一件和目标一致的事情，你就不会再面临危险了注意观察一下：你是否因为认为某些积极的行为值得称赞，就忘记了自己实际的目标是什么  </span><br><span class="line">　　你是否把进步当做放松的借口？这可能导致前进一小步后退两大步  </span><br><span class="line">　　当你发现自己用曾经的善行给现在的放纵做辩护时，停下来想一想，当初你为什么拒绝诱惑，而不是你应不应该得到奖励</span><br></pre></td></tr></table></figure></p>
 <h3 id="不要向明天赊账"><a href="#不要向明天赊账" class="headerlink" title="不要向明天赊账"></a>不要向明天赊账</h3><p>　　明天和今天毫无区别，当你想改变行为的时候，试着减少行为的变化性，而不是减少某种行为。比如，对于拖延症，不要问自己“我是想今天做还是明天再做”，而要问自己“我是不是想承担永远拖延下去的恶果”  </p>
-<h2 id="大脑的弥天大谎：误把渴望当幸福"><a href="#大脑的弥天大谎：误把渴望当幸福" class="headerlink" title="大脑的弥天大谎：误把渴望当幸福"></a>大脑的弥天大谎：误把渴望当幸福</h2><hr>
-<p>　　“奖励系统”，一种神经学概念，它刺激的区域是人脑最原始的动力系统，驱使我们采取行动和消耗体能。世界上也充满了能带来同等刺激的东西，它们让我们去追寻对快乐的承诺，使我们对“我想要”的东西越来越着迷，而说“我不要”就会变得更加困难，则正是众多诱惑的工作原理。　　<br>　　奖励系统的工作原理是：当大脑发现获得奖励的机会时，它就释放叫做多巴胺的神经递质，多巴胺让我们期待奖励，使我们更愿意出手追寻这种快乐，但多巴胺本身不产生快乐。  </p>
-<h2 id="情绪低落为何使人屈服于诱惑"><a href="#情绪低落为何使人屈服于诱惑" class="headerlink" title="情绪低落为何使人屈服于诱惑"></a>情绪低落为何使人屈服于诱惑</h2><h3 id="为何压力会勾起欲望"><a href="#为何压力会勾起欲望" class="headerlink" title="为何压力会勾起欲望"></a>为何压力会勾起欲望</h3><p>　　压力压力会引发应激反应，应激反应是身体内部相互协调的一系列变化，让你在危险面前保护自己，或者维持心情。当你感到压力时，大脑会指引你，让你去做它认为能给你带来快乐的事情。压力包括愤怒、悲伤、自我怀疑、焦虑等消极状态，会使你的大脑进入寻找奖励的状态。  </p>
+<hr>
+<h2 id="大脑的弥天大谎：误把渴望当幸福"><a href="#大脑的弥天大谎：误把渴望当幸福" class="headerlink" title="大脑的弥天大谎：误把渴望当幸福"></a>大脑的弥天大谎：误把渴望当幸福</h2><p>　　“奖励系统”，一种神经学概念，它刺激的区域是人脑最原始的动力系统，驱使我们采取行动和消耗体能。世界上也充满了能带来同等刺激的东西，它们让我们去追寻对快乐的承诺，使我们对“我想要”的东西越来越着迷，而说“我不要”就会变得更加困难，则正是众多诱惑的工作原理。　　<br>　　奖励系统的工作原理是：当大脑发现获得奖励的机会时，它就释放叫做多巴胺的神经递质，多巴胺让我们期待奖励，使我们更愿意出手追寻这种快乐，但多巴胺本身不产生快乐。  </p>
+<hr>
+<h2 id="情绪低落为何使人屈服于诱惑"><a href="#情绪低落为何使人屈服于诱惑" class="headerlink" title="情绪低落为何使人屈服于诱惑"></a>情绪低落为何使人屈服于诱惑</h2><h3 id="为何压力会勾起欲望"><a href="#为何压力会勾起欲望" class="headerlink" title="为何压力会勾起欲望"></a>为何压力会勾起欲望</h3><p>　　压力会引发应激反应，应激反应是身体内部相互协调的一系列变化，让你在危险面前保护自己，或者维持心情。当你感到压力时，大脑会指引你，让你去做它认为能给你带来快乐的事情。压力包括愤怒、悲伤、自我怀疑、焦虑等消极状态，会使你的大脑进入寻找奖励的状态。  </p>
 <h3 id="缓解压力"><a href="#缓解压力" class="headerlink" title="缓解压力"></a>缓解压力</h3><p>　　最有效的解压方法包括：<strong>锻炼、阅读、听音乐、与家人朋友相处、散步、冥想、以及培养有创意的爱好等</strong>。最无效的解压方法包括：暴饮暴食、玩游戏、上网、花两小时以上时间看电视或电影。<br>　　有效和无效策略的主要区别是：真正缓解压力的不是释放多巴胺或者是依赖奖励的承诺，而是增加大脑中改善情绪的化学物质、这些物质让大脑不再对压力产生反应，减少身体中的压力荷尔蒙，产生有治愈效果的方松反应。以上的有效解压方法都有这些特点。  </p>
-<h3 id="失败的时候，请原谅自己"><a href="#失败的时候，请原谅自己" class="headerlink" title="失败的时候，请原谅自己"></a>失败的时候，请原谅自己</h3><p>　　如果能预测自己什么时候、会如何受到诱惑和违背承诺，你就更可能拥有坚定的决心。我们需要允许自己去做真正让我们快乐的事，原理那些与我们生活无关的压力的根源。当我们遇到挫折时，我们需要原谅曾经的失败，不要把它们作为屈服或放弃的借口。想要增强自控力，自我同情笔自我打击有效的多。<br>　　事先之明：预测你什么时候，会怎样受到诱惑和违背承诺，想象一个不让自己放弃抗争的具体方法。</p>
-<h2 id="出售未来"><a href="#出售未来" class="headerlink" title="出售未来"></a>出售未来</h2><hr>
-<h3 id="即时奖励和未来奖励"><a href="#即时奖励和未来奖励" class="headerlink" title="即时奖励和未来奖励"></a>即时奖励和未来奖励</h3><p>　　在意志力挑战中，当你屈服于诱惑或拖延的时候，你得到了即时奖励，出售了未来奖励，原因在于当诱惑真实存在时，你的大脑会进入“搜寻”奖励模式，确保不会错过任何奖励，而大脑的奖励系统还未进化到能对未来奖励做出回应的地步。即时奖励激活更原始的奖励系统，而未来奖励则无法做到。为了解决这个问题，你需要检坚持10分钟法则：在诱惑面前安排10分钟的等待时间，在这段缓冲时间内，你要时刻想着长远利益，创造物理或视觉屏障来抵挡诱惑。而对于“我要做”的意志力挑战，你可以同样采用这个法则————坚持10分钟。在这10分钟你可以思考一个问题：你是否愿意放弃未来奖励而向当前诱惑屈服。</p>
+<h3 id="失败的时候，请原谅自己"><a href="#失败的时候，请原谅自己" class="headerlink" title="失败的时候，请原谅自己"></a>失败的时候，请原谅自己</h3><p>　　如果能预测自己什么时候、会如何受到诱惑和违背承诺，你就更可能拥有坚定的决心。我们需要允许自己去做真正让我们快乐的事，远离那些与我们生活无关的压力的根源。当我们遇到挫折时，我们需要原谅曾经的失败，不要把它们作为屈服或放弃的借口。想要增强自控力，自我同情笔自我打击有效的多。<br>　　事先之明：预测你什么时候，会怎样受到诱惑和违背承诺，想象一个不让自己放弃抗争的具体方法。</p>
+<hr>
+<h2 id="出售未来"><a href="#出售未来" class="headerlink" title="出售未来"></a>出售未来</h2><h3 id="即时奖励和未来奖励"><a href="#即时奖励和未来奖励" class="headerlink" title="即时奖励和未来奖励"></a>即时奖励和未来奖励</h3><p>　　在意志力挑战中，当你屈服于诱惑或拖延的时候，你得到了即时奖励，出售了未来奖励，原因在于当诱惑真实存在时，你的大脑会进入“搜寻”奖励模式，确保不会错过任何奖励，而大脑的奖励系统还未进化到能对未来奖励做出回应的地步。即时奖励激活更原始的奖励系统，而未来奖励则无法做到。为了解决这个问题，你需要检坚持10分钟法则：在诱惑面前安排10分钟的等待时间，在这段缓冲时间内，你要时刻想着长远利益，创造物理或视觉屏障来抵挡诱惑。而对于“我要做”的意志力挑战，你可以同样采用这个法则————坚持10分钟。在这10分钟你可以思考一个问题：你是否愿意放弃未来奖励而向当前诱惑屈服。</p>
 <h3 id="预先承诺"><a href="#预先承诺" class="headerlink" title="预先承诺"></a>预先承诺</h3><p>　　要实现自己的目标，我们就必须限制自己的选择，这称为“预先承诺”，更进一步的做法是：研究受诱惑的自我，看清它们的弱点，利用诡计、勇气、创造力预测并约束那个自我。具体你需要做到以下三件事：1.做好拒绝诱惑的准备；2. 让 接受诱惑变得更难；3.激励未来的自己。</p>
 <h3 id="遇见未来的自己"><a href="#遇见未来的自己" class="headerlink" title="遇见未来的自己"></a>遇见未来的自己</h3><p>　　心理学告诉我们：我们会把未来的自己想象成一个完全不同的人，他具有更强的意志力，更理想化的特征，而这是错误的。你现在不去拒绝诱惑，那未来你也很难拒绝诱惑，你不应该等待自控力更强的未来的自己出现，而应该从现在做起。<br>　　之所以我们会把未来的自己视为另一个人，原因在于，我们不知道未来的自己的想法和感受，当我们想到未来的自己时，我们的欲望不会像现在一样紧迫，情绪不会像现在一样真切。只有到我们真正需要作出选择的时候，我们才会知道当下的想法好感受。  　　<br>　　如何让未来的自己更可信，你可以从以下事情开始尝试：  </p>
 <pre><code>    - 创造未来记忆：越真实越生动的未来图景越不会让你在未来后悔
     - 给未来的自己发条短信：向未来的自己描述自己现在将要做什么、你对未来自己的希望，未来的自己是否会因为现在自己做了什么而表示感激，建立自己和未来自己的联系
     - 想象未来的自己： 想象一个你希望成为的自己，想象未来的自己对现在自己的感觉：自豪？感激？后悔？但时刻记住，如果你不从现在开始改变，那你的未来也会一成不变
 </code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/[学习]高数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hoi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/05/[学习]高数/" itemprop="url">高数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T15:41:12+08:00">
-                2018-07-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数学/" itemprop="url" rel="index">
-                    <span itemprop="name">数学</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<h2 id="泰勒公式"><a href="#泰勒公式" class="headerlink" title="泰勒公式"></a>泰勒公式</h2><p>$f(x)=\sum_{n=0}^\infty \frac{f(x_0)^n}{n!}(x-x_0)^n$  </p>
-<p>\(f(x)=\sum_{n=0}^\infty \frac{f(0)^n}{n!}(x)^n\)</p>
-<p>\(sinx=x-\frac{x^3}{3!}+o(x^3)\) </p>
-<p>\(cosx=1-\frac{x^2}{2!}+\frac{x^4}{4!}+o(x^4)\)</p>
-<p>\(arcsinx=x+\frac{x^3}{3!}+o(x^3)\)</p>
-<p>\(tanx=x+\frac{x^3}{3}+o(x^3)\)</p>
-<p>\(arctanx=x-\frac{x^3}{3}+o(x^3)\)  </p>
-<p>\(ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}+o(x^3)\)  </p>
-<p>\(e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+o(x^3)\)  </p>
-<p>\((1+x)^n=1+nx+\frac{n(n-1)}{2!}x^2+o(x^2)\)  </p>
-<p>$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$</p>
-
           
         
       
@@ -805,7 +1025,19 @@
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-05T21:30:14+08:00">
+                2018-07-05
+              </time>
             
           </span>
 
@@ -842,6 +1074,25 @@
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
           
 
           
@@ -939,6 +1190,191 @@ if __name__ == &#39;__main__&#39;:
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/[学习]高数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hoi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/05/[学习]高数/" itemprop="url">高数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T15:41:12+08:00">
+                2018-07-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-08T16:58:55+08:00">
+                2018-07-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数学/" itemprop="url" rel="index">
+                    <span itemprop="name">数学</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<h2 id="泰勒公式"><a href="#泰勒公式" class="headerlink" title="泰勒公式"></a>泰勒公式</h2><p>$f(x)=\sum_{n=0}^\infty \frac{f(x_0)^n}{n!}(x-x_0)^n$  </p>
+<p>\(f(x)=\sum_{n=0}^\infty \frac{f(0)^n}{n!}(x)^n\)</p>
+<p>\(sinx=x-\frac{x^3}{3!}+o(x^3)\) </p>
+<p>\(cosx=1-\frac{x^2}{2!}+\frac{x^4}{4!}+o(x^4)\)</p>
+<p>\(arcsinx=x+\frac{x^3}{3!}+o(x^3)\)</p>
+<p>\(tanx=x+\frac{x^3}{3}+o(x^3)\)</p>
+<p>\(arctanx=x-\frac{x^3}{3}+o(x^3)\)  </p>
+<p>\(ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}+o(x^3)\)  </p>
+<p>\(e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+o(x^3)\)  </p>
+<p>\((1+x)^n=1+nx+\frac{n(n-1)}{2!}x^2+o(x^2)\)  </p>
+<p>$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/[随笔]-灵感/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -976,7 +1412,19 @@ if __name__ == &#39;__main__&#39;:
             
 
             
+              <span class="post-meta-divider">|</span>
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-05T21:30:31+08:00">
+                2018-07-05
+              </time>
             
           </span>
 
@@ -1013,6 +1461,25 @@ if __name__ == &#39;__main__&#39;:
 
           
 
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
           
 
           
@@ -1114,7 +1581,7 @@ if __name__ == &#39;__main__&#39;:
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1179,6 +1646,15 @@ if __name__ == &#39;__main__&#39;:
   </span>
   <span class="author" itemprop="copyrightHolder">Lin Hoi</span>
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
   
 </div>
 

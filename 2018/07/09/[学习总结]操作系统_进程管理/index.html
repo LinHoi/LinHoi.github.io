@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="随笔,幻想," />
+  <meta name="keywords" content="操作系统," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="第一章对于现在的我们而言,最重要的事情是什么呢?米歇尔没有一个确定的答案,从一个穷山僻壤的偏远星球来到这个位于银河中心的大都市的年轻人而言,一切都是那么的令人惊叹,等待他的是花花世界,而这种全新的世界对米歇尔究竟会意味着什么,没有人知晓这个答案,假如心理史学的发展能够去探测个人的发展趋势,也许心理史学家们会表现的如此惊讶,如此一个平凡的乡下人,竟会有着如此巨大的潜力.未完待续…">
-<meta name="keywords" content="随笔,幻想">
+<meta name="description" content="进程与线程进程　　进程是进程实体的运行过程，是系统进行资源分配和调度的一个独立单位（注意与基本单位的区分）　　进程实现操作系统的并发性和共享性，进程映像由：程序段、相关数据段和PCB构成，其中PCB是进程存在的唯一标志。　　进程的特征包括：动态性、并发性、独立性、异步性、结构性 进程的转态和转换　　进程有以下五种状态：  运行状态 就绪状态 阻塞（等待）状态 创建状态 结束状态  　　五种状态的转">
+<meta name="keywords" content="操作系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="随笔">
-<meta property="og:url" content="http://yoursite.com/2018/07/05/[随笔]-灵感/index.html">
+<meta property="og:title" content="进程管理">
+<meta property="og:url" content="http://yoursite.com/2018/07/09/[学习总结]操作系统_进程管理/index.html">
 <meta property="og:site_name" content="Hikari">
-<meta property="og:description" content="第一章对于现在的我们而言,最重要的事情是什么呢?米歇尔没有一个确定的答案,从一个穷山僻壤的偏远星球来到这个位于银河中心的大都市的年轻人而言,一切都是那么的令人惊叹,等待他的是花花世界,而这种全新的世界对米歇尔究竟会意味着什么,没有人知晓这个答案,假如心理史学的发展能够去探测个人的发展趋势,也许心理史学家们会表现的如此惊讶,如此一个平凡的乡下人,竟会有着如此巨大的潜力.未完待续…">
+<meta property="og:description" content="进程与线程进程　　进程是进程实体的运行过程，是系统进行资源分配和调度的一个独立单位（注意与基本单位的区分）　　进程实现操作系统的并发性和共享性，进程映像由：程序段、相关数据段和PCB构成，其中PCB是进程存在的唯一标志。　　进程的特征包括：动态性、并发性、独立性、异步性、结构性 进程的转态和转换　　进程有以下五种状态：  运行状态 就绪状态 阻塞（等待）状态 创建状态 结束状态  　　五种状态的转">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-05T13:30:31.236Z">
+<meta property="og:image" content="http://yoursite.com/images/2-1.png">
+<meta property="og:updated_time" content="2018-07-11T13:36:32.048Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="随笔">
-<meta name="twitter:description" content="第一章对于现在的我们而言,最重要的事情是什么呢?米歇尔没有一个确定的答案,从一个穷山僻壤的偏远星球来到这个位于银河中心的大都市的年轻人而言,一切都是那么的令人惊叹,等待他的是花花世界,而这种全新的世界对米歇尔究竟会意味着什么,没有人知晓这个答案,假如心理史学的发展能够去探测个人的发展趋势,也许心理史学家们会表现的如此惊讶,如此一个平凡的乡下人,竟会有着如此巨大的潜力.未完待续…">
+<meta name="twitter:title" content="进程管理">
+<meta name="twitter:description" content="进程与线程进程　　进程是进程实体的运行过程，是系统进行资源分配和调度的一个独立单位（注意与基本单位的区分）　　进程实现操作系统的并发性和共享性，进程映像由：程序段、相关数据段和PCB构成，其中PCB是进程存在的唯一标志。　　进程的特征包括：动态性、并发性、独立性、异步性、结构性 进程的转态和转换　　进程有以下五种状态：  运行状态 就绪状态 阻塞（等待）状态 创建状态 结束状态  　　五种状态的转">
+<meta name="twitter:image" content="http://yoursite.com/images/2-1.png">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/05/[随笔]-灵感/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/09/[学习总结]操作系统_进程管理/"/>
 
 
 
 
 
-  <title>随笔 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>进程管理 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -263,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/[随笔]-灵感/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/09/[学习总结]操作系统_进程管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lin Hoi">
@@ -280,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">随笔</h1>
+          <h1 class="post-title" itemprop="name headline">进程管理</h1>
         
 
         <div class="post-meta">
@@ -292,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T11:07:12+08:00">
-                2018-07-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T17:34:12+08:00">
+                2018-07-09
               </time>
             
 
@@ -308,8 +310,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-05T21:30:31+08:00">
-                2018-07-05
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-11T21:36:32+08:00">
+                2018-07-11
               </time>
             
           </span>
@@ -327,8 +329,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
                   </a>
                 </span>
 
@@ -383,7 +385,140 @@
       
 
       
-        <h2 id="第一章"><a href="#第一章" class="headerlink" title="第一章"></a>第一章</h2><p>对于现在的我们而言,最重要的事情是什么呢?米歇尔没有一个确定的答案,从一个穷山僻壤的偏远星球来到这个位于银河中心的大都市的年轻人而言,一切都是那么的令人惊叹,等待他的是花花世界,而这种全新的世界对米歇尔究竟会意味着什么,没有人知晓这个答案,假如心理史学的发展能够去探测个人的发展趋势,也许心理史学家们会表现的如此惊讶,如此一个平凡的乡下人,竟会有着如此巨大的潜力.<br>未完待续…</p>
+        <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>　　进程是进程实体的运行过程，是系统进行资源分配和调度的一个<strong>独立单位</strong>（注意与基本单位的区分）<br>　　进程实现操作系统的并发性和共享性，进程映像由：程序段、相关数据段和PCB构成，其中PCB是进程存在的唯一标志。<br>　　进程的特征包括：动态性、并发性、独立性、异步性、结构性</p>
+<h3 id="进程的转态和转换"><a href="#进程的转态和转换" class="headerlink" title="进程的转态和转换"></a>进程的转态和转换</h3><p>　　进程有以下五种状态：</p>
+<ol>
+<li>运行状态</li>
+<li>就绪状态</li>
+<li>阻塞（等待）状态</li>
+<li>创建状态</li>
+<li>结束状态</li>
+</ol>
+<p>　　五种状态的转化关系如图<br><img src="/images/2-1.png" alt="状态转化"></p>
+<h3 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h3><ol>
+<li><p>进程创建</p>
+<ul>
+<li>为新进程申请PCB</li>
+<li>为进程分配资源</li>
+<li>初始化PCB</li>
+<li>将进程插入到就绪队列</li>
+</ul>
+</li>
+<li><p>进程的终止</p>
+<ul>
+<li>检索PCB，读取进程状态</li>
+<li>若进程处于执行状态，终止该进程的执行</li>
+<li>终止子进程的执行（若有）</li>
+<li>释放该进程拥有的全部资源</li>
+<li>从队列中删除进程PCB</li>
+</ul>
+</li>
+<li><p>进程的阻塞</p>
+<ul>
+<li>找到将要阻塞进程的PCB</li>
+<li>若进程处于运行状态，则保护现场，将其状态转为阻塞状态，停止运行</li>
+<li>将PCB插入相应事件的等待队列</li>
+</ul>
+</li>
+<li><p>进程的唤醒</p>
+<ul>
+<li>找到进程PCB</li>
+<li>将进程从等待队列移出，置为就绪状态</li>
+<li>PCB插入就绪队列，等待调度</li>
+</ul>
+</li>
+<li><p>进程切换</p>
+<ul>
+<li>保存处理机上下文</li>
+<li>更新PCB</li>
+<li>将PCB插入相应队列</li>
+<li>选择另外一个进程，更新PCB</li>
+<li>更新内存管理的数据结构</li>
+<li>恢复处理机上下文</li>
+</ul>
+</li>
+</ol>
+<h3 id="进程的组织"><a href="#进程的组织" class="headerlink" title="进程的组织"></a>进程的组织</h3><ol>
+<li><p>进程控制块<br>　　PCB常驻内存，是进程实体的一部分，是进程存在的唯一标志。PCB主要包含以下内容</p>
+<ol>
+<li>）进程描述信息：PID，UID</li>
+<li>）进程控制和管理信息：进程当前状态、进程优先级</li>
+<li>）资源分配清单</li>
+<li>）处理机相关信息：PWD等</li>
+</ol>
+</li>
+<li><p>程序段<br>　　能被调度到CPU执行的程序代码段</p>
+</li>
+<li><p>数据段<br>　　程序加工处理的原始数据或是程序执行时产生的中间或最终结果</p>
+</li>
+</ol>
+<h3 id="进程的通信"><a href="#进程的通信" class="headerlink" title="进程的通信"></a>进程的通信</h3><ol>
+<li>共享内存：使用PV操作对共享空间进行读/写</li>
+<li>消息传递：直接通信和间接通信</li>
+<li>管道通信：连接读进程和写进程，以实现它们之间的通信，管道通信是半双工通信</li>
+</ol>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><ol>
+<li>线程概念<br>　　线程是轻量级进程，引入目的是为了提高操作系统并发性能。它是程序执行流的最小单元，不拥有系统资源</li>
+</ol>
+<p>２. 进程和线程的比较</p>
+<pre><code>- 调度：线程是独立调度的基本单位，进程是拥有资源的基本单位，同一进程中，线程的切换不会引起进程调度。
+- 拥有资源：进程是拥有资源的基本单位，线程不拥于资源
+- 并发性：进程可并发执行，线程也可并发执行
+- 系统开销：
+- 地址空间和其他资源：进程的地址空间之间相互独立，同一进程的各个线程共享进程资源
+- 通信：进程间通信需要同步和互斥手段，线程间通信可以通过直接读写进程数据段
+</code></pre><ol>
+<li><p>线程的属性</p>
+<ul>
+<li>线程不拥有系统资源</li>
+<li>不同线程可以执行相同程序</li>
+<li>同一进程的线程共享进程资源</li>
+<li>线程是处理机的调度基本单位</li>
+<li>线程生命周期会经历阻塞，、就绪、和运行等各种状态</li>
+</ul>
+</li>
+<li><p>线程实现方式</p>
+<ul>
+<li>用户级线程：对内核透明</li>
+<li>内核级线程</li>
+</ul>
+</li>
+<li><p>多线程模型</p>
+<ul>
+<li>多对一模型：多个用户级线程映射到一个内核级线程，当一个线程在使用内核服务是被阻塞，整个进程都会被阻塞</li>
+<li>一对一模型：一个线程的阻塞妨碍另一个线程继续执行</li>
+<li>多对多模型</li>
+</ul>
+</li>
+</ol>
+<h2 id="处理机调度"><a href="#处理机调度" class="headerlink" title="处理机调度"></a>处理机调度</h2><h3 id="调度的概念"><a href="#调度的概念" class="headerlink" title="调度的概念"></a>调度的概念</h3><ol>
+<li>调度的基本概念<br> 处理机调度是指从就绪队列中，按照一定的算法选择一个进程并将处理机分配给它运行，以实现进程并发地执行</li>
+<li>调度的层级<ul>
+<li>作业调度（高级调度）：从外存挑选作业，为其分配内存、IO设备等资源，并建立进程，使进程获得竞争处理机的机会</li>
+<li>中级调度（内存调度）：将处于挂起状态且已具备运行条件的就绪进程，重新调入内存，挂在就绪队列上</li>
+<li>进程调度（低级调度）：按照某种策略从从就绪队列中选择一个进程，为其分配处理机</li>
+</ul>
+</li>
+</ol>
+<h3 id="进程调度方式"><a href="#进程调度方式" class="headerlink" title="进程调度方式"></a>进程调度方式</h3><ol>
+<li>非剥夺调度方式</li>
+<li>剥夺调度方式</li>
+</ol>
+<h3 id="调度的基本准则"><a href="#调度的基本准则" class="headerlink" title="调度的基本准则"></a>调度的基本准则</h3><ol>
+<li>CPU利用率</li>
+<li>系统吞吐量：单位时间CPU完成的作业数量</li>
+<li>周转时间：从作业提交到作业完成所经历的时间</li>
+<li>等待时间：进程处于等待处理机状态时间之和</li>
+<li>响应时间：从用户提交请求到系统首次响应所用时间</li>
+</ol>
+<h3 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h3><ol>
+<li>先来先服务（FCFS）调度算法</li>
+<li>短作业优先（SJF）调度算法</li>
+<li>优先级调度算法</li>
+<li>高响应比优先调度算法</li>
+<li>时间片轮转调度算法</li>
+<li>多级反馈队列调度算法</li>
+</ol>
 
       
     </div>
@@ -401,9 +536,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/随笔/" rel="tag"># 随笔</a>
-          
-            <a href="/tags/幻想/" rel="tag"># 幻想</a>
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
           
         </div>
       
@@ -416,15 +549,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/07/08/[学习总结]操作系统_操作系统概述/" rel="next" title="操作系统概述">
+                <i class="fa fa-chevron-left"></i> 操作系统概述
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/05/[学习]高数/" rel="prev" title="高数">
-                高数 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -556,7 +689,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一章"><span class="nav-number">1.</span> <span class="nav-text">第一章</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#进程与线程"><span class="nav-number">1.</span> <span class="nav-text">进程与线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进程"><span class="nav-number">1.1.</span> <span class="nav-text">进程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的转态和转换"><span class="nav-number">1.2.</span> <span class="nav-text">进程的转态和转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程控制"><span class="nav-number">1.3.</span> <span class="nav-text">进程控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的组织"><span class="nav-number">1.4.</span> <span class="nav-text">进程的组织</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程的通信"><span class="nav-number">1.5.</span> <span class="nav-text">进程的通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程"><span class="nav-number">1.6.</span> <span class="nav-text">线程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理机调度"><span class="nav-number">2.</span> <span class="nav-text">处理机调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调度的概念"><span class="nav-number">2.1.</span> <span class="nav-text">调度的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程调度方式"><span class="nav-number">2.2.</span> <span class="nav-text">进程调度方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度的基本准则"><span class="nav-number">2.3.</span> <span class="nav-text">调度的基本准则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调度算法"><span class="nav-number">2.4.</span> <span class="nav-text">调度算法</span></a></li></ol></li></ol></div>
             
 
           </div>
