@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="高数," />
+  <meta name="keywords" content="操作系统," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="泰勒公式$f(x)=\sum_{n=0}^\infty \frac{f(x_0)^n}{n!}(x-x_0)^n$   \(f(x)=\sum_{n=0}^\infty \frac{f(0)^n}{n!}(x)^n\) \(sinx=x-\frac{x^3}{3!}+o(x^3)\)  \(cosx=1-\frac{x^2}{2!}+\frac{x^4}{4!}+o(x^4)\) \(arcs">
-<meta name="keywords" content="高数">
+<meta name="description" content="死锁的概念 死锁的定义 多个进程因为竞争资源和造成的一种相互等待的现象 死锁产生原因   系统资源竞争 进程推进顺序非法   死锁产生的必要条件   互斥条件 不剥夺条件 请求和饱和条件 循环等待条件    死锁的处理策略 预防死锁：破坏死锁产生的四个必要条件中的一个或多个 避免死锁：防止系统进入不安全状态 死锁检测和解除：不采取限制，检测到再解除  死锁避免 系统安全状态 系统按照某种进程推进顺">
+<meta name="keywords" content="操作系统">
 <meta property="og:type" content="article">
-<meta property="og:title" content="高数">
-<meta property="og:url" content="http://yoursite.com/2018/07/05/[学习]高数/index.html">
+<meta property="og:title" content="进程管理-死锁">
+<meta property="og:url" content="http://yoursite.com/2018/07/12/[学习总结]操作系统_进程管理_死锁/index.html">
 <meta property="og:site_name" content="Hikari">
-<meta property="og:description" content="泰勒公式$f(x)=\sum_{n=0}^\infty \frac{f(x_0)^n}{n!}(x-x_0)^n$   \(f(x)=\sum_{n=0}^\infty \frac{f(0)^n}{n!}(x)^n\) \(sinx=x-\frac{x^3}{3!}+o(x^3)\)  \(cosx=1-\frac{x^2}{2!}+\frac{x^4}{4!}+o(x^4)\) \(arcs">
+<meta property="og:description" content="死锁的概念 死锁的定义 多个进程因为竞争资源和造成的一种相互等待的现象 死锁产生原因   系统资源竞争 进程推进顺序非法   死锁产生的必要条件   互斥条件 不剥夺条件 请求和饱和条件 循环等待条件    死锁的处理策略 预防死锁：破坏死锁产生的四个必要条件中的一个或多个 避免死锁：防止系统进入不安全状态 死锁检测和解除：不采取限制，检测到再解除  死锁避免 系统安全状态 系统按照某种进程推进顺">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-08T08:58:55.777Z">
+<meta property="og:updated_time" content="2018-07-12T15:14:13.170Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="高数">
-<meta name="twitter:description" content="泰勒公式$f(x)=\sum_{n=0}^\infty \frac{f(x_0)^n}{n!}(x-x_0)^n$   \(f(x)=\sum_{n=0}^\infty \frac{f(0)^n}{n!}(x)^n\) \(sinx=x-\frac{x^3}{3!}+o(x^3)\)  \(cosx=1-\frac{x^2}{2!}+\frac{x^4}{4!}+o(x^4)\) \(arcs">
+<meta name="twitter:title" content="进程管理-死锁">
+<meta name="twitter:description" content="死锁的概念 死锁的定义 多个进程因为竞争资源和造成的一种相互等待的现象 死锁产生原因   系统资源竞争 进程推进顺序非法   死锁产生的必要条件   互斥条件 不剥夺条件 请求和饱和条件 循环等待条件    死锁的处理策略 预防死锁：破坏死锁产生的四个必要条件中的一个或多个 避免死锁：防止系统进入不安全状态 死锁检测和解除：不采取限制，检测到再解除  死锁避免 系统安全状态 系统按照某种进程推进顺">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/07/05/[学习]高数/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/07/12/[学习总结]操作系统_进程管理_死锁/"/>
 
 
 
 
 
-  <title>高数 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>进程管理-死锁 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/[学习]高数/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/12/[学习总结]操作系统_进程管理_死锁/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lin Hoi">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">高数</h1>
+          <h1 class="post-title" itemprop="name headline">进程管理-死锁</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T15:41:12+08:00">
-                2018-07-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T22:22:12+08:00">
+                2018-07-12
               </time>
             
 
@@ -308,8 +308,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-08T16:58:55+08:00">
-                2018-07-08
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:14:13+08:00">
+                2018-07-12
               </time>
             
           </span>
@@ -327,8 +327,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数学/" itemprop="url" rel="index">
-                    <span itemprop="name">数学</span>
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
                   </a>
                 </span>
 
@@ -383,19 +383,53 @@
       
 
       
-        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<h2 id="泰勒公式"><a href="#泰勒公式" class="headerlink" title="泰勒公式"></a>泰勒公式</h2><p>$f(x)=\sum_{n=0}^\infty \frac{f(x_0)^n}{n!}(x-x_0)^n$  </p>
-<p>\(f(x)=\sum_{n=0}^\infty \frac{f(0)^n}{n!}(x)^n\)</p>
-<p>\(sinx=x-\frac{x^3}{3!}+o(x^3)\) </p>
-<p>\(cosx=1-\frac{x^2}{2!}+\frac{x^4}{4!}+o(x^4)\)</p>
-<p>\(arcsinx=x+\frac{x^3}{3!}+o(x^3)\)</p>
-<p>\(tanx=x+\frac{x^3}{3}+o(x^3)\)</p>
-<p>\(arctanx=x-\frac{x^3}{3}+o(x^3)\)  </p>
-<p>\(ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}+o(x^3)\)  </p>
-<p>\(e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+o(x^3)\)  </p>
-<p>\((1+x)^n=1+nx+\frac{n(n-1)}{2!}x^2+o(x^2)\)  </p>
-<p>$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$</p>
+        <h3 id="死锁的概念"><a href="#死锁的概念" class="headerlink" title="死锁的概念"></a>死锁的概念</h3><ol>
+<li>死锁的定义<br> 多个进程因为竞争资源和造成的一种相互等待的现象</li>
+<li>死锁产生原因  <ul>
+<li>系统资源竞争</li>
+<li>进程推进顺序非法</li>
+</ul>
+</li>
+<li>死锁产生的必要条件  <ul>
+<li>互斥条件</li>
+<li>不剥夺条件</li>
+<li>请求和饱和条件</li>
+<li>循环等待条件</li>
+</ul>
+</li>
+</ol>
+<h3 id="死锁的处理策略"><a href="#死锁的处理策略" class="headerlink" title="死锁的处理策略"></a>死锁的处理策略</h3><ol>
+<li>预防死锁：破坏死锁产生的四个必要条件中的一个或多个</li>
+<li>避免死锁：防止系统进入不安全状态</li>
+<li>死锁检测和解除：不采取限制，检测到再解除</li>
+</ol>
+<h3 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h3><ol>
+<li>系统安全状态<br> 系统按照某种进程推进顺序（P1,P2,…,Pn),为每个进程Pi分配其所需资源，知道满足每个进程的最大资源需求，使每个进程都可以顺利完成，此时称P1,P2,…,Pn为安全序列，如果系统无法找到一个安全序列，则称系统处于不安全状态。</li>
+<li>银行家算法<br> 银行家算法是最著名的死锁避免算法。<ol>
+<li>数据结构描述  <ul>
+<li>可利用资源矢量Available：Available[i]=K表示系统现有Ri类资源K个</li>
+<li>最大需求矩阵Max：Max[i,j]=K，表示进程i需要Rj类资源的最大数目为K</li>
+<li>分配矩阵Allocation：Allocation[i,j]=K ,表示进程i已经分配到了Rj类资源数目为K</li>
+<li>需求矩阵Need：Need[i,j]=K，表示进程i还需要Rj类资源数目为K</li>
+</ul>
+</li>
+<li>算法描述</li>
+<li>安全性算法  </li>
+</ol>
+</li>
+</ol>
+<h3 id="死锁检测和解除"><a href="#死锁检测和解除" class="headerlink" title="死锁检测和解除"></a>死锁检测和解除</h3><ol>
+<li>资源分配图<br> 请求边，分配边</li>
+<li><p>死锁定理<br> S为死锁的条件是当且仅当S状态的资源分配图是不可完全化简的。<br> 资源分配图化简：</p>
+</li>
+<li><p>死锁解除  </p>
+<ul>
+<li>资源剥夺法</li>
+<li>撤销进程法</li>
+<li>进程回退法</li>
+</ul>
+</li>
+</ol>
 
       
     </div>
@@ -413,7 +447,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/高数/" rel="tag"># 高数</a>
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
           
         </div>
       
@@ -426,8 +460,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/05/[工具]MarkDown语法/" rel="next" title="Markdown语法摘要">
-                <i class="fa fa-chevron-left"></i> Markdown语法摘要
+              <a href="/2018/07/12/[学习总结]操作系统_进程管理_经典同步问题/" rel="next" title="进程管理-经典同步问题">
+                <i class="fa fa-chevron-left"></i> 进程管理-经典同步问题
               </a>
             
           </div>
@@ -435,10 +469,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/05/[读书笔记]-自控力/" rel="prev" title="《自控力》读书笔记">
-                《自控力》读书笔记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -570,7 +600,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#泰勒公式"><span class="nav-number">1.</span> <span class="nav-text">泰勒公式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁的概念"><span class="nav-number">1.</span> <span class="nav-text">死锁的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁的处理策略"><span class="nav-number">2.</span> <span class="nav-text">死锁的处理策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁避免"><span class="nav-number">3.</span> <span class="nav-text">死锁避免</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#死锁检测和解除"><span class="nav-number">4.</span> <span class="nav-text">死锁检测和解除</span></a></li></ol></div>
             
 
           </div>
@@ -730,71 +760,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -812,6 +778,50 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
   
 
 
