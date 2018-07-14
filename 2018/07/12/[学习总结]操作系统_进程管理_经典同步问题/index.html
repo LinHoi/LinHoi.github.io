@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hikari">
 <meta property="og:description" content="生产者消费者问题 问题描述 生产者进程和消费者进程共享一个缓冲区，只有缓冲区未满时，生产者进程才可以吧消息放入缓冲区，只有当缓冲区非空时，消费者进程才可以从中取消息，缓冲区为临界资源 思路 解决互斥和同步PV操作问题 代码  1234567891011121314151617181920212223semaphore mutex=1;semaphore full=0;semaphore empty">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-12T14:21:21.063Z">
+<meta property="og:updated_time" content="2018-07-12T15:18:29.998Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="进程管理-经典同步问题">
 <meta name="twitter:description" content="生产者消费者问题 问题描述 生产者进程和消费者进程共享一个缓冲区，只有缓冲区未满时，生产者进程才可以吧消息放入缓冲区，只有当缓冲区非空时，消费者进程才可以从中取消息，缓冲区为临界资源 思路 解决互斥和同步PV操作问题 代码  1234567891011121314151617181920212223semaphore mutex=1;semaphore full=0;semaphore empty">
@@ -308,7 +308,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T22:21:21+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:18:29+08:00">
                 2018-07-12
               </time>
             
@@ -408,10 +408,8 @@
 <li><p>代码</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">semaphore chopstick[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;</span><br><span class="line">Pi()&#123;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        p(mutex);</span><br><span class="line">        P(chopstick[i]);</span><br><span class="line">        P(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>]);</span><br><span class="line">        V(mutex);</span><br><span class="line">        eat;</span><br><span class="line">        V(chopstick[i]);</span><br><span class="line">        V(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>]);</span><br><span class="line">        think;</span><br><span class="line">    &#125;<span class="keyword">while</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>吸烟者问题</p>
-</li>
 </ol>
-
+<h2 id="吸烟者问题"><a href="#吸烟者问题" class="headerlink" title="吸烟者问题"></a>吸烟者问题</h2>
       
     </div>
     
@@ -441,8 +439,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/11/[设定]_Galaxy/" rel="next" title="设定">
-                <i class="fa fa-chevron-left"></i> 设定
+              <a href="/2018/07/11/[设定]Galaxy/" rel="next" title="设定稿">
+                <i class="fa fa-chevron-left"></i> 设定稿
               </a>
             
           </div>
@@ -530,7 +528,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -585,7 +583,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生产者消费者问题"><span class="nav-number">1.</span> <span class="nav-text">生产者消费者问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读者-写者问题"><span class="nav-number">2.</span> <span class="nav-text">读者-写者问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哲学家进餐问题"><span class="nav-number">3.</span> <span class="nav-text">哲学家进餐问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生产者消费者问题"><span class="nav-number">1.</span> <span class="nav-text">生产者消费者问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读者-写者问题"><span class="nav-number">2.</span> <span class="nav-text">读者-写者问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#哲学家进餐问题"><span class="nav-number">3.</span> <span class="nav-text">哲学家进餐问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#吸烟者问题"><span class="nav-number">4.</span> <span class="nav-text">吸烟者问题</span></a></li></ol></div>
             
 
           </div>

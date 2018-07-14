@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hikari">
 <meta property="og:description" content="死锁的概念 死锁的定义 多个进程因为竞争资源和造成的一种相互等待的现象 死锁产生原因   系统资源竞争 进程推进顺序非法   死锁产生的必要条件   互斥条件 不剥夺条件 请求和饱和条件 循环等待条件    死锁的处理策略 预防死锁：破坏死锁产生的四个必要条件中的一个或多个 避免死锁：防止系统进入不安全状态 死锁检测和解除：不采取限制，检测到再解除  死锁避免 系统安全状态 系统按照某种进程推进顺">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-12T15:14:13.170Z">
+<meta property="og:updated_time" content="2018-07-12T15:21:43.105Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="进程管理-死锁">
 <meta name="twitter:description" content="死锁的概念 死锁的定义 多个进程因为竞争资源和造成的一种相互等待的现象 死锁产生原因   系统资源竞争 进程推进顺序非法   死锁产生的必要条件   互斥条件 不剥夺条件 请求和饱和条件 循环等待条件    死锁的处理策略 预防死锁：破坏死锁产生的四个必要条件中的一个或多个 避免死锁：防止系统进入不安全状态 死锁检测和解除：不采取限制，检测到再解除  死锁避免 系统安全状态 系统按照某种进程推进顺">
@@ -308,7 +308,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:14:13+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:21:43+08:00">
                 2018-07-12
               </time>
             
@@ -404,7 +404,7 @@
 <li>死锁检测和解除：不采取限制，检测到再解除</li>
 </ol>
 <h3 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h3><ol>
-<li>系统安全状态<br> 系统按照某种进程推进顺序（P1,P2,…,Pn),为每个进程Pi分配其所需资源，知道满足每个进程的最大资源需求，使每个进程都可以顺利完成，此时称P1,P2,…,Pn为安全序列，如果系统无法找到一个安全序列，则称系统处于不安全状态。</li>
+<li>系统安全状态<br> 系统按照某种进程推进顺序（P1,P2,…,Pn),为每个进程Pi分配其所需资源，直到满足每个进程的最大资源需求，使每个进程都可以顺利完成，此时称P1,P2,…,Pn为安全序列，如果系统无法找到一个安全序列，则称系统处于不安全状态。</li>
 <li>银行家算法<br> 银行家算法是最著名的死锁避免算法。<ol>
 <li>数据结构描述  <ul>
 <li>可利用资源矢量Available：Available[i]=K表示系统现有Ri类资源K个</li>
@@ -469,6 +469,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/13/[学习总结]操作系统_内存管理/" rel="prev" title="内存管理">
+                内存管理 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -545,7 +549,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
