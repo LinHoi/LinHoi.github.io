@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="计算机网络," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="传输层提供的功能1 传输层的功能传输层位于网络层之上，为应用层提供通信服务，它是通信部分的最高层和用户功能的最低层。传输层的功能：  提供进程之间的逻辑通信(端到端通信) 复用：不同进程可以使用同一传输层协议传递数据 分用：数据接收方能够将不同应用程序的数据正确交付 差错检测：对报文的首部和数据部分进行差错检测 提供两种传输协议：TCP和UDP  2 传输层的寻址与端口 端口的作用端口用于标识主机">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="传输层">
+<meta property="og:url" content="http://yoursite.com/2018/07/22/[学习总结]计算机网络_传输层/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="传输层提供的功能1 传输层的功能传输层位于网络层之上，为应用层提供通信服务，它是通信部分的最高层和用户功能的最低层。传输层的功能：  提供进程之间的逻辑通信(端到端通信) 复用：不同进程可以使用同一传输层协议传递数据 分用：数据接收方能够将不同应用程序的数据正确交付 差错检测：对报文的首部和数据部分进行差错检测 提供两种传输协议：TCP和UDP  2 传输层的寻址与端口 端口的作用端口用于标识主机">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/三次握手.png">
+<meta property="og:image" content="http://yoursite.com/images/四次挥手.png">
+<meta property="og:updated_time" content="2018-07-23T23:10:28.142Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="传输层">
+<meta name="twitter:description" content="传输层提供的功能1 传输层的功能传输层位于网络层之上，为应用层提供通信服务，它是通信部分的最高层和用户功能的最低层。传输层的功能：  提供进程之间的逻辑通信(端到端通信) 复用：不同进程可以使用同一传输层协议传递数据 分用：数据接收方能够将不同应用程序的数据正确交付 差错检测：对报文的首部和数据部分进行差错检测 提供两种传输协议：TCP和UDP  2 传输层的寻址与端口 端口的作用端口用于标识主机">
+<meta name="twitter:image" content="http://yoursite.com/images/三次握手.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/22/[学习总结]计算机网络_传输层/"/>
+
+
+
+
+
+  <title>传输层 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/22/[学习总结]计算机网络_传输层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hoi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">传输层</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-22T15:53:12+08:00">
+                2018-07-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-24T07:10:28+08:00">
+                2018-07-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="传输层提供的功能"><a href="#传输层提供的功能" class="headerlink" title="传输层提供的功能"></a>传输层提供的功能</h2><h3 id="1-传输层的功能"><a href="#1-传输层的功能" class="headerlink" title="1 传输层的功能"></a>1 传输层的功能</h3><p>传输层位于网络层之上，为应用层提供通信服务，它是通信部分的最高层和用户功能的最低层。<br>传输层的功能：</p>
+<ul>
+<li>提供进程之间的逻辑通信(端到端通信)</li>
+<li>复用：不同进程可以使用同一传输层协议传递数据</li>
+<li>分用：数据接收方能够将不同应用程序的数据正确交付</li>
+<li>差错检测：对报文的<strong>首部和数据部分</strong>进行差错检测</li>
+<li>提供两种传输协议：TCP和UDP</li>
+</ul>
+<h3 id="2-传输层的寻址与端口"><a href="#2-传输层的寻址与端口" class="headerlink" title="2 传输层的寻址与端口"></a>2 传输层的寻址与端口</h3><ol>
+<li>端口的作用<br>端口用于标识主机中的应用进程</li>
+<li>端口号<br>端口号长度为16bit,能够表示65536(2<sup>16</sup>)个不同端口号<br>常用端口号： </li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>应用程序</th>
+<th>FTP</th>
+<th>TELNET</th>
+<th>SMAP</th>
+<th>DNS</th>
+<th>TFTP</th>
+<th>HTTP</th>
+<th>SNMP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>端口号</td>
+<td>21</td>
+<td>23</td>
+<td>25</td>
+<td>53</td>
+<td>69</td>
+<td>80</td>
+<td>161</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li><p>套接字</p>
+<p> <font align="center"><strong>套接字=(主机号：端口号)</strong></font><br> 套接字唯一的标识了网络中一个主机和其上的一个进程</p>
+</li>
+</ol>
+<h3 id="3-无连接服务与面向连接服务"><a href="#3-无连接服务与面向连接服务" class="headerlink" title="3 无连接服务与面向连接服务"></a>3 无连接服务与面向连接服务</h3><ol>
+<li>TCP协议<br> TCP协议是面向连接的传输控制协议，提供可靠的传输服务，不提供广播或组播服务。应用场合有：FTP、HTTP和TELNET等</li>
+<li>UDP协议<br> UDP是无连接的非可靠的传输层协议，UDP具有较好的速度，应用场合有：TFTP、DNS、SNMP和RTP等</li>
+</ol>
+<h2 id="UDP协议"><a href="#UDP协议" class="headerlink" title="UDP协议"></a>UDP协议</h2><h3 id="1-UDP概述"><a href="#1-UDP概述" class="headerlink" title="1 UDP概述"></a>1 UDP概述</h3><p>UDP在IP数据报服务基础之上增加了复用和分用以及差错检测两个最基本服务。  UDP协议有以下优势：</p>
+<pre><code>- 无需建立连接：速度快
+- 无连接状态：不用维护连接状态
+- 分组开销小：TCP首部20字节，UDP首部8字节
+- 没有拥塞机制：网络中拥塞不会影响主机发送效率
+</code></pre><p>UDP常用于一次性传输较少量的数据，UDP不提供可靠传输，可靠性由应用层完成。</p>
+<h3 id="2-UDP的首部格式"><a href="#2-UDP的首部格式" class="headerlink" title="2 UDP的首部格式"></a>2 UDP的首部格式</h3><p>UDP数据报包含首部和数据部分，其中首部占8字节平分成四段，分别为：</p>
+<pre><code>- 源端口
+- 目的端口
+- UDP长度(包含首部和数据部分)
+- UDP校验和
+</code></pre><h3 id="3-UDP校验"><a href="#3-UDP校验" class="headerlink" title="3 UDP校验"></a>3 UDP校验</h3><p>伪首部：在UDP数据报前加上12字节的伪首部，形成临时UDP数据报，用于计算校验和，伪首部不传送或递交，其唯一功能就是计算校验和。<br>校验：IP数据报的校验只检验数据部分，而UDP的校验将首部和数据部分一起检验。<br>校验和计算：将临时UDP以16位为一个数，进行二进制反码运算求和，所得结果再求反即为校验和<br>反码：二进制数据第一位为符号位，符号位为‘0’表示正数，符号位为‘1’表示负数，正数的反码为其本身，负数的反码为其各个数位取反(符号位不变)。</p>
+<h2 id="TCP协议"><a href="#TCP协议" class="headerlink" title="TCP协议"></a>TCP协议</h2><h3 id="1-TCP协议特点"><a href="#1-TCP协议特点" class="headerlink" title="1 TCP协议特点"></a>1 TCP协议特点</h3><p>TCP协议是在不可靠的IP层之上提供可靠的数据传输的协议。<br>TCP协议特点：  </p>
+<pre><code>- 面向连接的传输层协议
+- TCP连接是点对点连接
+- 提供可靠的交付服务
+- 提供全双工通信
+- TCP是面向字节流的：TCP把应用程序交下来的数据看成无结构的字节流
+</code></pre><h3 id="2-TCP报文"><a href="#2-TCP报文" class="headerlink" title="2 TCP报文"></a>2 TCP报文</h3><p>TCP传输的数据单元是数据段，TCP数据段分为TCP首部和TCP数据两部分，TCP段作为IP数据报的数据部分封装。TCP首部前20字节是固定的，总长度是4N字节。<br>TCP报文段各字段含义：</p>
+<pre><code>- 源端口和目的端口：各占2字节
+- 序号：标记本段的第一个字节的序列
+- 确认字段：确认号=N，表示序号N-1前的数据都正确接收
+- 数据偏移:首部长度
+- 保留字段：
+- 紧急为URG
+- 确认位ACK：ACK=1时确认位有效
+- 推送位
+- 复位位RST
+- 同部位SYN：SYN=1 表示连接请求或连接接收报文
+- 终止位FIN：FIN=1表示要求释放连接
+- 窗口字段：
+- 校验和：检验首部和数据部分
+- 紧急指针字段
+- 选项字段
+- 填充字段
+</code></pre><h3 id="3-TCP连接管理"><a href="#3-TCP连接管理" class="headerlink" title="3 TCP连接管理"></a>3 TCP连接管理</h3><ol>
+<li><p>TCP连接建立<br> 三次握手：<br> <img src="/images/三次握手.png" alt="三次握手"><br> 第一步：客户机发起连接请求<br> 第二步：服务器同意建立连接后发回确认，为该连接分配缓冲和变量<br> 第三步：客户机收到确认报文后向服务器给出确认，为连接分配缓存和变量</p>
+<p> 关键字段：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SYN=1, seq=x</span><br><span class="line">SYN=1, ACK=1,seq=y,ack=x+1</span><br><span class="line">ACK=1, seq=x+1,ack=y+1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TCP连接释放<br> 四次挥手：<br> <img src="/images/四次挥手.png" alt="四次挥手"><br> 第一步：客户机发送释放连接报文<br> 第二步：服务器收到释放报文后发出确认<br> 第三步：服务器发送连接释放报文<br> 第四步：客户机收到释放报文后，发出确认。</p>
+<p> 关键字段：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FIN=1，seq=u</span><br><span class="line">ACK=1,seq=v,ack=u+1</span><br><span class="line">FIN=1,ACK=1,seq=w,ack=u+1</span><br><span class="line">ACK=1,seq=u+1.ack=w+1</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="TCP可靠传输"><a href="#TCP可靠传输" class="headerlink" title="TCP可靠传输"></a>TCP可靠传输</h3><ol>
+<li>序号：TCP首部的序号字段用来保证数据有序提交</li>
+<li>确认：TCP首部的确认号表示期望收到对方的下一个报文段的数据的第一的字节的序号</li>
+<li>重传：<ul>
+<li>超时:每发送一个报文段，为其设置计时器，计时器到期还未收到确认则重传该报文</li>
+<li>冗余ACK：接收方每收到一个比期望序列号大的失序报文段，发送一个冗余ACK(指明下一个期待字节的序号)给发送方，发送方收到三个冗余ACK就重传.</li>
+</ul>
+</li>
+</ol>
+<h3 id="TCP流量控制"><a href="#TCP流量控制" class="headerlink" title="TCP流量控制"></a>TCP流量控制</h3><p>流量控制：流量控制服务匹配发送方的发送速率和接收方的读取速率来防止发送方使接收方缓存溢出。TCP利用窗口机制来实现流量控制。<br>接收窗口rwnd：衡量接收方的接收容量，由TCP报文首部的窗口字段给出。<br>拥塞窗口cwnd：由当前网络的拥塞情况决定，反映网络的当前容量。<br>发送方的发送窗口大小为接收窗口和拥塞窗口中的最小值，反应。  </p>
+<h3 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h3><p>拥塞表现为通信时延的增加，拥塞控制就是防止过多的数据注入网络中。<br>拥塞控制和流量控制：<br>拥塞控制是全局性的过程，涉及所有主机和路由器。<br>流量控制是点对点的通信量控制，由接收端控制发送端。</p>
+<p>拥塞控制算法有两种：</p>
+<h4 id="1-慢开始和拥塞避免"><a href="#1-慢开始和拥塞避免" class="headerlink" title="1 慢开始和拥塞避免"></a>1 慢开始和拥塞避免</h4><ol>
+<li><p>慢开始算法<br> 拥塞窗口大小随着传输次数增加而呈2的指数倍增长，当拥塞窗口增大到慢开始门限(ssthresh)时改用拥塞避免算法。</p>
+</li>
+<li><p>拥塞避免算法<br>拥塞窗口大小随着传输次数线性增长，当出现网络拥塞时的窗口大小为cwnd，将慢开始门限降至cwnd的一半。</p>
+</li>
+<li><p>网络拥塞的处理<br>发生拥塞时，将慢开始门限降至出现拥塞时的发送方cwnd的一半，再将拥塞窗口大小重新设为1，执行慢开始算法</p>
+</li>
+</ol>
+<h4 id="2-快重传和快恢复"><a href="#2-快重传和快恢复" class="headerlink" title="2 快重传和快恢复"></a>2 快重传和快恢复</h4><ol>
+<li><p>快重传<br>当发送方连续接到3个重复的ACK，直接重传该ACK对应报文段。</p>
+</li>
+<li><p>快恢复<br>当收到3个冗余ACK时，将慢开始门限设为此时cwnd值的一半，并从慢开始门限处继续执行拥塞避免算法</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/21/[学习总结]操作系统_网络层/" rel="next" title="网络层">
+                <i class="fa fa-chevron-left"></i> 网络层
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/24/[学习总结]计算机网络_应用层/" rel="prev" title="应用层">
+                应用层 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Lin Hoi</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#传输层提供的功能"><span class="nav-number">1.</span> <span class="nav-text">传输层提供的功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-传输层的功能"><span class="nav-number">1.1.</span> <span class="nav-text">1 传输层的功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-传输层的寻址与端口"><span class="nav-number">1.2.</span> <span class="nav-text">2 传输层的寻址与端口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-无连接服务与面向连接服务"><span class="nav-number">1.3.</span> <span class="nav-text">3 无连接服务与面向连接服务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UDP协议"><span class="nav-number">2.</span> <span class="nav-text">UDP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-UDP概述"><span class="nav-number">2.1.</span> <span class="nav-text">1 UDP概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-UDP的首部格式"><span class="nav-number">2.2.</span> <span class="nav-text">2 UDP的首部格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-UDP校验"><span class="nav-number">2.3.</span> <span class="nav-text">3 UDP校验</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP协议"><span class="nav-number">3.</span> <span class="nav-text">TCP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-TCP协议特点"><span class="nav-number">3.1.</span> <span class="nav-text">1 TCP协议特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-TCP报文"><span class="nav-number">3.2.</span> <span class="nav-text">2 TCP报文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-TCP连接管理"><span class="nav-number">3.3.</span> <span class="nav-text">3 TCP连接管理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP可靠传输"><span class="nav-number">3.4.</span> <span class="nav-text">TCP可靠传输</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP流量控制"><span class="nav-number">3.5.</span> <span class="nav-text">TCP流量控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP拥塞控制"><span class="nav-number">3.6.</span> <span class="nav-text">TCP拥塞控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-慢开始和拥塞避免"><span class="nav-number">3.6.1.</span> <span class="nav-text">1 慢开始和拥塞避免</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-快重传和快恢复"><span class="nav-number">3.6.2.</span> <span class="nav-text">2 快重传和快恢复</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hoi</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count"></span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -259,6 +259,384 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/12/[学习总结]操作系统_进程管理_经典同步问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hoi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/12/[学习总结]操作系统_进程管理_经典同步问题/" itemprop="url">进程管理-经典同步问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T15:34:12+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:18:29+08:00">
+                2018-07-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h2><ol>
+<li>问题描述<br> 生产者进程和消费者进程共享一个缓冲区，只有缓冲区未满时，生产者进程才可以吧消息放入缓冲区，只有当缓冲区非空时，消费者进程才可以从中取消息，缓冲区为临界资源</li>
+<li>思路<br> 解决互斥和同步PV操作问题</li>
+<li>代码  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">semaphore mutex=<span class="number">1</span>;</span><br><span class="line">semaphore full=<span class="number">0</span>;</span><br><span class="line">semaphore empty=n;</span><br><span class="line">producer()&#123;</span><br><span class="line">    <span class="keyword">while</span>（<span class="number">1</span>）&#123;</span><br><span class="line">        生产数据；</span><br><span class="line">        P(empty);</span><br><span class="line">        P(mutex);</span><br><span class="line">        数据放入缓冲区；</span><br><span class="line">        V（mutex）；</span><br><span class="line">        V(full);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">comsumer()&#123;</span><br><span class="line">    <span class="keyword">while</span>（<span class="number">1</span>）&#123;</span><br><span class="line">        P(full);</span><br><span class="line">        P(mutex);</span><br><span class="line">        从缓冲区中取出数据；</span><br><span class="line">        V(mutex);</span><br><span class="line">        V(empty);</span><br><span class="line">        消费数据；</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="读者-写者问题"><a href="#读者-写者问题" class="headerlink" title="读者-写者问题"></a>读者-写者问题</h2><ol>
+<li>问题描述<br> 有读者进程和写者进程，关系如下：  <ul>
+<li>多个读者可同时对文件进行读操作</li>
+<li>只允许一个写者往文件写数据</li>
+<li>写者完成工作之前，不允许其他读者或写者操作</li>
+<li>写者执行操作之间，应让已有读者和写者全部退出</li>
+</ul>
+</li>
+<li>思路<br> 写者和写者、读者都互斥；读者与写者互斥，读者间同步<br> 利用count记录读者数目，mutex用于count的互斥访问，rx用于读写者的互斥访问</li>
+<li>代码<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> count =<span class="number">0</span>;</span><br><span class="line">semaphore mutex=<span class="number">1</span>;</span><br><span class="line">semaphore re=<span class="number">1</span>;</span><br><span class="line">writer()&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        P(rw);</span><br><span class="line">        写入数据；</span><br><span class="line">        V(rw)；</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">reader()&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        P(mutex);</span><br><span class="line">        <span class="keyword">if</span>(count == <span class="number">0</span>)</span><br><span class="line">            P(rw);</span><br><span class="line">        count++;</span><br><span class="line">        V(mutex);</span><br><span class="line">        读；</span><br><span class="line">        P(mutex);</span><br><span class="line">        count--;</span><br><span class="line">        <span class="keyword">if</span>(count == <span class="number">0</span>)</span><br><span class="line">            V(rw);</span><br><span class="line">        V(mutex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="哲学家进餐问题"><a href="#哲学家进餐问题" class="headerlink" title="哲学家进餐问题"></a>哲学家进餐问题</h2><ol>
+<li>问题描述<br> 一张圆桌上坐在五个哲学家，每个哲学家左右两边各有一只筷子，哲学家一次只能拿一只筷子，拿到两只筷子才可以进餐，否则等待，进餐后放下筷子，继续思考。</li>
+<li><p>思路<br> 定义互斥型号量数组chopstick[5]={1,1,1,1,1},用于对筷子的互斥访问,哲学家编号0—4，哲学家i左边的筷子为编号i；右边的筷子为编号（i+1）%5;mutex表示对筷子的互信号量</p>
+</li>
+<li><p>代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">semaphore chopstick[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;</span><br><span class="line">Pi()&#123;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        p(mutex);</span><br><span class="line">        P(chopstick[i]);</span><br><span class="line">        P(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>]);</span><br><span class="line">        V(mutex);</span><br><span class="line">        eat;</span><br><span class="line">        V(chopstick[i]);</span><br><span class="line">        V(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>]);</span><br><span class="line">        think;</span><br><span class="line">    &#125;<span class="keyword">while</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="吸烟者问题"><a href="#吸烟者问题" class="headerlink" title="吸烟者问题"></a>吸烟者问题</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/11/[设定]Galaxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hoi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/11/[设定]Galaxy/" itemprop="url">设定稿</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-11T22:37:12+08:00">
+                2018-07-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:40:59+08:00">
+                2018-07-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设定稿/" itemprop="url" rel="index">
+                    <span itemprop="name">设定稿</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="时间理论"><a href="#时间理论" class="headerlink" title="时间理论"></a>时间理论</h2><h3 id="時恒定律"><a href="#時恒定律" class="headerlink" title="時恒定律"></a>時恒定律</h3><ol>
+<li>概念<br>　　時是物体（任何世界也是一个特殊物体）的固有属性，它是时间之上的第五维属性。一个未曾进行人为时间操作的世界称为父世界，在平行宇宙的观点下，父世界是单一世界，任何一个父世界的“时”总量是恒定的，可由“时律公式“计算。假如父世界进行超越时空、重返过去或未来的操作，父世界会被分裂为若干个子世界，子世界的时总量与父世界的相等，利用该原理可以检测一个世界是否进行过人为操作，在这里，世界并不仅包括大型的集合体，也包括个体，任何一个个体都可以称为一个独立的世界。一个世界进行时操作会对周围世界产生影响，影响程度可用时相关公式计算,一般情况下影响程度与时间和空间的距离成正比。</li>
+<li>时与物体<br>　　时属性是衡量物体存在的一个关键属性，对任意物体，时总量越多物体存在越稳定，时总量越少物体越不稳定，随着时操作的进行，父物体被分裂为多个子物体，时的量值也会衰减，当时的量值低于一定数值时，物体的存在将无法在时间和空间维度稳定维持，存在消失的风险。据此，时操作应该严格限制，通常对重要世界或物体的时操作是无法进行的，要进行此类操作需要世界级的执行权限，该权限可由个体申请，由银河联合委员会通过审议决定是否开放，其审议过程异常繁杂，无法再短时间完成。</li>
+<li>时监控站<br>　　时监控站由银河政府建立，位于五维空间（显然要监控五维属性，其存在维度就不能低于五维），目的在于监控目标世界的时量变化，。时监控站的筹备与建立耗时200年，是银河史上最大的工程之一。  </li>
+</ol>
+<p>….</p>
+<h2 id="通信网络理论"><a href="#通信网络理论" class="headerlink" title="通信网络理论"></a>通信网络理论</h2><h3 id="超空间中继站"><a href="#超空间中继站" class="headerlink" title="超空间中继站"></a>超空间中继站</h3><p>　　电磁波通信无法摆脱速度的限制，在超距离传输中的延时和距离成正比，若将信息传输到一光年之外处，会有一年的延迟，且为了应对电磁波衰减，必须建立数量极大的中继站，成本昂贵，电磁波通信注定其只能在一个小范围世界内使用，无法在全银河进行推广。<br>　　超空间理论的发展，为银河通信成为可能，其主要依据实体就是超空间中继站，任意两个超空间中继站间的传输延迟都可以控制在毫秒级。</p>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h2 id="机器人"><a href="#机器人" class="headerlink" title="机器人"></a>机器人</h2><h3 id="机器人的种类"><a href="#机器人的种类" class="headerlink" title="机器人的种类"></a>机器人的种类</h3><h3 id="机器人设计原则"><a href="#机器人设计原则" class="headerlink" title="机器人设计原则"></a>机器人设计原则</h3><h2 id="交通运输"><a href="#交通运输" class="headerlink" title="交通运输"></a>交通运输</h2><h3 id="超空间运输"><a href="#超空间运输" class="headerlink" title="超空间运输"></a>超空间运输</h3><h2 id="教育"><a href="#教育" class="headerlink" title="教育"></a>教育</h2><h3 id="大学"><a href="#大学" class="headerlink" title="大学"></a>大学</h3><h3 id="图书馆"><a href="#图书馆" class="headerlink" title="图书馆"></a>图书馆</h3><h3 id="教育网络"><a href="#教育网络" class="headerlink" title="教育网络"></a>教育网络</h3><h2 id="计算机技术"><a href="#计算机技术" class="headerlink" title="计算机技术"></a>计算机技术</h2><h3 id="超级计算机"><a href="#超级计算机" class="headerlink" title="超级计算机"></a>超级计算机</h3><h3 id="计算机规范"><a href="#计算机规范" class="headerlink" title="计算机规范"></a>计算机规范</h3><h2 id="农业"><a href="#农业" class="headerlink" title="农业"></a>农业</h2><h3 id="农业世界"><a href="#农业世界" class="headerlink" title="农业世界"></a>农业世界</h3><h3 id="运输通道"><a href="#运输通道" class="headerlink" title="运输通道"></a>运输通道</h3><h2 id="人类"><a href="#人类" class="headerlink" title="人类"></a>人类</h2><h3 id="新人类"><a href="#新人类" class="headerlink" title="新人类"></a>新人类</h3><h3 id="基因操作"><a href="#基因操作" class="headerlink" title="基因操作"></a>基因操作</h3><p>　　</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/09/[学习总结]操作系统_进程管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1030,6 +1408,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/[学习]高数/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hoi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/05/[学习]高数/" itemprop="url">高数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T15:41:12+08:00">
+                2018-07-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-08T16:58:55+08:00">
+                2018-07-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数学/" itemprop="url" rel="index">
+                    <span itemprop="name">数学</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+
+<h2 id="泰勒公式"><a href="#泰勒公式" class="headerlink" title="泰勒公式"></a>泰勒公式</h2><p>$f(x)=\sum_{n=0}^\infty \frac{f(x_0)^n}{n!}(x-x_0)^n$  </p>
+<p>\(f(x)=\sum_{n=0}^\infty \frac{f(0)^n}{n!}(x)^n\)</p>
+<p>\(sinx=x-\frac{x^3}{3!}+o(x^3)\) </p>
+<p>\(cosx=1-\frac{x^2}{2!}+\frac{x^4}{4!}+o(x^4)\)</p>
+<p>\(arcsinx=x+\frac{x^3}{3!}+o(x^3)\)</p>
+<p>\(tanx=x+\frac{x^3}{3}+o(x^3)\)</p>
+<p>\(arctanx=x-\frac{x^3}{3}+o(x^3)\)  </p>
+<p>\(ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}+o(x^3)\)  </p>
+<p>\(e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+o(x^3)\)  </p>
+<p>\((1+x)^n=1+nx+\frac{n(n-1)}{2!}x^2+o(x^2)\)  </p>
+<p>$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/[工具]MarkDown语法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1184,191 +1747,6 @@ if __name__ == &#39;__main__&#39;:
     # A comment
     print &#39;hello world&#39;
 </code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/05/[学习]高数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hoi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/05/[学习]高数/" itemprop="url">高数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-05T15:41:12+08:00">
-                2018-07-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-08T16:58:55+08:00">
-                2018-07-08
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数学/" itemprop="url" rel="index">
-                    <span itemprop="name">数学</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
-
-<h2 id="泰勒公式"><a href="#泰勒公式" class="headerlink" title="泰勒公式"></a>泰勒公式</h2><p>$f(x)=\sum_{n=0}^\infty \frac{f(x_0)^n}{n!}(x-x_0)^n$  </p>
-<p>\(f(x)=\sum_{n=0}^\infty \frac{f(0)^n}{n!}(x)^n\)</p>
-<p>\(sinx=x-\frac{x^3}{3!}+o(x^3)\) </p>
-<p>\(cosx=1-\frac{x^2}{2!}+\frac{x^4}{4!}+o(x^4)\)</p>
-<p>\(arcsinx=x+\frac{x^3}{3!}+o(x^3)\)</p>
-<p>\(tanx=x+\frac{x^3}{3}+o(x^3)\)</p>
-<p>\(arctanx=x-\frac{x^3}{3}+o(x^3)\)  </p>
-<p>\(ln(1+x)=x-\frac{x^2}{2}+\frac{x^3}{3}+o(x^3)\)  </p>
-<p>\(e^x=1+x+\frac{x^2}{2!}+\frac{x^3}{3!}+o(x^3)\)  </p>
-<p>\((1+x)^n=1+nx+\frac{n(n-1)}{2!}x^2+o(x^2)\)  </p>
-<p>$\sum_{i=0}^n i^2 = \frac{(n^2+n)(2n+1)}{6}$</p>
 
           
         
@@ -1627,7 +2005,7 @@ if __name__ == &#39;__main__&#39;:
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
