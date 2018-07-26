@@ -259,6 +259,454 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/26/[学习总结]数据结构_线性表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hoi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/26/[学习总结]数据结构_线性表/" itemprop="url">线性表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-26T15:23:12+08:00">
+                2018-07-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-26T22:18:08+08:00">
+                2018-07-26
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="线性表的定义和基本操作"><a href="#线性表的定义和基本操作" class="headerlink" title="线性表的定义和基本操作"></a>线性表的定义和基本操作</h2><h3 id="一-线性表的定义"><a href="#一-线性表的定义" class="headerlink" title="一 线性表的定义"></a>一 线性表的定义</h3><p>线性表是具有相同数据类型的n(n≧0)个数据元素的有限序列。在线性表中，除第一个元素外，每个元素有且仅有一个直接前驱；除最后一个元素外，每个元素有且仅有一个直接后继。<br>线性表特点：</p>
+<ul>
+<li>表中元素个数有限</li>
+<li>表中元素具有逻辑顺序性</li>
+<li>每个元素都是数据元素</li>
+<li>元素的数据类型相同</li>
+<li>表中元素具有抽象性</li>
+</ul>
+<h3 id="二-线性表的基本操作"><a href="#二-线性表的基本操作" class="headerlink" title="二 线性表的基本操作"></a>二 线性表的基本操作</h3><p>InitList(&amp;L)<br>Length(L)<br>LocateElem(L,e)<br>GetElem(L,i)<br>ListInsert(&amp;L,i,e)<br>ListDelect(&amp;L,i,&amp;e)<br>PrintList(L)<br>Empty(L)<br>DestoryList(&amp;L)  </p>
+<h2 id="线性表的顺序表示"><a href="#线性表的顺序表示" class="headerlink" title="线性表的顺序表示"></a>线性表的顺序表示</h2><h3 id="顺序表的定义"><a href="#顺序表的定义" class="headerlink" title="顺序表的定义"></a>顺序表的定义</h3><p>线性表的顺序存储称为顺序表，顺序表的特点是表中元素的逻辑顺序与其物理顺序相同。<br>线性表的顺序存储类型描述如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MaxSize 100</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    ElemType data[MaxSize];</span><br><span class="line">    <span class="keyword">int</span> length;</span><br><span class="line">&#125;SqList;</span><br></pre></td></tr></table></figure></p>
+<p>上述采用静态分配方式分配内存，也可采用动态分配方式，描述如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> InitSie 100</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    ElemType *data;</span><br><span class="line">    <span class="keyword">int</span> MaxSie,length;</span><br><span class="line">&#125;SqList;</span><br></pre></td></tr></table></figure></p>
+<p>C语言中动态分配语句为<br><b>L.data=(ElemType*)malloca(sizeof(ElemTye)*InitSize</b><br>C++中的动态分配语句是：<br><b>L.data= new ElemType(InitSize)</b>  </p>
+<p>顺序表的最主要特点是<strong>随机访问</strong>，即通过首地址和元素序号直接访问元素。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注：顺序表的存储结构是随机存取，而链表的存储结构是顺序存取，注意区分。</span><br></pre></td></tr></table></figure></p>
+<h3 id="顺序表上基本操作的实现"><a href="#顺序表上基本操作的实现" class="headerlink" title="顺序表上基本操作的实现"></a>顺序表上基本操作的实现</h3><ol>
+<li><p>插入操作<br>插入算法的评价时间复杂度为O(n)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListInsert</span><span class="params">(SqList &amp;L,<span class="keyword">int</span> i,ElemType e)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i&lt;=<span class="number">1</span>||i&gt;L.length+<span class="number">1</span>)           <span class="comment">//判断i是否越界</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(L.length==MaxSize)            <span class="comment">//判断空间是否满</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=L.length;j&gt;=i;j--)&#123;    <span class="comment">//移动元素</span></span><br><span class="line">        L.data[j]=L.data[j<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    L.data[i<span class="number">-1</span>]=e;                   <span class="comment">//插入元素  </span></span><br><span class="line">    L.length++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除操作<br>删除操作的时间复杂度为O(n)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListDelect</span><span class="params">(SqList &amp;L,<span class="keyword">int</span> i,ElemType &amp;e)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i&lt;<span class="number">1</span>||i&gt;L.length)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    e=L.data[i<span class="number">-1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=i<span class="number">-1</span>;j&lt;L.length<span class="number">-1</span>;j++)&#123;</span><br><span class="line">        L.data[j]=L.data[j+<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    L.length--;</span><br><span class="line">    <span class="keyword">return</span> ture;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>顺序查找/按值查找<br>在顺序表L中查找第一个元素等于e的元素，并返回其位序。<br>顺序查找的时间复杂度为O(n)</p>
+</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LocateElem</span><span class="params">(SqList L,ElemType e)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;L.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(L.data[i]==e)</span><br><span class="line">            <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/25/[学习总结]数据结构_绪论/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hoi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/25/[学习总结]数据结构_绪论/" itemprop="url">数据结构绪论</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-25T16:23:12+08:00">
+                2018-07-25
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-26T22:14:43+08:00">
+                2018-07-26
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="数据结构的基本概念"><a href="#数据结构的基本概念" class="headerlink" title="数据结构的基本概念"></a>数据结构的基本概念</h2><h3 id="一-基本结构和概念"><a href="#一-基本结构和概念" class="headerlink" title="一 基本结构和概念"></a>一 基本结构和概念</h3><ol>
+<li><strong>数据</strong><br>数据是信息的载体，是描述客观事物属性的数、字符和所有能输入到计算机并被计算机程序识别和处理的符号的集合。</li>
+<li><strong>数据元素</strong><br>数据元素是数据的基本单位，一个数据元素由若干个数据项组成，数据项是构成数据元素的最小单位。</li>
+<li><strong>数据对象</strong><br>数据对象是具有相同性质的数据元素的聚合。。 </li>
+<li><p><strong>数据类型</strong><br>数据类型是一组值的集合和定义在此集合上一组操作的总称。  </p>
+<ul>
+<li>原子类型：其值不可再分的数据类型</li>
+<li>结构类型：其值可以再分解为若干分量的数据类型</li>
+<li>抽象数据类型：抽象数据组织和与之相关的操作</li>
+</ul>
+</li>
+<li><p><strong>抽象数据类型(ADT)</strong><br>抽象数据类型是一个数学模型和定义在该模型上的一组操作。<br> 抽象数据组成：  </p>
+<pre><code> * 数据对象
+ * 数据关系
+ * 基本操作集
+</code></pre></li>
+<li><p><strong>数据结构</strong><br>结构是指数据之间的相互关系。<br>数据结构是指相互之间存在特定关系的数据元素的集合。<br> 数据结构构成：</p>
+<pre><code> * 逻辑结构
+ * 存储结构
+ * 数据的运算
+</code></pre></li>
+</ol>
+<h3 id="2-数据结构的三要素"><a href="#2-数据结构的三要素" class="headerlink" title="2 数据结构的三要素"></a>2 数据结构的三要素</h3><ol>
+<li><p><strong>数据的逻辑结构</strong><br>逻辑结构是指数据之间的逻辑关系。  </p>
+<blockquote>
+<p> 数据逻辑结构分类：</p>
+<ul>
+<li><strong>线性结构</strong>：<ul>
+<li>一般线性表</li>
+<li>受限线性表：<ul>
+<li>栈和队列</li>
+<li>数组</li>
+</ul>
+</li>
+<li>线性表推广：<ul>
+<li>广义表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>非线性结构</strong>：<ul>
+<li>集合</li>
+<li>树形结构</li>
+<li>图状结构</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><p><strong>数据的存储结构</strong><br>数据的存储结构是指数据结构在计算机中的表示(映像)，也称为<strong>物理结构</strong>。<br>　　<br>数据存储结构分类：</p>
+<ul>
+<li>顺序存储:逻辑上相邻的元素存储在物理位置也相邻的存储单元</li>
+<li>链接存储：借助指示元素地址的指针表示元素之间的关系，只能实现顺序存取</li>
+<li>索引存储：建立索引表，索引表中每一项称为索引项(存储关键字和物理地址的映射关系)</li>
+<li>散列存储：根据元素的关键字直接计算出该元素的物理地址，也称为Hash存储</li>
+</ul>
+</li>
+<li>数据的运算<br>包括数据的定义和实现。</li>
+</ol>
+<h2 id="算法和算法评价"><a href="#算法和算法评价" class="headerlink" title="算法和算法评价"></a>算法和算法评价</h2><h3 id="一-算法的基本概念"><a href="#一-算法的基本概念" class="headerlink" title="一 算法的基本概念"></a>一 算法的基本概念</h3><p>算法是对特定问题求解步骤的一种描述。算法有五个重要特征。  </p>
+<ol>
+<li>有穷性：一个算法在执行有穷步后结束，且每一步在有穷时间内完成</li>
+<li>确定性：相同输入只能得出相同结构</li>
+<li>可行性：算法操作可通过基本运算执行有限次来实现</li>
+<li>输入：一个算法有零个或多个输入</li>
+<li>输出：一个算法有一个或多个输出</li>
+</ol>
+<p>算法目标：</p>
+<ol>
+<li>正确性</li>
+<li>可读性</li>
+<li>健壮性</li>
+<li>效率和低存储需求</li>
+</ol>
+<h3 id="算法效率的度量"><a href="#算法效率的度量" class="headerlink" title="算法效率的度量"></a>算法效率的度量</h3><ol>
+<li><p><strong>时间复杂度</strong><br>一个语句的频度指该语句在算法中被重复执行的次数，算法中所有语句的频度之和为T(n)，T(n)与算法中的基本运算的频率f(n)同数量级。<br>算法的时间复杂度记为：<br><center><br>T(n)=O(f(n))<br></center><br>常见时间复杂度比较：<br>O(1) &lt; O(log<sub>2</sub>n) &lt; O(n) &lt; O(nlog<sub>2</sub>n) &lt; O(n<sup>2</sup>) &lt; O(n<sup>3</sup>) &lt; O(2<sup>n</sup>) &lt; O(n!) &lt; O(n<sup>n</sup>)</p>
+</li>
+<li><p>空间复杂度<br>算法的空间复杂度指算法所耗费的存储空间。<br>算法的就地工作是指算法所需存储空间为常量。即空间复杂度为O(1)</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/24/[学习总结]计算机网络_应用层/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -306,8 +754,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-24T14:28:17+08:00">
-                2018-07-24
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-25T16:31:07+08:00">
+                2018-07-25
               </time>
             
           </span>
@@ -841,11 +1289,11 @@
 </code></pre><h3 id="3-TCP连接管理"><a href="#3-TCP连接管理" class="headerlink" title="3 TCP连接管理"></a>3 TCP连接管理</h3><ol>
 <li><p>TCP连接建立<br> 三次握手：<br> <img src="/images/三次握手.png" alt="三次握手"><br> 第一步：客户机发起连接请求<br> 第二步：服务器同意建立连接后发回确认，为该连接分配缓冲和变量<br> 第三步：客户机收到确认报文后向服务器给出确认，为连接分配缓存和变量</p>
 <p> 关键字段：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SYN=1, seq=x</span><br><span class="line">SYN=1, ACK=1,seq=y,ack=x+1</span><br><span class="line">ACK=1, seq=x+1,ack=y+1</span><br></pre></td></tr></table></figure>
+ <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">SYN</span>=1, <span class="attribute">seq</span>=x</span><br><span class="line"><span class="attribute">SYN</span>=1, <span class="attribute">ACK</span>=1,seq=y,ack=x+1</span><br><span class="line"><span class="attribute">ACK</span>=1, <span class="attribute">seq</span>=x+1,ack=y+1</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>TCP连接释放<br> 四次挥手：<br> <img src="/images/四次挥手.png" alt="四次挥手"><br> 第一步：客户机发送释放连接报文<br> 第二步：服务器收到释放报文后发出确认<br> 第三步：服务器发送连接释放报文<br> 第四步：客户机收到释放报文后，发出确认。</p>
 <p> 关键字段：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FIN=1，seq=u</span><br><span class="line">ACK=1,seq=v,ack=u+1</span><br><span class="line">FIN=1,ACK=1,seq=w,ack=u+1</span><br><span class="line">ACK=1,seq=u+1.ack=w+1</span><br></pre></td></tr></table></figure>
+ <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FIN=<span class="number">1</span>，seq=u</span><br><span class="line">ACK=<span class="number">1</span>,seq=v,ack=u+<span class="number">1</span></span><br><span class="line">FIN=<span class="number">1</span>,ACK=<span class="number">1</span>,seq=w,ack=u+<span class="number">1</span></span><br><span class="line">ACK=<span class="number">1</span>,seq=u+<span class="number">1.</span>ack=w+<span class="number">1</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="TCP可靠传输"><a href="#TCP可靠传输" class="headerlink" title="TCP可靠传输"></a>TCP可靠传输</h3><ol>
@@ -1660,6 +2108,309 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/[学习总结]计算机网络_物理层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hoi">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/17/[学习总结]计算机网络_物理层/" itemprop="url">物理层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T13:57:12+08:00">
+                2018-07-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-19T10:05:20+08:00">
+                2018-07-19
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="通信基础"><a href="#通信基础" class="headerlink" title="通信基础"></a>通信基础</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li>数据、信号、码元</li>
+</ol>
+<ul>
+<li>数据：传送信息的实体</li>
+<li>信号：数据的电气或电磁表现，是数据传输过程的存在形式</li>
+<li>码元：一个固定时长的信号波形</li>
+</ul>
+<ol>
+<li>信源、信道、信宿</li>
+</ol>
+<ul>
+<li>信源：产生数据的源头</li>
+<li>信宿：接受数据的终点</li>
+<li>信道：信号的传输介质</li>
+<li>通信交互方式：<ul>
+<li>单工通信：单向传输，一条信道</li>
+<li>半双工通信：双向传输，不可同时收发，两条信道</li>
+<li>全双工通信：双向传输，可同时收发，两条信道</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>速率、波特、带宽</li>
+</ol>
+<ul>
+<li>速率(数据率)：数据传输速率：<ul>
+<li>码元传输速率：单位时间传输的码元数，单位为波特(Baud)</li>
+<li>信息传输速率：单位时间传输的二进制码元数(即比特数)，单位比特/秒(b/s)</li>
+</ul>
+</li>
+<li>带宽：单位时间内网络中两点间的最高数据率</li>
+</ul>
+<h3 id="奈奎斯特定理与香农定理"><a href="#奈奎斯特定理与香农定理" class="headerlink" title="奈奎斯特定理与香农定理"></a>奈奎斯特定理与香农定理</h3><ol>
+<li><p>奈奎斯特定理：<br> 理想低通信道下的极限数据传输率 = 2Wlog<sub>2</sub>V<br>其中W是理想低通信道的带宽,单位HZ，V是每个码元离散电平数目(如四位二进制有16种不同码元)</p>
+</li>
+<li><p>香农定理：<br> 信道的极限数据传输速率 = Wlog<sub>2</sub>(1+S/N)<br>信噪比 = 10log<sub>10</sub>(S/N) 单位(dB)</p>
+</li>
+</ol>
+<h3 id="编码与调制"><a href="#编码与调制" class="headerlink" title="编码与调制"></a>编码与调制</h3><p>数据变换为模拟信号的过程称为调制，数据变换为数字信号的过程称为编码</p>
+<ol>
+<li>数字数据编码为数字信号</li>
+</ol>
+<ul>
+<li>非归零码</li>
+<li>曼切斯特编码</li>
+<li>差分曼切斯特编码</li>
+</ul>
+<ol>
+<li>数字数据调制为模拟数据</li>
+</ol>
+<ul>
+<li>幅移键控</li>
+<li>频移键控</li>
+<li>相移键控</li>
+<li>正交振幅调制</li>
+</ul>
+<ol>
+<li>模拟数据编码为数字数据</li>
+<li>模拟数据编码为模拟信号</li>
+</ol>
+<h3 id="电路交换、报文交换、分组交换"><a href="#电路交换、报文交换、分组交换" class="headerlink" title="电路交换、报文交换、分组交换"></a>电路交换、报文交换、分组交换</h3><ol>
+<li>电路交换: 数据传输前，两结点间建立专用物理通信路径</li>
+<li>报文交换：利用报文进行存储转发</li>
+<li>分组交换：利用分组进行存储转发<br>！<a href="/images/数据交换方式.png">数据交换方式</a>  </li>
+</ol>
+<h3 id="数据报与虚电路"><a href="#数据报与虚电路" class="headerlink" title="数据报与虚电路"></a>数据报与虚电路</h3><p>分组交换分为面向无连接的数据报方式和面向连接的虚电路方式</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>数据报服务</th>
+<th>虚电路服务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连接的建立</td>
+<td>不要</td>
+<td>必须有</td>
+</tr>
+<tr>
+<td>目的地址</td>
+<td>每个分组都有完整的目的地址</td>
+<td>仅在建立连接阶段使用，之后每个分组使用长度较短的虚电路号</td>
+</tr>
+<tr>
+<td>路由选择</td>
+<td>每个分组独立地进行路由选择和转发</td>
+<td>属于同一条虚电路的分组按照同一路由转发</td>
+</tr>
+<tr>
+<td>分组顺序</td>
+<td>不保证分组的有序到达</td>
+<td>保证分组的有序到达</td>
+</tr>
+<tr>
+<td>可靠性</td>
+<td>不保证可靠通信可靠性由用户主机来保证</td>
+<td>可靠性由网络保证</td>
+</tr>
+<tr>
+<td>对网络故障的适应性</td>
+<td>出故障的结点丢失分组，其他分组路径选择发生变化，可正常传输</td>
+<td>所有经过故障结点的虚电路均不能正常工作</td>
+</tr>
+<tr>
+<td>差错处理和流量控制</td>
+<td>由用户主机进行流量控制，不保证数据报的可靠性</td>
+<td>可由分组交换网负责，也可由用户主机负责</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="传输介质"><a href="#传输介质" class="headerlink" title="传输介质"></a>传输介质</h2><h3 id="双绞线、同轴电缆、光纤与无线传输介质"><a href="#双绞线、同轴电缆、光纤与无线传输介质" class="headerlink" title="双绞线、同轴电缆、光纤与无线传输介质"></a>双绞线、同轴电缆、光纤与无线传输介质</h3><ol>
+<li>双绞线</li>
+<li>同轴电缆</li>
+<li>光纤</li>
+<li>无线传输介质</li>
+</ol>
+<h3 id="物理层接口的特性"><a href="#物理层接口的特性" class="headerlink" title="物理层接口的特性"></a>物理层接口的特性</h3><ol>
+<li>机械特性：定义物理连接的边界点</li>
+<li>电气特性：规定信号电压高低和阻抗匹配等</li>
+<li>功能特性：指明电压意义和信号线用途等</li>
+<li>规程特性：定义物理接口的工作规范</li>
+</ol>
+<h3 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h3><ol>
+<li>中继器：信号整形并放大(但是中继器的原理是将衰减信号再生，而不是放大)在转发。受信号延迟规范制约，中继器不能无限增加。</li>
+<li>集线器(Hub)：多端口中继器,只能够在半双工下工作，多个端口均分总带宽。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/[学习总结]计算机网络_计算机网络体系结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1932,309 +2683,6 @@
 <li>传输层</li>
 <li>应用层</li>
 </ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/[学习总结]计算机网络_物理层/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hoi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/17/[学习总结]计算机网络_物理层/" itemprop="url">物理层</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T13:57:12+08:00">
-                2018-07-17
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-19T10:05:20+08:00">
-                2018-07-19
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
-                    <span itemprop="name">计算机网络</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="通信基础"><a href="#通信基础" class="headerlink" title="通信基础"></a>通信基础</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
-<li>数据、信号、码元</li>
-</ol>
-<ul>
-<li>数据：传送信息的实体</li>
-<li>信号：数据的电气或电磁表现，是数据传输过程的存在形式</li>
-<li>码元：一个固定时长的信号波形</li>
-</ul>
-<ol>
-<li>信源、信道、信宿</li>
-</ol>
-<ul>
-<li>信源：产生数据的源头</li>
-<li>信宿：接受数据的终点</li>
-<li>信道：信号的传输介质</li>
-<li>通信交互方式：<ul>
-<li>单工通信：单向传输，一条信道</li>
-<li>半双工通信：双向传输，不可同时收发，两条信道</li>
-<li>全双工通信：双向传输，可同时收发，两条信道</li>
-</ul>
-</li>
-</ul>
-<ol>
-<li>速率、波特、带宽</li>
-</ol>
-<ul>
-<li>速率(数据率)：数据传输速率：<ul>
-<li>码元传输速率：单位时间传输的码元数，单位为波特(Baud)</li>
-<li>信息传输速率：单位时间传输的二进制码元数(即比特数)，单位比特/秒(b/s)</li>
-</ul>
-</li>
-<li>带宽：单位时间内网络中两点间的最高数据率</li>
-</ul>
-<h3 id="奈奎斯特定理与香农定理"><a href="#奈奎斯特定理与香农定理" class="headerlink" title="奈奎斯特定理与香农定理"></a>奈奎斯特定理与香农定理</h3><ol>
-<li><p>奈奎斯特定理：<br> 理想低通信道下的极限数据传输率 = 2Wlog<sub>2</sub>V<br>其中W是理想低通信道的带宽,单位HZ，V是每个码元离散电平数目(如四位二进制有16种不同码元)</p>
-</li>
-<li><p>香农定理：<br> 信道的极限数据传输速率 = Wlog<sub>2</sub>(1+S/N)<br>信噪比 = 10log<sub>10</sub>(S/N) 单位(dB)</p>
-</li>
-</ol>
-<h3 id="编码与调制"><a href="#编码与调制" class="headerlink" title="编码与调制"></a>编码与调制</h3><p>数据变换为模拟信号的过程称为调制，数据变换为数字信号的过程称为编码</p>
-<ol>
-<li>数字数据编码为数字信号</li>
-</ol>
-<ul>
-<li>非归零码</li>
-<li>曼切斯特编码</li>
-<li>差分曼切斯特编码</li>
-</ul>
-<ol>
-<li>数字数据调制为模拟数据</li>
-</ol>
-<ul>
-<li>幅移键控</li>
-<li>频移键控</li>
-<li>相移键控</li>
-<li>正交振幅调制</li>
-</ul>
-<ol>
-<li>模拟数据编码为数字数据</li>
-<li>模拟数据编码为模拟信号</li>
-</ol>
-<h3 id="电路交换、报文交换、分组交换"><a href="#电路交换、报文交换、分组交换" class="headerlink" title="电路交换、报文交换、分组交换"></a>电路交换、报文交换、分组交换</h3><ol>
-<li>电路交换: 数据传输前，两结点间建立专用物理通信路径</li>
-<li>报文交换：利用报文进行存储转发</li>
-<li>分组交换：利用分组进行存储转发<br>！<a href="/images/数据交换方式.png">数据交换方式</a>  </li>
-</ol>
-<h3 id="数据报与虚电路"><a href="#数据报与虚电路" class="headerlink" title="数据报与虚电路"></a>数据报与虚电路</h3><p>分组交换分为面向无连接的数据报方式和面向连接的虚电路方式</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>数据报服务</th>
-<th>虚电路服务</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>连接的建立</td>
-<td>不要</td>
-<td>必须有</td>
-</tr>
-<tr>
-<td>目的地址</td>
-<td>每个分组都有完整的目的地址</td>
-<td>仅在建立连接阶段使用，之后每个分组使用长度较短的虚电路号</td>
-</tr>
-<tr>
-<td>路由选择</td>
-<td>每个分组独立地进行路由选择和转发</td>
-<td>属于同一条虚电路的分组按照同一路由转发</td>
-</tr>
-<tr>
-<td>分组顺序</td>
-<td>不保证分组的有序到达</td>
-<td>保证分组的有序到达</td>
-</tr>
-<tr>
-<td>可靠性</td>
-<td>不保证可靠通信可靠性由用户主机来保证</td>
-<td>可靠性由网络保证</td>
-</tr>
-<tr>
-<td>对网络故障的适应性</td>
-<td>出故障的结点丢失分组，其他分组路径选择发生变化，可正常传输</td>
-<td>所有经过故障结点的虚电路均不能正常工作</td>
-</tr>
-<tr>
-<td>差错处理和流量控制</td>
-<td>由用户主机进行流量控制，不保证数据报的可靠性</td>
-<td>可由分组交换网负责，也可由用户主机负责</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="传输介质"><a href="#传输介质" class="headerlink" title="传输介质"></a>传输介质</h2><h3 id="双绞线、同轴电缆、光纤与无线传输介质"><a href="#双绞线、同轴电缆、光纤与无线传输介质" class="headerlink" title="双绞线、同轴电缆、光纤与无线传输介质"></a>双绞线、同轴电缆、光纤与无线传输介质</h3><ol>
-<li>双绞线</li>
-<li>同轴电缆</li>
-<li>光纤</li>
-<li>无线传输介质</li>
-</ol>
-<h3 id="物理层接口的特性"><a href="#物理层接口的特性" class="headerlink" title="物理层接口的特性"></a>物理层接口的特性</h3><ol>
-<li>机械特性：定义物理连接的边界点</li>
-<li>电气特性：规定信号电压高低和阻抗匹配等</li>
-<li>功能特性：指明电压意义和信号线用途等</li>
-<li>规程特性：定义物理接口的工作规范</li>
-</ol>
-<h3 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h3><ol>
-<li>中继器：信号整形并放大(但是中继器的原理是将衰减信号再生，而不是放大)在转发。受信号延迟规范制约，中继器不能无限增加。</li>
-<li>集线器(Hub)：多端口中继器,只能够在半双工下工作，多个端口均分总带宽。</li>
-</ol>
 
           
         
@@ -2831,559 +3279,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/13/[学习总结]操作系统_内存管理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hoi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/13/[学习总结]操作系统_内存管理/" itemprop="url">内存管理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-13T07:55:12+08:00">
-                2018-07-13
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-14T13:39:45+08:00">
-                2018-07-14
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/操作系统/" itemprop="url" rel="index">
-                    <span itemprop="name">操作系统</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="内存管理概念"><a href="#内存管理概念" class="headerlink" title="内存管理概念"></a>内存管理概念</h2><h3 id="内存管理的概念"><a href="#内存管理的概念" class="headerlink" title="内存管理的概念"></a>内存管理的概念</h3><ol>
-<li>内存管理：操作系统对内存的换分和动态规划称为内存管理</li>
-<li><p>内存管理的功能</p>
-<ul>
-<li>内存空间的分配与回收</li>
-<li>地址转换</li>
-<li>内存空间扩展</li>
-<li>存储保护</li>
-</ul>
-</li>
-<li><p>进程运行的基本原理</p>
-<ol>
-<li>程序装入与链接<ul>
-<li>编译：将源代码编译成目标模块</li>
-<li>链接：将目标模块和库函数链接成装入模块<ul>
-<li>静态链接</li>
-<li>装入时动态链接</li>
-<li>运行时动态链接</li>
-</ul>
-</li>
-<li>装入：将装入模块装入内存运行<ul>
-<li>绝对装入：程序逻辑地址和实际内存地址相同</li>
-<li>可重定位装入(静态重定位)：装入模块装入内存时，进行重定位(地址转换)</li>
-<li>动态运行时装入(动态重定位)：地址转换在程序执行时进行</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>逻辑地址空间和物理地址空间  <ul>
-<li>相对地址：目标模块从0号单元开始编址，相对该地址的地址即为相对地址</li>
-<li>逻辑地址：内存中物理单元的集合称为逻辑地址空间，它是地址转换的最终地址</li>
-<li>地址重定位：逻辑地址转换为物理地址</li>
-</ul>
-</li>
-<li>内存保护<ul>
-<li>重定位寄存器</li>
-<li>界地址寄存器</li>
-</ul>
-</li>
-</ol>
-</li>
-</ol>
-<h3 id="覆盖和交换"><a href="#覆盖和交换" class="headerlink" title="覆盖和交换"></a>覆盖和交换</h3><ol>
-<li>覆盖<br> 将用户空间分成固定区和覆盖区，固定区存放活跃的部分，覆盖区存放即将访的段，其它段存放在外存。覆盖用于一个进程或进程中，覆盖技术对程序员不透明，已成历史。</li>
-<li>交换<br> 将处于等待状态的进程序从内存移到辅存称为换出，将准备好竞争CPU运行的程序从辅存移到内存称为换入。交换技术用于不同进程之间</li>
-</ol>
-<h3 id="连续分配管理方式"><a href="#连续分配管理方式" class="headerlink" title="连续分配管理方式"></a>连续分配管理方式</h3><pre><code>连续分配方式指为一个程序分配一个连续的内存空间。
-</code></pre><ol>
-<li>单一连续分配<br> 内存分为系统区和用户区，系统区给操作系统使用，用户区给一道用户程序使用，只能用在单任务操作系统中</li>
-<li><p>固定分区分配<br> 用户空间划分为若干个固定大小的区域，每个分区只装入一道程序。分区有等大小分区和不等大小分区。固定分区有内部碎片</p>
-</li>
-<li><p>动态分区分配<br> 动态分区分配又称为可变分区分配。在进程装入内存时，根据进程大小动态建立分区。动态分区分配会造成外部碎片。<br> 动态分区分配策略：</p>
-<ul>
-<li>首次适应算法（First Fit）</li>
-<li>最佳适应（Best Fit）</li>
-<li>最坏适应（Worst Fit）</li>
-<li>邻近适应（Next Fit）</li>
-</ul>
-</li>
-</ol>
-<h3 id="非连续分配管理方式"><a href="#非连续分配管理方式" class="headerlink" title="非连续分配管理方式"></a>非连续分配管理方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">非连续分配指一个程序分散地装入到不相邻的内存分区中。</span><br><span class="line">按照分区分配是否固定分为分页存储管理和分段存储管理。</span><br><span class="line">分页存储管理中又依据运行程序时是否把全部页面都装入内存才运行分为基本分页存储管理和请求分页存储管理。</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>基本分页存储管理方式<br> 将主存空间划分为大小相等的块，进程执行时，以块为单位申请块空间。<br> 分页管理不会产生外部碎片，每个进程平均产生半个块大小的内部碎片（页内碎片）</p>
-<ol>
-<li>分页存储的基本概念<ul>
-<li>页面：进程中的块称为页，内存中的块称为页框，在外存的称为块</li>
-<li>地址结构：<br>  |31    …    12|11    …   0|<br>  |—-|—-|<br>  |页号P|页内偏移量W|</li>
-<li>页表：页表在内存中，用于建立进程页号到内存中物理块号的地址映射</li>
-</ul>
-</li>
-<li>基本地址变换机构： 将逻辑地址转换为物理地址</li>
-<li>具有块表的地址变换机构<br><img src="/images/3.jpg" alt="地址变换机构">  </li>
-<li>二级页表</li>
-</ol>
-</li>
-<li><p>基本分段存储管理方式  </p>
-<ol>
-<li>分段</li>
-<li>段表</li>
-<li>地址变换机构<br> <img src="/images/分段地址变换机构.jpg" width="80%" align="center"></li>
-<li>段的共享与保护</li>
-</ol>
-</li>
-<li>段页式管理方式<br> <img src="/images/段页式.jpg" alt="段页式"></li>
-</ol>
-<h2 id="虚拟内存管理"><a href="#虚拟内存管理" class="headerlink" title="虚拟内存管理"></a>虚拟内存管理</h2><h3 id="虚拟内存管理的基本概念"><a href="#虚拟内存管理的基本概念" class="headerlink" title="虚拟内存管理的基本概念"></a>虚拟内存管理的基本概念</h3><ol>
-<li>传统存储管理方式特征<ul>
-<li>一次性：作业要一次全部装入内存后才能运行</li>
-<li>驻留性：作业装入内存后，一直驻留在内存中</li>
-</ul>
-</li>
-<li>局部性原理<ul>
-<li>时间局部性：</li>
-<li>空间局部性：</li>
-</ul>
-</li>
-<li>虚拟存储器定义和特征<br> 虚拟存储器指具有请求调入功能和置换功能，能从逻辑上对内存容量就那些扩展的一种存储系统。<br> 主要特征：<ul>
-<li>多次性：允许作业分多次调入内存运行</li>
-<li>对换性：允许作业进行换入和换出</li>
-<li>虚拟性：逻辑容量=内存容量+外存容量</li>
-</ul>
-</li>
-<li>虚拟存储技术的实现<br> 实现方式：<ul>
-<li>请求分页存储管理</li>
-<li>请求分段存储管理</li>
-<li>请求段页式存储管理<br>硬件支持：</li>
-<li>内存和外存</li>
-<li>中断机构</li>
-<li>地址变换机构</li>
-<li>页(段)表机制</li>
-</ul>
-</li>
-</ol>
-<h3 id="请求分页管理方式"><a href="#请求分页管理方式" class="headerlink" title="请求分页管理方式"></a>请求分页管理方式</h3><ol>
-<li>页表机制<br> 页表项:<ul>
-<li>页号</li>
-<li>物理块号</li>
-<li>状态位P：标记该页是否已调入内存</li>
-<li>访问字段A：记录本页的访问次数</li>
-<li>修改位M：标志该页调入内存后是否被修改</li>
-<li>外存地址： 该页的外存地址</li>
-</ul>
-</li>
-<li>缺页中断机构  <ul>
-<li>在指令执行期间发生，属于内部中断</li>
-<li>一条指令执行期间可能发生多次缺页中断</li>
-</ul>
-</li>
-<li>地址变换机构<br> 地址变换时先检索快表：<ul>
-<li>如果在块表中找到对应页，修改页表项的访问位，利用页表项的物理块号和页内地址形成物理地址。</li>
-<li>如果找不到，则检索内存中的页表，找到对应页号，查看页表项中的状态位P，若该页未调入内存，则产生缺页中断，请求从外存中把该页调入内存。</li>
-</ul>
-</li>
-</ol>
-<h3 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h3><p>进程运行时，若其访问的页面不在内存中，且内存已经没有足够空间，则要从内存中换出页面，选择调出页面的算法称为页面置换算法。</p>
-<ol>
-<li>最佳置换算法(OPT):调出最长时间内不再使用的页面</li>
-<li>先进先出页面置换算法(FIFO)：调出最早调入的页面会产生Belady异常(分配物理块数增大而缺页次数反而增加)</li>
-<li>最近最久未使用置换算法(LRU)：</li>
-<li>时钟置换算法(CLOCK)或最近未用算法(NRU)：调入的页面使用位初始值设为1并形成一个循环，指针指向第一个页面。每次调换时从指针处开始扫描循环，若使用位为1则置为0，指针后移；若使用位为0，则置换该页面，指针后移。</li>
-</ol>
-<h3 id="页面分配策略"><a href="#页面分配策略" class="headerlink" title="页面分配策略"></a>页面分配策略</h3><ol>
-<li>置换策略<br> 固定/可变分配：考虑进程分配的物理块是否是固定的<br> 局部/全局置换：考虑是只在进程内部置换还是可以使用其他物理块<br> 组合策略有：<ul>
-<li>固定分配局部置换</li>
-<li>可变分配全局置换</li>
-<li>可变分配局部置换</li>
-<li>因为固定分配限制进程的可用物理块所有没有固定分配全局置换</li>
-</ul>
-</li>
-<li>调入页面时机  <ul>
-<li>预调页策略：运行前调页，由程序员指定调页策略</li>
-<li>请求调页策略：运行期间调页</li>
-</ul>
-</li>
-<li>从何处调入页面<br> 文件区存放文件，采用离散分配；对换区存放对换页面，采用连续分配<ul>
-<li>从对换区调入</li>
-<li>从文件区调入</li>
-</ul>
-</li>
-</ol>
-<h3 id="抖动"><a href="#抖动" class="headerlink" title="抖动"></a>抖动</h3><pre><code>抖动是指频繁的页面调度行为
-</code></pre><h3 id="工作集"><a href="#工作集" class="headerlink" title="工作集"></a>工作集</h3><pre><code>工作集(驻留集)指某段时间间隔内，进程要访问的页面集合，合理选择工作集大小可以防止抖动现象
-</code></pre><h3 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/12/[学习总结]操作系统_进程管理_死锁/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hoi">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/12/[学习总结]操作系统_进程管理_死锁/" itemprop="url">进程管理-死锁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T22:22:12+08:00">
-                2018-07-12
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:21:43+08:00">
-                2018-07-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/操作系统/" itemprop="url" rel="index">
-                    <span itemprop="name">操作系统</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="死锁的概念"><a href="#死锁的概念" class="headerlink" title="死锁的概念"></a>死锁的概念</h3><ol>
-<li>死锁的定义<br> 多个进程因为竞争资源和造成的一种相互等待的现象</li>
-<li>死锁产生原因  <ul>
-<li>系统资源竞争</li>
-<li>进程推进顺序非法</li>
-</ul>
-</li>
-<li>死锁产生的必要条件  <ul>
-<li>互斥条件</li>
-<li>不剥夺条件</li>
-<li>请求和饱和条件</li>
-<li>循环等待条件</li>
-</ul>
-</li>
-</ol>
-<h3 id="死锁的处理策略"><a href="#死锁的处理策略" class="headerlink" title="死锁的处理策略"></a>死锁的处理策略</h3><ol>
-<li>预防死锁：破坏死锁产生的四个必要条件中的一个或多个</li>
-<li>避免死锁：防止系统进入不安全状态</li>
-<li>死锁检测和解除：不采取限制，检测到再解除</li>
-</ol>
-<h3 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h3><ol>
-<li>系统安全状态<br> 系统按照某种进程推进顺序（P1,P2,…,Pn),为每个进程Pi分配其所需资源，直到满足每个进程的最大资源需求，使每个进程都可以顺利完成，此时称P1,P2,…,Pn为安全序列，如果系统无法找到一个安全序列，则称系统处于不安全状态。</li>
-<li>银行家算法<br> 银行家算法是最著名的死锁避免算法。<ol>
-<li>数据结构描述  <ul>
-<li>可利用资源矢量Available：Available[i]=K表示系统现有Ri类资源K个</li>
-<li>最大需求矩阵Max：Max[i,j]=K，表示进程i需要Rj类资源的最大数目为K</li>
-<li>分配矩阵Allocation：Allocation[i,j]=K ,表示进程i已经分配到了Rj类资源数目为K</li>
-<li>需求矩阵Need：Need[i,j]=K，表示进程i还需要Rj类资源数目为K</li>
-</ul>
-</li>
-<li>算法描述</li>
-<li>安全性算法  </li>
-</ol>
-</li>
-</ol>
-<h3 id="死锁检测和解除"><a href="#死锁检测和解除" class="headerlink" title="死锁检测和解除"></a>死锁检测和解除</h3><ol>
-<li>资源分配图<br> 请求边，分配边</li>
-<li><p>死锁定理<br> S为死锁的条件是当且仅当S状态的资源分配图是不可完全化简的。<br> 资源分配图化简：</p>
-</li>
-<li><p>死锁解除  </p>
-<ul>
-<li>资源剥夺法</li>
-<li>撤销进程法</li>
-<li>进程回退法</li>
-</ul>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3434,7 +3329,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -3445,7 +3340,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -3456,7 +3351,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -473,11 +473,11 @@
 </code></pre><h3 id="3-TCP连接管理"><a href="#3-TCP连接管理" class="headerlink" title="3 TCP连接管理"></a>3 TCP连接管理</h3><ol>
 <li><p>TCP连接建立<br> 三次握手：<br> <img src="/images/三次握手.png" alt="三次握手"><br> 第一步：客户机发起连接请求<br> 第二步：服务器同意建立连接后发回确认，为该连接分配缓冲和变量<br> 第三步：客户机收到确认报文后向服务器给出确认，为连接分配缓存和变量</p>
 <p> 关键字段：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SYN=1, seq=x</span><br><span class="line">SYN=1, ACK=1,seq=y,ack=x+1</span><br><span class="line">ACK=1, seq=x+1,ack=y+1</span><br></pre></td></tr></table></figure>
+ <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">SYN</span>=1, <span class="attribute">seq</span>=x</span><br><span class="line"><span class="attribute">SYN</span>=1, <span class="attribute">ACK</span>=1,seq=y,ack=x+1</span><br><span class="line"><span class="attribute">ACK</span>=1, <span class="attribute">seq</span>=x+1,ack=y+1</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>TCP连接释放<br> 四次挥手：<br> <img src="/images/四次挥手.png" alt="四次挥手"><br> 第一步：客户机发送释放连接报文<br> 第二步：服务器收到释放报文后发出确认<br> 第三步：服务器发送连接释放报文<br> 第四步：客户机收到释放报文后，发出确认。</p>
 <p> 关键字段：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FIN=1，seq=u</span><br><span class="line">ACK=1,seq=v,ack=u+1</span><br><span class="line">FIN=1,ACK=1,seq=w,ack=u+1</span><br><span class="line">ACK=1,seq=u+1.ack=w+1</span><br></pre></td></tr></table></figure>
+ <figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FIN=<span class="number">1</span>，seq=u</span><br><span class="line">ACK=<span class="number">1</span>,seq=v,ack=u+<span class="number">1</span></span><br><span class="line">FIN=<span class="number">1</span>,ACK=<span class="number">1</span>,seq=w,ack=u+<span class="number">1</span></span><br><span class="line">ACK=<span class="number">1</span>,seq=u+<span class="number">1.</span>ack=w+<span class="number">1</span></span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 <h3 id="TCP可靠传输"><a href="#TCP可靠传输" class="headerlink" title="TCP可靠传输"></a>TCP可靠传输</h3><ol>
@@ -625,7 +625,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -636,7 +636,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -647,7 +647,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
