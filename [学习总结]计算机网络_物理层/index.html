@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="计算机网络," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="通信基础基本概念 数据、信号、码元   数据：传送信息的实体 信号：数据的电气或电磁表现，是数据传输过程的存在形式 码元：一个固定时长的信号波形   信源、信道、信宿   信源：产生数据的源头 信宿：接受数据的终点 信道：信号的传输介质 通信交互方式： 单工通信：单向传输，一条信道 半双工通信：双向传输，不可同时收发，两条信道 全双工通信：双向传输，可同时收发，两条信道     速率、波特、带宽">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="物理层">
+<meta property="og:url" content="http://yoursite.com/[学习总结]计算机网络_物理层/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="通信基础基本概念 数据、信号、码元   数据：传送信息的实体 信号：数据的电气或电磁表现，是数据传输过程的存在形式 码元：一个固定时长的信号波形   信源、信道、信宿   信源：产生数据的源头 信宿：接受数据的终点 信道：信号的传输介质 通信交互方式： 单工通信：单向传输，一条信道 半双工通信：双向传输，不可同时收发，两条信道 全双工通信：双向传输，可同时收发，两条信道     速率、波特、带宽">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-19T02:05:20.155Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="物理层">
+<meta name="twitter:description" content="通信基础基本概念 数据、信号、码元   数据：传送信息的实体 信号：数据的电气或电磁表现，是数据传输过程的存在形式 码元：一个固定时长的信号波形   信源、信道、信宿   信源：产生数据的源头 信宿：接受数据的终点 信道：信号的传输介质 通信交互方式： 单工通信：单向传输，一条信道 半双工通信：双向传输，不可同时收发，两条信道 全双工通信：双向传输，可同时收发，两条信道     速率、波特、带宽">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/[学习总结]计算机网络_物理层/"/>
+
+
+
+
+
+  <title>物理层 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/[学习总结]计算机网络_物理层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">物理层</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T13:57:12+08:00">
+                2018-07-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-19T10:05:20+08:00">
+                2018-07-19
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,032 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="通信基础"><a href="#通信基础" class="headerlink" title="通信基础"></a>通信基础</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li>数据、信号、码元</li>
+</ol>
+<ul>
+<li>数据：传送信息的实体</li>
+<li>信号：数据的电气或电磁表现，是数据传输过程的存在形式</li>
+<li>码元：一个固定时长的信号波形</li>
+</ul>
+<ol>
+<li>信源、信道、信宿</li>
+</ol>
+<ul>
+<li>信源：产生数据的源头</li>
+<li>信宿：接受数据的终点</li>
+<li>信道：信号的传输介质</li>
+<li>通信交互方式：<ul>
+<li>单工通信：单向传输，一条信道</li>
+<li>半双工通信：双向传输，不可同时收发，两条信道</li>
+<li>全双工通信：双向传输，可同时收发，两条信道</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>速率、波特、带宽</li>
+</ol>
+<ul>
+<li>速率(数据率)：数据传输速率：<ul>
+<li>码元传输速率：单位时间传输的码元数，单位为波特(Baud)</li>
+<li>信息传输速率：单位时间传输的二进制码元数(即比特数)，单位比特/秒(b/s)</li>
+</ul>
+</li>
+<li>带宽：单位时间内网络中两点间的最高数据率</li>
+</ul>
+<h3 id="奈奎斯特定理与香农定理"><a href="#奈奎斯特定理与香农定理" class="headerlink" title="奈奎斯特定理与香农定理"></a>奈奎斯特定理与香农定理</h3><ol>
+<li><p>奈奎斯特定理：<br> 理想低通信道下的极限数据传输率 = 2Wlog<sub>2</sub>V<br>其中W是理想低通信道的带宽,单位HZ，V是每个码元离散电平数目(如四位二进制有16种不同码元)</p>
+</li>
+<li><p>香农定理：<br> 信道的极限数据传输速率 = Wlog<sub>2</sub>(1+S/N)<br>信噪比 = 10log<sub>10</sub>(S/N) 单位(dB)</p>
+</li>
+</ol>
+<h3 id="编码与调制"><a href="#编码与调制" class="headerlink" title="编码与调制"></a>编码与调制</h3><p>数据变换为模拟信号的过程称为调制，数据变换为数字信号的过程称为编码</p>
+<ol>
+<li>数字数据编码为数字信号</li>
+</ol>
+<ul>
+<li>非归零码</li>
+<li>曼切斯特编码</li>
+<li>差分曼切斯特编码</li>
+</ul>
+<ol>
+<li>数字数据调制为模拟数据</li>
+</ol>
+<ul>
+<li>幅移键控</li>
+<li>频移键控</li>
+<li>相移键控</li>
+<li>正交振幅调制</li>
+</ul>
+<ol>
+<li>模拟数据编码为数字数据</li>
+<li>模拟数据编码为模拟信号</li>
+</ol>
+<h3 id="电路交换、报文交换、分组交换"><a href="#电路交换、报文交换、分组交换" class="headerlink" title="电路交换、报文交换、分组交换"></a>电路交换、报文交换、分组交换</h3><ol>
+<li>电路交换: 数据传输前，两结点间建立专用物理通信路径</li>
+<li>报文交换：利用报文进行存储转发</li>
+<li>分组交换：利用分组进行存储转发<br>！<a href="/images/数据交换方式.png">数据交换方式</a>  </li>
+</ol>
+<h3 id="数据报与虚电路"><a href="#数据报与虚电路" class="headerlink" title="数据报与虚电路"></a>数据报与虚电路</h3><p>分组交换分为面向无连接的数据报方式和面向连接的虚电路方式</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>数据报服务</th>
+<th>虚电路服务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连接的建立</td>
+<td>不要</td>
+<td>必须有</td>
+</tr>
+<tr>
+<td>目的地址</td>
+<td>每个分组都有完整的目的地址</td>
+<td>仅在建立连接阶段使用，之后每个分组使用长度较短的虚电路号</td>
+</tr>
+<tr>
+<td>路由选择</td>
+<td>每个分组独立地进行路由选择和转发</td>
+<td>属于同一条虚电路的分组按照同一路由转发</td>
+</tr>
+<tr>
+<td>分组顺序</td>
+<td>不保证分组的有序到达</td>
+<td>保证分组的有序到达</td>
+</tr>
+<tr>
+<td>可靠性</td>
+<td>不保证可靠通信可靠性由用户主机来保证</td>
+<td>可靠性由网络保证</td>
+</tr>
+<tr>
+<td>对网络故障的适应性</td>
+<td>出故障的结点丢失分组，其他分组路径选择发生变化，可正常传输</td>
+<td>所有经过故障结点的虚电路均不能正常工作</td>
+</tr>
+<tr>
+<td>差错处理和流量控制</td>
+<td>由用户主机进行流量控制，不保证数据报的可靠性</td>
+<td>可由分组交换网负责，也可由用户主机负责</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="传输介质"><a href="#传输介质" class="headerlink" title="传输介质"></a>传输介质</h2><h3 id="双绞线、同轴电缆、光纤与无线传输介质"><a href="#双绞线、同轴电缆、光纤与无线传输介质" class="headerlink" title="双绞线、同轴电缆、光纤与无线传输介质"></a>双绞线、同轴电缆、光纤与无线传输介质</h3><ol>
+<li>双绞线</li>
+<li>同轴电缆</li>
+<li>光纤</li>
+<li>无线传输介质</li>
+</ol>
+<h3 id="物理层接口的特性"><a href="#物理层接口的特性" class="headerlink" title="物理层接口的特性"></a>物理层接口的特性</h3><ol>
+<li>机械特性：定义物理连接的边界点</li>
+<li>电气特性：规定信号电压高低和阻抗匹配等</li>
+<li>功能特性：指明电压意义和信号线用途等</li>
+<li>规程特性：定义物理接口的工作规范</li>
+</ol>
+<h3 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h3><ol>
+<li>中继器：信号整形并放大(但是中继器的原理是将衰减信号再生，而不是放大)在转发。受信号延迟规范制约，中继器不能无限增加。</li>
+<li>集线器(Hub)：多端口中继器,只能够在半双工下工作，多个端口均分总带宽。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/[学习总结]操作系统_IO管理/" rel="next" title="IO管理">
+                <i class="fa fa-chevron-left"></i> IO管理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/[学习总结]计算机网络_计算机网络体系结构/" rel="prev" title="计算机网络体系结构">
+                计算机网络体系结构 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#通信基础"><span class="nav-number">1.</span> <span class="nav-text">通信基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本概念"><span class="nav-number">1.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#奈奎斯特定理与香农定理"><span class="nav-number">1.2.</span> <span class="nav-text">奈奎斯特定理与香农定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编码与调制"><span class="nav-number">1.3.</span> <span class="nav-text">编码与调制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#电路交换、报文交换、分组交换"><span class="nav-number">1.4.</span> <span class="nav-text">电路交换、报文交换、分组交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据报与虚电路"><span class="nav-number">1.5.</span> <span class="nav-text">数据报与虚电路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输介质"><span class="nav-number">2.</span> <span class="nav-text">传输介质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#双绞线、同轴电缆、光纤与无线传输介质"><span class="nav-number">2.1.</span> <span class="nav-text">双绞线、同轴电缆、光纤与无线传输介质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理层接口的特性"><span class="nav-number">2.2.</span> <span class="nav-text">物理层接口的特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#物理层设备"><span class="nav-number">2.3.</span> <span class="nav-text">物理层设备</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">25.3k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

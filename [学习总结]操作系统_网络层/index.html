@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="计算机网络," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="网络层功能1 异构网络互联网络互联通常指用路由器进行网络互联和路由选择，在TCP/IP体系中，参加互联的计算机网络使用相同的IP协议，组成一个虚拟互联网络，该网络对互联的具体网络异构细节是透明的。 2 路由与转发路由器主要完成两个功能：路由选择(确定哪一条路径)和分组转发(分组到达时所采取的行动) 3 拥塞控制通信子网中，由于出现过量的分组而引起网络性能下降的现象称为拥塞。   判断：网络负载增加">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络层">
+<meta property="og:url" content="http://yoursite.com/[学习总结]操作系统_网络层/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="网络层功能1 异构网络互联网络互联通常指用路由器进行网络互联和路由选择，在TCP/IP体系中，参加互联的计算机网络使用相同的IP协议，组成一个虚拟互联网络，该网络对互联的具体网络异构细节是透明的。 2 路由与转发路由器主要完成两个功能：路由选择(确定哪一条路径)和分组转发(分组到达时所采取的行动) 3 拥塞控制通信子网中，由于出现过量的分组而引起网络性能下降的现象称为拥塞。   判断：网络负载增加">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/IP数据报.jpg">
+<meta property="og:image" content="http://yoursite.com/images/IP地址.jpg">
+<meta property="og:updated_time" content="2018-07-22T00:24:33.133Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络层">
+<meta name="twitter:description" content="网络层功能1 异构网络互联网络互联通常指用路由器进行网络互联和路由选择，在TCP/IP体系中，参加互联的计算机网络使用相同的IP协议，组成一个虚拟互联网络，该网络对互联的具体网络异构细节是透明的。 2 路由与转发路由器主要完成两个功能：路由选择(确定哪一条路径)和分组转发(分组到达时所采取的行动) 3 拥塞控制通信子网中，由于出现过量的分组而引起网络性能下降的现象称为拥塞。   判断：网络负载增加">
+<meta name="twitter:image" content="http://yoursite.com/images/IP数据报.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/[学习总结]操作系统_网络层/"/>
+
+
+
+
+
+  <title>网络层 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/[学习总结]操作系统_网络层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">网络层</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-21T06:57:12+08:00">
+                2018-07-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-22T08:24:33+08:00">
+                2018-07-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,629 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="网络层功能"><a href="#网络层功能" class="headerlink" title="网络层功能"></a>网络层功能</h2><h3 id="1-异构网络互联"><a href="#1-异构网络互联" class="headerlink" title="1 异构网络互联"></a>1 异构网络互联</h3><p>网络互联通常指用路由器进行网络互联和路由选择，在TCP/IP体系中，参加互联的计算机网络使用相同的IP协议，组成一个虚拟互联网络，该网络对互联的具体网络异构细节是透明的。</p>
+<h3 id="2-路由与转发"><a href="#2-路由与转发" class="headerlink" title="2 路由与转发"></a>2 路由与转发</h3><p>路由器主要完成两个功能：路由选择(确定哪一条路径)和分组转发(分组到达时所采取的行动)</p>
+<h3 id="3-拥塞控制"><a href="#3-拥塞控制" class="headerlink" title="3 拥塞控制"></a>3 拥塞控制</h3><p>通信子网中，由于出现过量的分组而引起网络性能下降的现象称为拥塞。  </p>
+<p>判断：<br>网络负载增加而网络吞吐量明显小于正常吞吐量则网络进入”轻度拥塞”状态；若网络吞吐量随着网络负载的增加反而下降，网络进入拥塞状态；若网络吞吐量下降到零，则网络进入死锁状态。</p>
+<p>流量控制和拥塞控制：<br>流量控制只涉及发送端和接收端，通过控制发送端的数据发送速率，使接收端及时接收。拥塞控制是全局问题，涉及网络中所有主机、路由器和导致网络传输能力下降的所有因素。  </p>
+<p>拥塞控制方法：  </p>
+<ul>
+<li>开环控制：事先考虑拥塞因素，预防拥塞产生，是一种静态方法。</li>
+<li>闭环控制：事先不做处理，检测到拥塞再处理，是一种动态方法。</li>
+</ul>
+<h2 id="路由算法"><a href="#路由算法" class="headerlink" title="路由算法"></a>路由算法</h2><h3 id="1-静态路由和动态路由"><a href="#1-静态路由和动态路由" class="headerlink" title="1 静态路由和动态路由"></a>1 静态路由和动态路由</h3><p><strong>静态路由算法</strong>：网络管理员手工配置路由信息<br><strong>动态路由算法</strong>：路由器之之间彼此交换路由信息，按照一定的算法获得最优寻路效果</p>
+<h3 id="2-距离-向量路由算法"><a href="#2-距离-向量路由算法" class="headerlink" title="2 距离-向量路由算法"></a>2 距离-向量路由算法</h3><p>距离-向量路由算法中，所有节点定期将它们的整个路由选择表传送给所有直接相邻结点。路由选择表包括：每条路径的目的地和路径的距离(跳数)</p>
+<h3 id="3-链路状态路由算法"><a href="#3-链路状态路由算法" class="headerlink" title="3 链路状态路由算法"></a>3 链路状态路由算法</h3><p>链路状态路由中，每个结点都有完全的网络拓扑图，当链路状态发生变化时，结点通过广播方式向所有结点告知与自己直接相连的链路信息。<br><strong>距离-向量路由算法和链路状态路由算法比较</strong>：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>距离-向量路由算法</th>
+<th>链路状态路由算法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>交流对象</td>
+<td>直接相邻结点</td>
+<td>其他所有结点</td>
+</tr>
+<tr>
+<td>交流内容</td>
+<td>自己到网络中所有其他结点的信息</td>
+<td>与自己直接相连的链路信息</td>
+</tr>
+<tr>
+<td>路由环路</td>
+<td>有可能出现</td>
+<td>无</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="4-层次路由"><a href="#4-层次路由" class="headerlink" title="4 层次路由"></a>4 层次路由</h3><p>路由选择按照层次方式进行以适应网路规模的扩大</p>
+<ol>
+<li>内部网关协议(IGP)：自治系统内部所使用的路由选择协议<ul>
+<li>RIP协议</li>
+<li>OSPF协议</li>
+</ul>
+</li>
+<li>外部网关协议(EGP):自治系统之间所使用的路由协议<ul>
+<li>BGP协议</li>
+</ul>
+</li>
+</ol>
+<h2 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h2><h3 id="1-IPv4分组"><a href="#1-IPv4分组" class="headerlink" title="1 IPv4分组"></a>1 IPv4分组</h3><ol>
+<li><p>IPv4分组格式<br>一个IP分组由首部和数据两部分组成，首部的前一部分长度固定为20(4*5)字节 </p>
+<p> <img src="/images/IP数据报.jpg" alt="IP"></p>
+<p> IP 首部重要字段：</p>
+<pre><code> - 版本：IP协议版本
+ - 首部长度：基本单位为4B(32位)
+ - 总长度：基本单位为B(即字节)，最大长度为2&lt;sup&gt;16&lt;/sup&gt;-1 = 65535 字节
+ - 标识：每产生一个数据报，标识加一；一个数据报的不同分片标识相同
+ - 标志：占3位，最低位为MF(more fragment),MF =1 表示还有分片，MF=0 表示最后一个分片；中间位为DF(Don&#39;t Fragment)，DF = 0 表示该数据报允许分片
+ - 片偏移：基本单位为8字节(64位)
+ - 首部检验和：只检验分组的首部，不检验数据部分
+ - 生产时间TTL：数据报可通过路由器数的最大值
+ - 协议：传输层协议
+</code></pre></li>
+<li><p>IP 数据报分片<br>MTU：最大传输单元，指链路层数据报所能承受的最大数据量，以太网的MTU为1500字节。</p>
+</li>
+<li><p>网络层转发分组的流程</p>
+</li>
+</ol>
+<h3 id="IPv4地址与NAT"><a href="#IPv4地址与NAT" class="headerlink" title="IPv4地址与NAT"></a>IPv4地址与NAT</h3><ol>
+<li><p>IPv4地址<br> <img src="/images/IP地址.jpg" alt="IP地址"><br>特殊IP地址：</p>
+<ul>
+<li>主机号全为0 表示本网络本身</li>
+<li>主机号全为1表示本网络的广播地址</li>
+<li>127.0.0.0用于环路自检，表示任意主机自身</li>
+<li>0.0.0.0表示本网络的本主机</li>
+<li>255.255.255.255 表示网络的广播地址</li>
+</ul>
+</li>
+<li><p>网络地址转换(NAT)<br>NAT：NAT通过将内网地址转化为公网地址，对外屏蔽内部IP地址。<br>NAT转换表：储存{本地IP地址：端口}到{全球IP地址：端口}的映射关系<br>NAT看得见端口，故工作在传输层</p>
+</li>
+</ol>
+<h3 id="子网划分与子网掩码、CIDR"><a href="#子网划分与子网掩码、CIDR" class="headerlink" title="子网划分与子网掩码、CIDR"></a>子网划分与子网掩码、CIDR</h3><ol>
+<li><p>子网划分<br>从主机位借用若干比特作为子网号，如三级IP地址={网络号，子网号，主机号}</p>
+</li>
+<li><p>子网掩码<br>子网掩码(二进制)与主机IP地址作 与操作 得到 主机网络号</p>
+</li>
+<li><p>无分类编址CIDR<br>CIDR：取消传统ABCD类网络划分，采用{网络前缀，主机号}的两级编址<br>路由聚合：将网络前缀相同的连续IP地址组成新的CIDR地址块<br>最长前缀匹配：使用CIDR时查找路由表可能会得到多个匹配结果，应当在匹配结果中找具有最长网络前缀的路由。</p>
+</li>
+</ol>
+<h3 id="ARP协议、DHCP协议与ICMP协议"><a href="#ARP协议、DHCP协议与ICMP协议" class="headerlink" title="ARP协议、DHCP协议与ICMP协议"></a>ARP协议、DHCP协议与ICMP协议</h3><ol>
+<li><p>ARP协议(地址解析协议)：<br>每个主机本地高速缓存存放ARP表，用来维护IP地址到MAC地址的映射。A欲向B发数据时，查找ARP表，若找到，则将MAC地址写入MAC帧后发送；若找不到，则向局域网所有主机广播ARP请求，B收到请求后向A发出响应，A更新B的映射关系到ARP表，再次查询后将B的MAC地址写入MAC帧，发送数据。<br>ARP协议工作在网络层。</p>
+</li>
+<li><p>动态主机配置协议DHCP<br>DHCP 常用于给主机动态地分配IP地址，DHCP是基于UDP的应用层协议<br>DHCP工作原理：<br>需要IP的主机广播发现报文，DHCP服务器收到报文后回答此广播报文，为其分配地址，称为提供报文。<br>DHCP客户端和服务端通过广播方式进行交互。</p>
+</li>
+</ol>
+<h3 id="网际控制报文协议ICMP"><a href="#网际控制报文协议ICMP" class="headerlink" title="网际控制报文协议ICMP"></a>网际控制报文协议ICMP</h3><p>ICMP 是IP层协议，用来报告差错和异常情况。<br>ICMP报文种类：</p>
+<ul>
+<li>ICMP差错报告报文：<ul>
+<li>终点不可达</li>
+<li>源点抑制</li>
+<li>时间超时</li>
+<li>参数问题</li>
+<li>改变路由</li>
+</ul>
+</li>
+<li>ICMP询问报文<ul>
+<li>会送请求和回答报文</li>
+<li>时间戳请求和回答报文</li>
+<li>掩码地址请求和回答报文</li>
+<li>路由器询问和通告报文</li>
+<li>ICMP的应用：</li>
+</ul>
+</li>
+<li>PING：工作在应用层</li>
+<li>traceroute：工作在网络层</li>
+</ul>
+<h2 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h2><p>IPv6 采用128位地址</p>
+<h2 id="路由协议"><a href="#路由协议" class="headerlink" title="路由协议"></a>路由协议</h2><h3 id="自治系统"><a href="#自治系统" class="headerlink" title="自治系统"></a>自治系统</h3><p>自治系统(AS)：单一技术管理下的一组路由器，使用内部路由选择协议确定分组在AS内的路由，使用域间路由协议确定分组在AS之间的路由。</p>
+<h3 id="域内路由与域间路由"><a href="#域内路由与域间路由" class="headerlink" title="域内路由与域间路由"></a>域内路由与域间路由</h3><ol>
+<li>内部网关协议</li>
+</ol>
+<ul>
+<li>RIP协议</li>
+<li>OSPF协议</li>
+</ul>
+<ol>
+<li>外部网关协议</li>
+</ol>
+<ul>
+<li>BGP-4</li>
+</ul>
+<h3 id="RIP路由协议"><a href="#RIP路由协议" class="headerlink" title="RIP路由协议"></a>RIP路由协议</h3><p>RIP是一种分布式的基于距离向量的路由选择协议，是基于UDP的应用层协议<br>RIP 协议规定：  </p>
+<ul>
+<li>路由器维护自己到其他每一个路由器的距离记录(这样一组距离称为距离向量)</li>
+<li>每经过一个路由器跳数加一，最多允许15跳，距离为16时表示网络不可达。</li>
+<li>优先选择跳数小的路径</li>
+</ul>
+<p>RIP 协议优点：实现简单，开销小<br>RIP协议缺点：</p>
+<ul>
+<li>由于要交换完整路由表，网络规模越大，开销越大</li>
+<li>网络故障时会出现慢收敛现象，俗称“坏消息传的慢”</li>
+</ul>
+<h3 id="OSPF路由协议"><a href="#OSPF路由协议" class="headerlink" title="OSPF路由协议"></a>OSPF路由协议</h3><ol>
+<li>OSPF协议基本特点<br>开发最短路径优先(OSPF)协议是使用分布式链路状态路由算法的典型代表。<br>OSPF协议特点：</li>
+</ol>
+<ul>
+<li>使用泛红法向所有路由器发送信息</li>
+<li>发送信息为与本路由器相邻的所有路由器的链路状态</li>
+<li>链路发生变化时，路由器才用泛红法向所有路由器发送此消息，更新收敛块</li>
+<li>OSPF是网络层协议,使用IP数据报传送；而RIP是应用层协议，使用UDP传送。</li>
+<li>每隔一段时间刷新一次数据库中的链路状态</li>
+</ul>
+<h3 id="BGP路由协议"><a href="#BGP路由协议" class="headerlink" title="BGP路由协议"></a>BGP路由协议</h3><p>边界网关协议(BGP)是不同自治系统的路由器之间交换路由信息的协议。<br>BGP是基于TCP的应用层协议。<br>工作原理：每个自治系统选择一个“BGP”发言人，发言人之间要交换路由信息时，先建立TCP连接。<br>三种路由协议的比较：  </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>RIP</th>
+<th>OSPF</th>
+<th>BGP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>内部</td>
+<td>内部</td>
+<td>外部</td>
+</tr>
+<tr>
+<td>路由算法</td>
+<td>距离-向量</td>
+<td>链路状态</td>
+<td>路径-向量</td>
+</tr>
+<tr>
+<td>传递协议</td>
+<td>UDP</td>
+<td>IP</td>
+<td>TCP</td>
+</tr>
+<tr>
+<td>路径选择</td>
+<td>跳数最少</td>
+<td>代价最低</td>
+<td>较好，非最佳</td>
+</tr>
+<tr>
+<td>交换结点</td>
+<td>和本结点相邻的路由器</td>
+<td>网络中全部路由器</td>
+<td>和本结点相邻的路由器</td>
+</tr>
+<tr>
+<td>交换内容</td>
+<td>自己的路由表</td>
+<td>与本路由器相邻的所有路由器的链路状态</td>
+<td>首次：整个路由表；非首次：有变化的部分</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="网络层设备"><a href="#网络层设备" class="headerlink" title="网络层设备"></a>网络层设备</h2><h3 id="路由器组成和功能"><a href="#路由器组成和功能" class="headerlink" title="路由器组成和功能"></a>路由器组成和功能</h3><p>路由器是一种具有多个输入输出端口的专用计算机，其任务是连接异构的网络并完成路由转发。<br>路由器是网络层设备，它实现了物理层、数据链路层和网络层。  </p>
+<p>路由器组成：</p>
+<ul>
+<li>路由选择：控制部分，其任务是根据路由选择协议构造路由表，并对路由表进行维护和更新。</li>
+<li>分组转发：<ul>
+<li>交换结构：处理分组</li>
+<li>一组输入端口：从比特流提取网络从数据</li>
+<li>一组输出端口：与输入端口进行相反操作</li>
+</ul>
+</li>
+</ul>
+<h3 id="路由表与路由转发"><a href="#路由表与路由转发" class="headerlink" title="路由表与路由转发"></a>路由表与路由转发</h3><p>路由表根据路由选择算法得出，用于路由选择。包含目的网络IP地址、子网掩码、下一跳IP地址和接口。<br>转发表由路由表得出，包含分组的目的地址和下一跳地址(MAC)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/[学习总结]计算机网络_数据链路层/" rel="next" title="数据链路层">
+                <i class="fa fa-chevron-left"></i> 数据链路层
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/[学习总结]计算机网络_传输层/" rel="prev" title="传输层">
+                传输层 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络层功能"><span class="nav-number">1.</span> <span class="nav-text">网络层功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-异构网络互联"><span class="nav-number">1.1.</span> <span class="nav-text">1 异构网络互联</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-路由与转发"><span class="nav-number">1.2.</span> <span class="nav-text">2 路由与转发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-拥塞控制"><span class="nav-number">1.3.</span> <span class="nav-text">3 拥塞控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由算法"><span class="nav-number">2.</span> <span class="nav-text">路由算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-静态路由和动态路由"><span class="nav-number">2.1.</span> <span class="nav-text">1 静态路由和动态路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-距离-向量路由算法"><span class="nav-number">2.2.</span> <span class="nav-text">2 距离-向量路由算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-链路状态路由算法"><span class="nav-number">2.3.</span> <span class="nav-text">3 链路状态路由算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-层次路由"><span class="nav-number">2.4.</span> <span class="nav-text">4 层次路由</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPv4"><span class="nav-number">3.</span> <span class="nav-text">IPv4</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-IPv4分组"><span class="nav-number">3.1.</span> <span class="nav-text">1 IPv4分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPv4地址与NAT"><span class="nav-number">3.2.</span> <span class="nav-text">IPv4地址与NAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#子网划分与子网掩码、CIDR"><span class="nav-number">3.3.</span> <span class="nav-text">子网划分与子网掩码、CIDR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP协议、DHCP协议与ICMP协议"><span class="nav-number">3.4.</span> <span class="nav-text">ARP协议、DHCP协议与ICMP协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网际控制报文协议ICMP"><span class="nav-number">3.5.</span> <span class="nav-text">网际控制报文协议ICMP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPv6"><span class="nav-number">4.</span> <span class="nav-text">IPv6</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#路由协议"><span class="nav-number">5.</span> <span class="nav-text">路由协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自治系统"><span class="nav-number">5.1.</span> <span class="nav-text">自治系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#域内路由与域间路由"><span class="nav-number">5.2.</span> <span class="nav-text">域内路由与域间路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RIP路由协议"><span class="nav-number">5.3.</span> <span class="nav-text">RIP路由协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSPF路由协议"><span class="nav-number">5.4.</span> <span class="nav-text">OSPF路由协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BGP路由协议"><span class="nav-number">5.5.</span> <span class="nav-text">BGP路由协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络层设备"><span class="nav-number">6.</span> <span class="nav-text">网络层设备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#路由器组成和功能"><span class="nav-number">6.1.</span> <span class="nav-text">路由器组成和功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由表与路由转发"><span class="nav-number">6.2.</span> <span class="nav-text">路由表与路由转发</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">25.3k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
