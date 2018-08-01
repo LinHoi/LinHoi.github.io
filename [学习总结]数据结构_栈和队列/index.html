@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Hikari">
 <meta property="og:description" content="1 栈1.1 栈的基本概念 栈的定义栈(Stack)：只允许在一端进行插入和删除的线性表栈顶(Top)：允许进行插入和删除的一端栈底(Button):栈底不允许插入和删除空栈：不含任何元素的栈 栈的基本操作InitStack(&amp;amp;S)StackEmpty(S)Push(&amp;amp;S,x)Pop(&amp;amp;S,&amp;amp;x)GetTop(S,&amp;amp;x)ClearStack(&amp;amp;S)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-29T02:30:38.722Z">
+<meta property="og:updated_time" content="2018-07-29T16:22:02.065Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="栈和队列">
 <meta name="twitter:description" content="1 栈1.1 栈的基本概念 栈的定义栈(Stack)：只允许在一端进行插入和删除的线性表栈顶(Top)：允许进行插入和删除的一端栈底(Button):栈底不允许插入和删除空栈：不含任何元素的栈 栈的基本操作InitStack(&amp;amp;S)StackEmpty(S)Push(&amp;amp;S,x)Pop(&amp;amp;S,&amp;amp;x)GetTop(S,&amp;amp;x)ClearStack(&amp;amp;S)">
@@ -308,8 +308,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-29T10:30:38+08:00">
-                2018-07-29
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-30T00:22:02+08:00">
+                2018-07-30
               </time>
             
           </span>
@@ -431,12 +431,16 @@
 </ol>
 <p>链式队列通常带头结点。</p>
 <ol>
-<li>链式队列的基本操作<br>初始化：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitLinkQueue</span><span class="params">(LinkQueue &amp;Q)</span></span>&#123;</span><br><span class="line">    Q.front = Q.rear =(LinkNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkNode));</span><br><span class="line">    Q.front = Q.rear = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>链式队列的基本操作<br> 初始化：</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitLinkQueue</span><span class="params">(LinkQueue &amp;Q)</span></span>&#123;</span><br><span class="line">    Q.front = Q.rear =(LinkNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkNode));</span><br><span class="line">    Q.front = Q.rear = <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 判断队空：</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">IsEmpty</span><span class="params">(LinkQueue Q)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Q.front = Q.rear) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 入队：</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">EnQueue</span><span class="params">(LinkQueue &amp;Q,Elemtype x)</span></span>&#123;</span><br><span class="line">    s = (LinkNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkNode));</span><br><span class="line">    s-&gt;data = x;</span><br><span class="line">    s-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    Q.rear-&gt;next = s;</span><br><span class="line">    Q.rear = s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 出队：</p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">DeQueue</span><span class="params">(LinkQueue &amp;Q,Elemtype &amp;x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Q.front == Q.rear) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    q = Q.front-&gt;next;                <span class="comment">//注意头结点</span></span><br><span class="line">    x = q-&gt;data;</span><br><span class="line">    Q.front-&gt;next = Q.front-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">if</span>(Q.rear == p)                 <span class="comment">//判断出队后队列为空的情况</span></span><br><span class="line">        Q.rear = Q.front;</span><br><span class="line">    <span class="built_in">free</span>(q);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>判断队空：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">IsEmpty</span><span class="params">(LinkQueue Q)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Q.front = Q.rear) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>入队：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">EnQueue</span><span class="params">(LinkQueue &amp;Q,Elemtype x)</span></span>&#123;</span><br><span class="line">    s = (LinkNode*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkNode));</span><br><span class="line">    s-&gt;data = x;</span><br><span class="line">    s-&gt;next = <span class="literal">NULL</span>;</span><br><span class="line">    Q.rear-&gt;next = s;</span><br><span class="line">    Q.rear = s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>出队：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">DeQueue</span><span class="params">(LinkQueue &amp;Q,Elemtype &amp;x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(Q.front == Q.rear) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    q = Q.front-&gt;next;                <span class="comment">//注意头结点</span></span><br><span class="line">    x = q-&gt;data;</span><br><span class="line">    Q.front-&gt;next = Q.front-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">if</span>(Q.rear == p)                 <span class="comment">//判断出队后队列为空的情况</span></span><br><span class="line">        Q.rear = Q.front;</span><br><span class="line">    <span class="built_in">free</span>(q);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h3 id="2-4-双端队列"><a href="#2-4-双端队列" class="headerlink" title="2.4 双端队列"></a>2.4 双端队列</h3><p>双端队列是允许两端都可以进行入队和出队操作的队列。</p>
 
       
@@ -477,6 +481,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/[学习总结]数据结构_树与二叉树/" rel="prev" title="树与二叉树">
+                树与二叉树 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -557,7 +565,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -662,7 +670,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">27.6k</span>
+    <span title="Site words total count">29.3k</span>
   
 </div>
 
