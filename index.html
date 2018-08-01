@@ -259,6 +259,229 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/[学习总结]数据结构_树与二叉树的应用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/[学习总结]数据结构_树与二叉树的应用/" itemprop="url">树与二叉树的运用</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T14:03:12+08:00">
+                2018-08-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-02T00:01:21+08:00">
+                2018-08-02
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,288 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="二叉排序树"><a href="#二叉排序树" class="headerlink" title="二叉排序树"></a>二叉排序树</h2><ol>
+<li>二叉排序树的定义<br>二叉排序树(BST)也称为二叉查找树。非空二叉排序树满足：</li>
+</ol>
+<ul>
+<li>若左子树非空，则左子树上所有结点关键字值均小于根结点的关键字值。</li>
+<li>若右子树非空，则右子树所有结点关键字值均大于根结点的关键字值。</li>
+<li>左右子树本身也是一颗二叉排序树。<br>对二叉排序树进行中序遍历可以得到一个递增序列。</li>
+</ul>
+<ol>
+<li><p>二叉排序树的查找<br>设欲查找值为K,将K与根结点的关键字值比较，若相对则查找成功，若其值大于K则在根结点的左子树中查找，若其值小于K则在根结点的右子树中查找。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BSTNode *<span class="title">BST_Serach</span><span class="params">(BiTree T,ElemType key)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(T&amp;&amp;key!=T-&gt;data)&#123;</span><br><span class="line">        <span class="keyword">if</span>(key&gt;T-&gt;data)</span><br><span class="line">            T=T-&gt;rchild;</span><br><span class="line">        <span class="keyword">else</span> T=T-&gt;lchild;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> T;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>二叉排序树的插入<br>若二叉排序树为空，则直接插入结点；若关键字k小于根结点的关键字，则插入到左子树中，若关键字k大于根结点的关键字，则插入到右子树中。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BST_Insert</span><span class="params">(BiTree &amp;T,ElemType k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T==<span class="literal">NULL</span>)&#123;                            <span class="comment">//若树为空直接插入</span></span><br><span class="line">        T=(BiTree)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiNode));</span><br><span class="line">        T-&gt;data=k;</span><br><span class="line">        T-&gt;lchild=T-&gt;rchild=<span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(T-&gt;data==K)                      <span class="comment">//若关键字k已存在，插入失败</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(T-&gt;data&gt;k)                      <span class="comment">//插入左子树</span></span><br><span class="line">        <span class="keyword">return</span> BST_Insert(T-&gt;lchild,k);</span><br><span class="line">    <span class="keyword">else</span>                                    <span class="comment">//插入右子树</span></span><br><span class="line">        <span class="keyword">return</span> BST_Insert(T-&gt;rchild,k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>二叉排序树的构造<br>构造二叉排序树就是将一个一个元素插入到二叉排序树中</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Create_BST</span><span class="params">(BiTree &amp;T,ElemType <span class="built_in">array</span>[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    T=<span class="literal">NULL</span>;                     <span class="comment">//初始化空树</span></span><br><span class="line">    i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">        BST_Insert(T,<span class="built_in">array</span>[i]);</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>二叉排序树的删除<br>删除结点时要将断开的二叉链表重新链接。<br>具体方法：</p>
+</li>
+</ol>
+<ul>
+<li>若删除结点时叶子结点，直接删除</li>
+<li>若删除结点z只有一颗左子树或右子树，则让z的子树代替z的位置</li>
+<li>若删除结点z既有左子树又有右子树，则另z的直接前驱(或直接后继)替代z，再删除原来的直接前驱(或直接后继)<br>【注：直接前驱或直接后继指排序序列中离z最近的左右两个结点】</li>
+</ul>
+<ol>
+<li>二叉排序树的查找效率<br>二叉排序树的查找性能与树的高度有关，若二叉排序树是只有左孩子的单子树，其平均查找长度为O(n)，若为平衡二叉树则平均查找长度为O(log<sub>2</sub>n)。</li>
+</ol>
+<h2 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h2><ol>
+<li><p>平衡二叉树的定义<br>左右子树高度差的绝对值不超过1的二叉树称为平衡二叉树(AVL树)，定义左子树与右子树的高度差为该结点的平衡因子，平衡因子取值为{-1,0,1}。</p>
+</li>
+<li><p>平衡二叉树的插入<br>插入方法：若插入结点导致平衡二叉树失衡，找到离插入结点最近的失衡结点A，对以A为根的子树进行调整，使其重新平衡。<br>失衡调整规律：</p>
+</li>
+<li>LL平衡旋转(右单旋转)：结点A的左孩子的左子树上插入新结点导致失衡，需要一次右旋操作，将A的左孩子右旋代替A。</li>
+<li>RR平衡旋转(左单旋转)：与LL平衡旋转相反。</li>
+<li>LR平衡旋转(先左后右双旋转)：结点A的左孩子B的右子树C上插新结点导致失衡。需要两次旋转，先将C左旋到B的位置，再将C右旋到A的位置</li>
+<li><p>RL平衡旋转(先右后左双旋转)：与LR平衡旋转相反。</p>
+</li>
+<li><p>平衡二叉树的查找<br>平均查找长度O(log<sub>2</sub>n)。</p>
+</li>
+</ol>
+<h2 id="哈夫曼树和哈夫曼编码"><a href="#哈夫曼树和哈夫曼编码" class="headerlink" title="哈夫曼树和哈夫曼编码"></a>哈夫曼树和哈夫曼编码</h2><ol>
+<li><p>哈夫曼树的定义<br>结点的权：一个数值<br>结点的带权路径长度：根到该结点的路径长度与其权值的乘积。<br>树的带权路径长度(WPL)：树中所有叶子结点的带权路径长度之和。<br>带权路径长度最小的二叉树称为哈夫曼树，也称为最优二叉树。</p>
+</li>
+<li><p>哈夫曼树的构造</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> N个结点作为N棵树构成森林F</span><br><span class="line"><span class="number">2.</span> 构造新结点，其左右子树为F中根结点权值最小的两棵树，其权值为左右子树根结点的权值之和。</span><br><span class="line"><span class="number">3.</span> 删除上步骤所选两棵树，将新树加入F</span><br><span class="line"><span class="number">4.</span> 重复<span class="number">2</span>、<span class="number">3</span>步骤直到只剩下一棵树。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>哈夫曼编码<br>对一字符串序列，将每个出现的字符作为一个结点，其权值为它该字符的出现频率，构造出对应哈夫曼树。在哈夫曼树中，转向左孩子的边标记为0，转向右孩子的指针标记为1，则各个字符的编码为根到该字符的路径上边标记的序列。</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/[学习总结]数据结构_树与二叉树/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -306,7 +529,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-01T12:38:58+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-01T13:38:55+08:00">
                 2018-08-01
               </time>
             
@@ -356,7 +579,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,662 字
+                  2,066 字
                 </span>
               
 
@@ -382,11 +605,13 @@
 
       
         
-          
-            <h2 id="1-树的基本概念"><a href="#1-树的基本概念" class="headerlink" title="1 树的基本概念"></a>1 树的基本概念</h2><h3 id="1-1树的定义"><a href="#1-1树的定义" class="headerlink" title="1.1树的定义"></a>1.1树的定义</h3><p>树是N(N&gt;=0)个结点的有限集合，N=0时，称为空树。任意一棵非空树满足：  </p>
+          <h2 id="1-树的基本概念"><a href="#1-树的基本概念" class="headerlink" title="1 树的基本概念"></a>1 树的基本概念</h2><h3 id="1-1树的定义"><a href="#1-1树的定义" class="headerlink" title="1.1树的定义"></a>1.1树的定义</h3><p>树是N(N&gt;=0)个结点的有限集合，N=0时，称为空树。任意一棵非空树满足：  </p>
 <ol>
 <li>有且仅有一个特定的称为根的结点。</li>
-<li>当N&gt;1时，其余结点可分为m个互不相交的有限集合，其中每个集合本身又是一棵树，并且称为根结点的子树。<br>树具有以下特点：  </li>
+<li>当N&gt;1时，其余结点可分为m个互不相交的有限集合，其中每个集合本身又是一棵树，并且称为根结点的子树。  </li>
+</ol>
+<p>树具有以下特点：  </p>
+<ol>
 <li>树的根结点没有前驱结点，除根以外的结点有且仅有一个前驱结点。</li>
 <li>树中结点可以有零个或多个后结点。</li>
 </ol>
@@ -417,75 +642,14 @@
 <li>路径长度：路径所经过的边的个数</li>
 </ul>
 </li>
-<li>森林：树的集合</li>
-</ol>
-<h3 id="1-3树的性质"><a href="#1-3树的性质" class="headerlink" title="1.3树的性质"></a>1.3树的性质</h3><ol>
-<li>树的结点树等于所有结点的度数之和加1。</li>
-<li>度为m的树树中，第i层最多有m<sup>i-1 </sup>个结点(i&gt;=1)</li>
-<li>高度为h的m叉树最多有(m <sup>h</sup> -1)/(m-1)个结点(等比数列求和)</li>
-<li>具有n个结点的m叉树的最小高度为log<sub>m</sub>(n(m-1)+1)向上取整(由3中公式推倒)</li>
-</ol>
-<h2 id="2-二叉树"><a href="#2-二叉树" class="headerlink" title="2 二叉树"></a>2 二叉树</h2><h3 id="2-1-二叉树的定义及其主要性质"><a href="#2-1-二叉树的定义及其主要性质" class="headerlink" title="2.1 二叉树的定义及其主要性质"></a>2.1 二叉树的定义及其主要性质</h3><ol>
-<li>二叉树的定义<ul>
-<li>或者为空二叉树。</li>
-<li>或者由一个根结点和两个互不相交的被称为根的左子树和右子树组成，左子树和右子树又分别为一颗二叉树。</li>
-</ul>
-</li>
-<li>特殊二叉树<br><strong>满二叉树</strong>：树中每一层都含有最多结点，一颗高为h的满二叉树含有2<sup>h</sup>-1个结点。<br><strong>完全二叉树</strong>：高度为h，有n个结点的二叉树，当且仅当每一个结点都与高度相同的满二叉树中编号为1~n的结点一一对应，称为完全二叉树。<br><strong>二叉排序树</strong>：二叉排序树的左子树上所有结点的关键字均小于根结点的关键字而右结点相反，左子树和右子树又各是一颗二叉树；或者是一颗空二叉树。<br><strong>平衡二叉树</strong>：树上任意结点的左子树和右子树的深度之差不超过1。  </li>
-<li>二叉树的性质</li>
-</ol>
-<ul>
-<li>非空二叉树中叶子结点数N<sub>0</sub>等于度为2的结点数N<sub>2</sub>加1,即N<sub>0</sub>=N<sub>2</sub>+1;<ul>
-<li>N<sub>0</sub>+N<sub>1</sub>+N<sub>2</sub>=N;N-1=N<sub>1</sub>+2N<sub>2</sub>;</li>
-</ul>
-</li>
-<li>第K层至多有2<sup>K-1</sup>个结点(K&gt;=1);</li>
-<li>高度为H的二叉树至多有2<sup>H</sup>-1个结点(H&gt;=1);</li>
-<li>完全二叉树：<ul>
-<li>结点i的左孩子编号为2i，或者无左孩子；</li>
-<li>结点i的右孩子为2i+1，或者无右孩子；</li>
-<li>结点i所在深度为log<sub>2</sub>i+1(向下取整)；</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-2-二叉树的存储结构"><a href="#2-2-二叉树的存储结构" class="headerlink" title="2.2 二叉树的存储结构"></a>2.2 二叉树的存储结构</h3><ol>
-<li>顺序存储结构<br>适用于完全二叉树或满二叉树，将编号为i的结点元素存储在数组下标为i-1的分量中(或者从下标1开始存储）。</li>
-<li>链式存储结构<br>结点结构：<ul>
-<li>数据域data</li>
-<li>左指针域lchild</li>
-<li>右指针域rchlid<br>二叉树的链式存储结构描述</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span>&#123;</span></span><br><span class="line">    ElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">BiTNode</span> *<span class="title">lchild</span>,<span class="title">rchild</span>;</span></span><br><span class="line">&#125;BitNode,*BitTree;</span><br></pre></td></tr></table></figure>
-<p>含n个结点的二叉链表中含n+1个空链域。  </p>
-<h2 id="3-二叉树的遍历和线索二叉树"><a href="#3-二叉树的遍历和线索二叉树" class="headerlink" title="3 二叉树的遍历和线索二叉树"></a>3 二叉树的遍历和线索二叉树</h2><h3 id="3-1-二叉树的遍历"><a href="#3-1-二叉树的遍历" class="headerlink" title="3.1 二叉树的遍历"></a>3.1 二叉树的遍历</h3><ol>
-<li><p>先序遍历(PreOrder)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PreOrder</span><span class="params">(BitTree T)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        visit(T);</span><br><span class="line">        PreOrder(T-&gt;lchild);</span><br><span class="line">        PreOrder(T-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>中序遍历(InOrder)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InOrder</span><span class="params">(BitTree T)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T!=<span class="literal">NULL</span>)&#123;</span><br><span class="line">        InOrder(T-&gt;lchild);</span><br><span class="line">        visit(T);</span><br><span class="line">        InOrder(T-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>后序遍历(PostOrder)</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PostOrder</span><span class="params">(BitTree T)</span></span>&#123;</span><br><span class="line">    PostOrder(T-&gt;lchild);</span><br><span class="line">    PostOrder(T-&gt;rchild);</span><br><span class="line">    visit(T);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>递归算法和非递归算法的转换<br>借助栈实现树的非递归算法，<br>中序遍历</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InOrder2</span><span class="params">(BitTree T)</span></span>&#123;</span><br><span class="line">    InitStack S;            <span class="comment">//初始化栈</span></span><br><span class="line">    BiTNode *p = T;         <span class="comment">//p为遍历指针</span></span><br><span class="line">    <span class="keyword">while</span>(p||!IsEmpty(S))&#123;    <span class="comment">//栈不空或p指针不空时循环</span></span><br><span class="line">        <span class="keyword">if</span>(P)&#123;                  <span class="comment">//根指针进栈，遍历左子树</span></span><br><span class="line">            Push(S,p);          <span class="comment">//往左走到底</span></span><br><span class="line">            p=p-&gt;rchild;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;                   <span class="comment">//指针出栈并访问，遍历右子树</span></span><br><span class="line">            Pop(S,p);</span><br><span class="line">            visit(p);</span><br><span class="line">            p=p-&gt;rchild;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>前序遍历<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PreOrder2</span><span class="params">(BitTree T)</span></span>&#123;</span><br><span class="line">    InitStack(S):</span><br><span class="line">    BiTNode *p = T;</span><br><span class="line">    <span class="keyword">while</span>(p||!IsEmpty(S))&#123;</span><br><span class="line">        <span class="keyword">if</span>(p)&#123;</span><br><span class="line">            Push(S,p);</span><br><span class="line">            visit(p);</span><br><span class="line">            p=p-&gt;lchild;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">           Pop(S,p);</span><br><span class="line">           p=p-&gt;rchild;       </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>后序遍历<br>思路：对于任意一个结点P，访问顺序是：P-&gt;lchild、P-&gt;rchild、p。所以入栈顺序相反；对P进行访问当且仅当其左右孩子均已被访问或左右孩子不存在，故在左右孩子入栈时可以将P的左右孩子置空，表示左右孩子已访问。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PostOrder2</span><span class="params">(BitTree T)</span></span>&#123;</span><br><span class="line">    InitStack(S);</span><br><span class="line">    BiTNode *p = T;</span><br><span class="line">    Pop(S,p);</span><br><span class="line">    <span class="keyword">while</span>(!IsEmpty(S))&#123;</span><br><span class="line">        GetTop(S,p);</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;rchild==<span class="literal">NULL</span>&amp;&amp;p-&gt;lchild==<span class="literal">NULL</span>)&#123;</span><br><span class="line">            visit(p);</span><br><span class="line">            Pop(S,p);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(p-&gt;rchild)&#123;              <span class="comment">//先压如右孩子，再压入左孩子</span></span><br><span class="line">                Push(S,p-&gt;rchild);    </span><br><span class="line">                p-&gt;rchild==<span class="literal">NULL</span>;      <span class="comment">//由于右孩子必定先与父结点被访问，</span></span><br><span class="line">            &#125;                        <span class="comment">//改变父结点的链接关系不会影响访问顺序</span></span><br><span class="line">            <span class="keyword">if</span>(p-&gt;lchild)&#123;</span><br><span class="line">                Push(S,p-&gt;lchild);</span><br><span class="line">                p-&gt;lchild==<span class="literal">NULL</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li><p>层次遍历<br>借助队列实现层次遍历算法</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LevelOrder</span><span class="params">(BitTree T)</span></span>&#123;</span><br><span class="line">    InitQueue(Q);</span><br><span class="line">    BitTree p;</span><br><span class="line">    EnQueue(Q,p);</span><br><span class="line">    <span class="keyword">while</span>(!IsEmpty(Q))&#123;</span><br><span class="line">        DeQueue(Q,p);</span><br><span class="line">        visit(p);</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;lchild)</span><br><span class="line">            EnQueue(p-&gt;lchild);</span><br><span class="line">        <span class="keyword">if</span>(p-&gt;rchild)</span><br><span class="line">            EnQueue(p-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>由遍历序列构造二叉树<br>由二叉树的中序序列与先序序列、后序序列或层序序列三者之一可唯一确定一颗二叉树。<br>由先序序列和后序序列无法唯一确定一颗二叉树。</p>
-</li>
-</ol>
-<h2 id="3-2-线索二叉树"><a href="#3-2-线索二叉树" class="headerlink" title="3.2 线索二叉树"></a>3.2 线索二叉树</h2><p>线索二叉树存储结构描述：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">ThreadNode</span>&#123;</span></span><br><span class="line">    ElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ThreadNode</span> *<span class="title">lchild</span>,<span class="title">rchild</span>;</span>   <span class="comment">//左右孩子指针</span></span><br><span class="line">    <span class="keyword">int</span> ltag，rtag                      <span class="comment">//左右线索标志</span></span><br><span class="line">&#125;ThreadNode，*ThreadTree;</span><br></pre></td></tr></table></figure></p>
-<p>其中：ltag=0表示lchild域指示结点的左孩子，ltag=1表示lchild域指示结点的前驱；<br>rtag=0表示rchlid域指示结点的右孩子，rtag=2表示rchlid域指示结点的后继。</p>
-
-          
+<li>森林：树的集合
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/[学习总结]数据结构_树与二叉树/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2856,309 +3020,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/[学习总结]计算机网络_物理层/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/[学习总结]计算机网络_物理层/" itemprop="url">物理层</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T13:57:12+08:00">
-                2018-07-17
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-19T10:05:20+08:00">
-                2018-07-19
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
-                    <span itemprop="name">计算机网络</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,032 字
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="通信基础"><a href="#通信基础" class="headerlink" title="通信基础"></a>通信基础</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
-<li>数据、信号、码元</li>
-</ol>
-<ul>
-<li>数据：传送信息的实体</li>
-<li>信号：数据的电气或电磁表现，是数据传输过程的存在形式</li>
-<li>码元：一个固定时长的信号波形</li>
-</ul>
-<ol>
-<li>信源、信道、信宿</li>
-</ol>
-<ul>
-<li>信源：产生数据的源头</li>
-<li>信宿：接受数据的终点</li>
-<li>信道：信号的传输介质</li>
-<li>通信交互方式：<ul>
-<li>单工通信：单向传输，一条信道</li>
-<li>半双工通信：双向传输，不可同时收发，两条信道</li>
-<li>全双工通信：双向传输，可同时收发，两条信道</li>
-</ul>
-</li>
-</ul>
-<ol>
-<li>速率、波特、带宽</li>
-</ol>
-<ul>
-<li>速率(数据率)：数据传输速率：<ul>
-<li>码元传输速率：单位时间传输的码元数，单位为波特(Baud)</li>
-<li>信息传输速率：单位时间传输的二进制码元数(即比特数)，单位比特/秒(b/s)</li>
-</ul>
-</li>
-<li>带宽：单位时间内网络中两点间的最高数据率</li>
-</ul>
-<h3 id="奈奎斯特定理与香农定理"><a href="#奈奎斯特定理与香农定理" class="headerlink" title="奈奎斯特定理与香农定理"></a>奈奎斯特定理与香农定理</h3><ol>
-<li><p>奈奎斯特定理：<br> 理想低通信道下的极限数据传输率 = 2Wlog<sub>2</sub>V<br>其中W是理想低通信道的带宽,单位HZ，V是每个码元离散电平数目(如四位二进制有16种不同码元)</p>
-</li>
-<li><p>香农定理：<br> 信道的极限数据传输速率 = Wlog<sub>2</sub>(1+S/N)<br>信噪比 = 10log<sub>10</sub>(S/N) 单位(dB)</p>
-</li>
-</ol>
-<h3 id="编码与调制"><a href="#编码与调制" class="headerlink" title="编码与调制"></a>编码与调制</h3><p>数据变换为模拟信号的过程称为调制，数据变换为数字信号的过程称为编码</p>
-<ol>
-<li>数字数据编码为数字信号</li>
-</ol>
-<ul>
-<li>非归零码</li>
-<li>曼切斯特编码</li>
-<li>差分曼切斯特编码</li>
-</ul>
-<ol>
-<li>数字数据调制为模拟数据</li>
-</ol>
-<ul>
-<li>幅移键控</li>
-<li>频移键控</li>
-<li>相移键控</li>
-<li>正交振幅调制</li>
-</ul>
-<ol>
-<li>模拟数据编码为数字数据</li>
-<li>模拟数据编码为模拟信号</li>
-</ol>
-<h3 id="电路交换、报文交换、分组交换"><a href="#电路交换、报文交换、分组交换" class="headerlink" title="电路交换、报文交换、分组交换"></a>电路交换、报文交换、分组交换</h3><ol>
-<li>电路交换: 数据传输前，两结点间建立专用物理通信路径</li>
-<li>报文交换：利用报文进行存储转发</li>
-<li>分组交换：利用分组进行存储转发<br>！<a href="/images/数据交换方式.png">数据交换方式</a>  </li>
-</ol>
-<h3 id="数据报与虚电路"><a href="#数据报与虚电路" class="headerlink" title="数据报与虚电路"></a>数据报与虚电路</h3><p>分组交换分为面向无连接的数据报方式和面向连接的虚电路方式</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th></th>
-<th>数据报服务</th>
-<th>虚电路服务</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>连接的建立</td>
-<td>不要</td>
-<td>必须有</td>
-</tr>
-<tr>
-<td>目的地址</td>
-<td>每个分组都有完整的目的地址</td>
-<td>仅在建立连接阶段使用，之后每个分组使用长度较短的虚电路号</td>
-</tr>
-<tr>
-<td>路由选择</td>
-<td>每个分组独立地进行路由选择和转发</td>
-<td>属于同一条虚电路的分组按照同一路由转发</td>
-</tr>
-<tr>
-<td>分组顺序</td>
-<td>不保证分组的有序到达</td>
-<td>保证分组的有序到达</td>
-</tr>
-<tr>
-<td>可靠性</td>
-<td>不保证可靠通信可靠性由用户主机来保证</td>
-<td>可靠性由网络保证</td>
-</tr>
-<tr>
-<td>对网络故障的适应性</td>
-<td>出故障的结点丢失分组，其他分组路径选择发生变化，可正常传输</td>
-<td>所有经过故障结点的虚电路均不能正常工作</td>
-</tr>
-<tr>
-<td>差错处理和流量控制</td>
-<td>由用户主机进行流量控制，不保证数据报的可靠性</td>
-<td>可由分组交换网负责，也可由用户主机负责</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="传输介质"><a href="#传输介质" class="headerlink" title="传输介质"></a>传输介质</h2><h3 id="双绞线、同轴电缆、光纤与无线传输介质"><a href="#双绞线、同轴电缆、光纤与无线传输介质" class="headerlink" title="双绞线、同轴电缆、光纤与无线传输介质"></a>双绞线、同轴电缆、光纤与无线传输介质</h3><ol>
-<li>双绞线</li>
-<li>同轴电缆</li>
-<li>光纤</li>
-<li>无线传输介质</li>
-</ol>
-<h3 id="物理层接口的特性"><a href="#物理层接口的特性" class="headerlink" title="物理层接口的特性"></a>物理层接口的特性</h3><ol>
-<li>机械特性：定义物理连接的边界点</li>
-<li>电气特性：规定信号电压高低和阻抗匹配等</li>
-<li>功能特性：指明电压意义和信号线用途等</li>
-<li>规程特性：定义物理接口的工作规范</li>
-</ol>
-<h3 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h3><ol>
-<li>中继器：信号整形并放大(但是中继器的原理是将衰减信号再生，而不是放大)在转发。受信号延迟规范制约，中继器不能无限增加。</li>
-<li>集线器(Hub)：多端口中继器,只能够在半双工下工作，多个端口均分总带宽。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3213,7 +3074,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -3302,7 +3163,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">29.3k</span>
+    <span title="Site words total count">31.0k</span>
   
 </div>
 
