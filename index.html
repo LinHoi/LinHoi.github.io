@@ -259,6 +259,271 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/[学习总结]数据结构_图/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/[学习总结]数据结构_图/" itemprop="url">图</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-02T08:29:12+08:00">
+                2018-08-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-04T00:41:07+08:00">
+                2018-08-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,043 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-图的基本概念"><a href="#1-图的基本概念" class="headerlink" title="1 图的基本概念"></a>1 图的基本概念</h2><h3 id="1-1-图的定义"><a href="#1-1-图的定义" class="headerlink" title="1.1 图的定义"></a>1.1 图的定义</h3><p>图G由顶点集V和边集E组成，记为G=(V,E)，V非空。</p>
+<ol>
+<li>有向图<br>若E是有向边(弧)的有限集合时，图G为有向图，从顶点v到顶点w的弧记为\<v,w\></v,w\></li>
+<li>无向图<br>若E是 无向边的有限集合，则图G为无向图，v和w之间的边记为(u,w)。</li>
+<li>简单图<br>简单图满足：不存在重复边；不存在顶点到自身的边。  </li>
+<li>多重图<br>与简单图相对。</li>
+<li>完全图<br>任意两点之间都存在边的无向图称为无向完全图；任意两个顶点之间都存在两条方向相反的弧的有向图称为有向完全图。</li>
+<li>子图<br>一个图的子图其边和顶点包含于原图中。</li>
+<li>连通、连通图和连通分量<br>顶点v和w之间有路径存在，则称v和w是连通的；图中任意两个顶点均连通的图称为连通图；极大连通子图称为连通分量。</li>
+<li>强连通图和强连通分量<br>有向图中，从顶点v到顶点w和从顶点w到顶点v之间都有路径，则称这两个顶点是强连通的；<br>任意一对顶点都是强连通的图称为强连通图；<br>图的极大强连通子图称为图的强连通分量。</li>
+<li>生成树和生成森林<br><strong>连通图的生成树</strong>是包含全部顶点的一个极小连通子图(边数最小)；<br><strong>非连通图的生成森林</strong>是连通分量的生成树的集合。</li>
+<li>顶点的度、入度和出度<br>无向图中顶点的度是以该顶点为端点的边的数目；<br>有向图中顶点的入度是以该顶点为弧尾的弧的数目；<br>有向图中顶点的出度是以该顶点为弧头的弧的数目。</li>
+<li>边的权和网<br>边上的数值称为边的权值；边上带权值的图称为网(带权图)。</li>
+<li>路径、路径长度和回路<br>顶点u到w的路径是指从u到w所经过的顶点序列，路径上的边的数目称为路径长度，首尾顶点相同的路径称为回路。</li>
+<li>简单路径、简单回路<br>顶点不重复的路径称为简单路径，顶点不重复的回路称为简单回路。</li>
+<li>距离<br>从顶点u到顶点w的最短路径若存在，则该路径的长度称为从u到w的距离。</li>
+<li>有向树<br>有一个顶点的入度为0，其余顶点入度均为1的有向图称为有向树。</li>
+</ol>
+<h2 id="2-图的存储及基本操作"><a href="#2-图的存储及基本操作" class="headerlink" title="2 图的存储及基本操作"></a>2 图的存储及基本操作</h2><h3 id="2-1-邻接矩阵法"><a href="#2-1-邻接矩阵法" class="headerlink" title="2.1 邻接矩阵法"></a>2.1 邻接矩阵法</h3><p>用一个二维数组存储图中顶点之间邻接关系的信息，则该二维数组称为邻接矩阵。<br>图的邻接矩阵存储结构描述：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MaxVertexNum 100</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> VertexType;              <span class="comment">//顶点</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> EdgeType;                 <span class="comment">//边</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    VertexType Vex[MaxVertexNum];      <span class="comment">//顶点表</span></span><br><span class="line">    EdgeType Edge[MaxVertexNum][MaxVertexNum];    <span class="comment">//邻接矩阵</span></span><br><span class="line">    <span class="keyword">int</span> vexnum,arcnum;             <span class="comment">//图的当前顶点数和弧数</span></span><br><span class="line">&#125;MGragn;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-2-邻接表法"><a href="#2-2-邻接表法" class="headerlink" title="2.2 邻接表法"></a>2.2 邻接表法</h3><p>对图G中的每个顶点vi建立一个单链表，单链表中的结点表示依附于该顶点的边，这个单链表称为顶点的边表。顶点的数据信息和边表的头指针建立顶点表，顶点表采用顺序存储。<br><strong>顶点表</strong>：顶点数据域与和指向该顶点的第一条邻接边的指针构成。<br><strong>边表</strong>：邻接点数据域和指向下一条邻接边的指针构成。<br>图的邻接表存储结构描述：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MaxVertexNum 100;</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">ArcNode</span>&#123;</span>    <span class="comment">//边表</span></span><br><span class="line">    <span class="keyword">int</span> adjvex;             <span class="comment">//数据域</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">ArcNode</span> *<span class="title">next</span>;</span>    <span class="comment">//下一条边的指针</span></span><br><span class="line">    InfoType info;          <span class="comment">//权值</span></span><br><span class="line">&#125;ArcNode;</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">VNode</span>&#123;</span>       <span class="comment">//顶点表</span></span><br><span class="line">    VertexTypeType data;</span><br><span class="line">    ArcNode *first;</span><br><span class="line">&#125;VNode,AdjList[MaxVertexNum];</span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span>             </span><br><span class="line">    AdjList vertices;        <span class="comment">//邻接表</span></span><br><span class="line">    <span class="keyword">int</span> vexnum,arcnum;       <span class="comment">//图的顶点数和弧数</span></span><br><span class="line">&#125;ALGraph;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-十字链表"><a href="#2-3-十字链表" class="headerlink" title="2.3 十字链表"></a>2.3 十字链表</h3><p>十指链表是<strong>有向图</strong>的一种链式存储结构。</p>
+<h3 id="2-3-临街多重表"><a href="#2-3-临街多重表" class="headerlink" title="2.3 临街多重表"></a>2.3 临街多重表</h3><p>临界多重表是<strong>无向图</strong>的一种链式存储结构。</p>
+<h2 id="3-图的遍历"><a href="#3-图的遍历" class="headerlink" title="3 图的遍历"></a>3 图的遍历</h2><h3 id="3-1-图的广度优先搜索-BFS"><a href="#3-1-图的广度优先搜索-BFS" class="headerlink" title="3.1 图的广度优先搜索(BFS)"></a>3.1 图的广度优先搜索(BFS)</h3><p>算法思想：首先访问起始顶点v，接着依次访问v的各个未被访问的邻接顶点，再对这些邻接顶点进行与v相同的操作，直到图中所有顶点全部访问。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MaxVertexNum 100</span></span><br><span class="line"><span class="keyword">bool</span> visited[MaxVertexNum];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BFSTraverse</span><span class="params">(Graph G)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;G.vexnum;i++)     <span class="comment">//初始化访问位为未访问</span></span><br><span class="line">        visited[i]=FALSE;</span><br><span class="line">    InitQueue(Q);                   <span class="comment">//初始化队列</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;G.vexnum;i++)&#123;    <span class="comment">//遍历每个顶点</span></span><br><span class="line">        <span class="keyword">if</span>(!visited[i])</span><br><span class="line">            BFS(G,i,Q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BFS</span><span class="params">(Graph G,<span class="keyword">int</span> v,Queue Q)</span></span>&#123;</span><br><span class="line">    visit(v);               <span class="comment">//访问操作</span></span><br><span class="line">    visited[v]=TRUE;        <span class="comment">//设置顶点为已访问</span></span><br><span class="line">    EnQueue(Q,v);           <span class="comment">//顶点入队</span></span><br><span class="line">    <span class="keyword">while</span>(!IsEmpty(Q))&#123;</span><br><span class="line">        DeQueue(Q,v)         <span class="comment">//顶点出队</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> w=FirstNeighbor(G,v);w&gt;<span class="number">0</span>;w=NextNeighbor(G,v,w))&#123;   <span class="comment">//遍历邻接顶点</span></span><br><span class="line">            <span class="keyword">if</span>(!visited[w])&#123;            <span class="comment">//先访问再入队</span></span><br><span class="line">                visit(w);</span><br><span class="line">                visited[w]=TRUE;</span><br><span class="line">                EnQueue(Q,w);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><p>BFS算法性能分析<br>| |邻接表|邻接矩阵|<br>|—-|—-|—-|<br>|时间复杂度|O(|V|+|E|)|O(|V| <sup>2</sup> )|</p>
+</li>
+<li><p>BFS 算法求解单源最短路径问题<br>BFS算法可以用于解决非带权图的单源最短路径问题</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">BFS_Min_Distance</span><span class="params">(Graph G,<span class="keyword">int</span> u)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;G.vexnum;i++)</span><br><span class="line">        distance[i]=<span class="number">-1</span>;   <span class="comment">//初始化距离，-1代表无限大</span></span><br><span class="line">    visited[u]=TRUE;</span><br><span class="line">    distance[u]=<span class="number">0</span>;          <span class="comment">//顶点到自身的距离为0</span></span><br><span class="line">    EnQueue(Q,u);</span><br><span class="line">    <span class="keyword">while</span>(!IsEmpty(Q))&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> w=FirstNeighbor(G,u);w&gt;=<span class="number">0</span>;w=NextNeighbor(G,u,w))&#123;</span><br><span class="line">            <span class="keyword">if</span>(!visited[w])&#123;</span><br><span class="line">                visited[w]=TRUE;</span><br><span class="line">                distance[w]=distance[u]+<span class="number">1</span>;</span><br><span class="line">                EnQueue(Q,w);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>广度优先生产树<br>由图的广度优先遍历得到的遍历树称为广度优先生成树</p>
+</li>
+</ol>
+<h3 id="3-2-深度优先搜索-DFS"><a href="#3-2-深度优先搜索-DFS" class="headerlink" title="3.2 深度优先搜索(DFS)"></a>3.2 深度优先搜索(DFS)</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MaxVertexNum 100</span></span><br><span class="line"><span class="keyword">bool</span> visited[MaxVertexNum];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFSTraverse</span><span class="params">(Graph G)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;G.vexnum;i++)         <span class="comment">//初始化访问位</span></span><br><span class="line">        visited[i]=FALSE;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;G.vexnum;i++)&#123;        <span class="comment">//遍历</span></span><br><span class="line">        <span class="keyword">if</span>(!visited[i])</span><br><span class="line">            DFS(G,i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DFS</span><span class="params">(Graph G,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">    visit(v);</span><br><span class="line">    visited[i]=TRUE;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> w=FirstNeighbor(G,v);w&gt;=o;w=NextNeighbor(G,v,w))&#123; <span class="comment">//遍历每个邻接顶点，对其进行深度递归</span></span><br><span class="line">        <span class="keyword">if</span>(!visited[w])</span><br><span class="line">            DFS(G,w);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">【注】：由于图的邻接矩阵表示唯一而邻接表表示不唯一，所以基于邻接矩阵的遍历所得DFS序列和BFS序列是惟一的，基于邻接表的遍历得到的DFS序列和BFS序列是不唯一的。</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>DFS算法性能分析<br>| |邻接表|邻接矩阵|<br>|—-|—-|—-|<br>|时间复杂度| O(|V|+|E| )| O(|V| <sup>2</sup> ) |<br>|空间复杂度| O(|V|) | O(|V|) |</p>
+</li>
+<li><p>深度优先生成树和生成森林<br>只有对连通图调用DFS才生成深度优先生成树，否则产生的是深度优先生成森林。</p>
+</li>
+</ol>
+<h3 id="3-3-图的遍历与图的连通性"><a href="#3-3-图的遍历与图的连通性" class="headerlink" title="3.3 图的遍历与图的连通性"></a>3.3 图的遍历与图的连通性</h3><p>无向连通图：一次遍历即可访问全部顶点。<br>无向非连通图：遍历次数等于连通分量的数目。<br>有向强连通图：一次遍历即可访问全部顶点。<br>有向非强连通图：遍历次数等于强连通分量的数目。</p>
+<h2 id="4-图的应用"><a href="#4-图的应用" class="headerlink" title="4 图的应用"></a>4 图的应用</h2><h3 id="4-1-最小生成树-MST"><a href="#4-1-最小生成树-MST" class="headerlink" title="4.1 最小生成树(MST)"></a>4.1 最小生成树(MST)</h3><p>一个连通图的生成树是图的极小连通子图，它包含图中所有顶点，且只含尽可能少的边。<br>一个带权连通图中，边权总和最小的生成树称为它的最小生成树。<br>最小生成树有以下性质：</p>
+<pre><code>- 树形不唯一
+- 边权总和唯一且最小
+- 边数为定点数减1
+</code></pre><p>最小生成树通用算法伪代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Generate_MST(G)&#123;</span><br><span class="line">    T=<span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">while</span>(T未形成一颗生成树)&#123;</span><br><span class="line">        找到一条加入树T后不会产生回路的最小代价边；</span><br><span class="line">        将该边加入到树T中；</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最小生成树算法主要有Prim算法和Kruskal算法。  </p>
+<ol>
+<li><p><strong>普里姆(Prim)算法</strong></p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Prim</span><span class="params">(G,T)</span></span>&#123;</span><br><span class="line">    T=∅;                <span class="comment">//初始化空树</span></span><br><span class="line">    U=&#123;w&#125;；              <span class="comment">//U用于存放生成树的顶点，初始化时添加第一个顶点w</span></span><br><span class="line">    <span class="keyword">while</span>((V-U)!=∅)&#123;     <span class="comment">//V用于存放图的全部顶点，若树中不包含全部顶点，就进行循环</span></span><br><span class="line">        寻找顶点u∈U，顶点v∈(V-U)，且(u,v)的边权最小；</span><br><span class="line">        T=T∪(u,v);        <span class="comment">//边并入生成树</span></span><br><span class="line">        U=U∪&#123;v&#125;；         <span class="comment">//顶点并入树的顶点集</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> Prim算法的时间复杂度为O(|V| <sup>2</sup> )</p>
+</li>
+<li><p><strong>克鲁斯卡尔(Kruskal)算法</strong></p>
+ <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Kruskal</span><span class="params">(V,T)</span></span>&#123;          <span class="comment">//V为图的顶点集，T为最小生成树</span></span><br><span class="line">    T=V；                    <span class="comment">//初始化生成树，仅包含全部顶点</span></span><br><span class="line">    disconnect_num=n;       <span class="comment">//T中不连通分量的个数，初始时与顶点数相同</span></span><br><span class="line">    <span class="keyword">while</span>(disconnect_num&gt;<span class="number">1</span>)&#123; <span class="comment">//不连通分量为1时，T已经建成</span></span><br><span class="line">        从边集E中取出权值最小的边(v,u);</span><br><span class="line">        <span class="keyword">if</span>(v和u属于不同的连通分量)&#123;</span><br><span class="line">            T=T∪(v,u);              <span class="comment">//将此边并入T中</span></span><br><span class="line">            disconnect_num--;       <span class="comment">//不连通分量树数减1</span></span><br><span class="line">            E=E-(v,u);              <span class="comment">//将此边从边集中删除</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> Kruskal算法的时间复杂度是O( |E|log|E| )</p>
+</li>
+</ol>
+<h3 id="4-2-最短路径"><a href="#4-2-最短路径" class="headerlink" title="4.2 最短路径"></a>4.2 最短路径</h3><p>　　带权路径长度最短的路径称为最短路径。<br>　　求解单源最短路径的算法：Dijkstra算法。<br>　　求解每一对顶点间的最短路径：Floyd算法。 </p>
+<ol>
+<li><strong>Dijkstra算法</strong></li>
+</ol>
+<ul>
+<li>初始条件：  <ul>
+<li>图的顶点集为V；  </li>
+<li>图采用邻接矩阵表示array[n][n];  </li>
+<li>从原点到各个顶点的最短路径长度存储在数组distance[n]中；  </li>
+<li>集合S记录已经求得最短路径的顶点。　</li>
+</ul>
+</li>
+<li>算法步骤：<ol>
+<li>初始化：集合S初始为{0}，distance[i]的初始值为array[0][i];  </li>
+<li>从顶点集V-S中选出一个顶点vj，从源点v0到它的距离最短，令S=S∪{j}；</li>
+<li>修改从源点出发到集合V-S上任一顶点的当前最短路径;</li>
+<li>重复步骤2和3，直到所有顶点都包含在S中<br>步骤3中的公式：if(distance[k]&gt;distance[j]+array[j][k]) then distance[k]=distance[j]+array[j][k]</li>
+</ol>
+</li>
+<li>局限性：<strong>不能处理边权为负数的情况</strong>。</li>
+</ul>
+<h3 id="4-3-拓扑排序"><a href="#4-3-拓扑排序" class="headerlink" title="4.3 拓扑排序"></a>4.3 拓扑排序</h3><p>有向无环图(DAG)：一个有向图中不存在环，则称为有向无环图。<br>AOV网：有向无环图中，用<strong>顶点表示活动</strong>，用有向边表示活动的先后关系，则这样的右向图称为AOV网。<br>拓扑排序：拓扑排序是有向无环图的一个顶点序列，它满足：每个顶点只出现一次，且若存在一条从A到B的路径，则在序列中B出现在A之后。<br>有向无环图拓扑排序的步骤：</p>
+<pre><code>1. 选择一个没有前驱的顶点并输出
+2. 从图中删除该顶点和以它为起点的有向边
+3. 重复步骤1和2直到DAG图为空
+</code></pre><h3 id="4-4-关键路径"><a href="#4-4-关键路径" class="headerlink" title="4.4 关键路径"></a>4.4 关键路径</h3><p>带权有向图中，以顶点表示事件，<strong>有向边表示活动</strong>，边上权值表示活动开销，则这种有向图称为AOE网。<br>AOE网性质：<br>　　某顶点事件发生后，以该顶点出发的有向边活动才能进行。<br>　　进入某一顶点的有向边活动全部完成，该顶点事件才能发生。<br>AOE网中具有最大路径长度的路径称为关键路径，关键路径上的活动称为关键活动。<br>关键变量：</p>
+<ol>
+<li>事件vk的最早发生时间ve(k)</li>
+<li>事件vk的最迟发生事件vl(k)</li>
+<li>活动ai的最早开始时间e(i)</li>
+<li>活动ai的最迟开始时间l(i)</li>
+<li>一个活动ai的最迟开始时间l(i)和最早开始时间e(i)的差值d(i)=l(i)-e(i)<br>求关键路径的步骤：</li>
+<li>求所有顶点事件的最早开始时间和最迟开始时间</li>
+<li>求所有边活动的最早开始时间和最迟开始时间</li>
+<li>求所有边活动的的差额d(),找出所有d()=0的活动构成关键路径</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/[学习总结]数据结构_树与二叉树的应用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -306,7 +571,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-08-02T00:01:21+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-02T08:28:12+08:00">
                 2018-08-02
               </time>
             
@@ -356,7 +621,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,288 字
+                  1,286 字
                 </span>
               
 
@@ -382,60 +647,23 @@
 
       
         
-          
-            <h2 id="二叉排序树"><a href="#二叉排序树" class="headerlink" title="二叉排序树"></a>二叉排序树</h2><ol>
-<li>二叉排序树的定义<br>二叉排序树(BST)也称为二叉查找树。非空二叉排序树满足：</li>
-</ol>
-<ul>
+          <h2 id="二叉排序树"><a href="#二叉排序树" class="headerlink" title="二叉排序树"></a>二叉排序树</h2><ol>
+<li>二叉排序树的定义<br>二叉排序树(BST)也称为二叉查找树。非空二叉排序树满足：<ul>
 <li>若左子树非空，则左子树上所有结点关键字值均小于根结点的关键字值。</li>
 <li>若右子树非空，则右子树所有结点关键字值均大于根结点的关键字值。</li>
 <li>左右子树本身也是一颗二叉排序树。<br>对二叉排序树进行中序遍历可以得到一个递增序列。</li>
 </ul>
-<ol>
-<li><p>二叉排序树的查找<br>设欲查找值为K,将K与根结点的关键字值比较，若相对则查找成功，若其值大于K则在根结点的左子树中查找，若其值小于K则在根结点的右子树中查找。  </p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BSTNode *<span class="title">BST_Serach</span><span class="params">(BiTree T,ElemType key)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(T&amp;&amp;key!=T-&gt;data)&#123;</span><br><span class="line">        <span class="keyword">if</span>(key&gt;T-&gt;data)</span><br><span class="line">            T=T-&gt;rchild;</span><br><span class="line">        <span class="keyword">else</span> T=T-&gt;lchild;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> T;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>二叉排序树的插入<br>若二叉排序树为空，则直接插入结点；若关键字k小于根结点的关键字，则插入到左子树中，若关键字k大于根结点的关键字，则插入到右子树中。  </p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">BST_Insert</span><span class="params">(BiTree &amp;T,ElemType k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T==<span class="literal">NULL</span>)&#123;                            <span class="comment">//若树为空直接插入</span></span><br><span class="line">        T=(BiTree)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiNode));</span><br><span class="line">        T-&gt;data=k;</span><br><span class="line">        T-&gt;lchild=T-&gt;rchild=<span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(T-&gt;data==K)                      <span class="comment">//若关键字k已存在，插入失败</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(T-&gt;data&gt;k)                      <span class="comment">//插入左子树</span></span><br><span class="line">        <span class="keyword">return</span> BST_Insert(T-&gt;lchild,k);</span><br><span class="line">    <span class="keyword">else</span>                                    <span class="comment">//插入右子树</span></span><br><span class="line">        <span class="keyword">return</span> BST_Insert(T-&gt;rchild,k);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>二叉排序树的构造<br>构造二叉排序树就是将一个一个元素插入到二叉排序树中</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Create_BST</span><span class="params">(BiTree &amp;T,ElemType <span class="built_in">array</span>[],<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">    T=<span class="literal">NULL</span>;                     <span class="comment">//初始化空树</span></span><br><span class="line">    i=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(i&lt;n)&#123;</span><br><span class="line">        BST_Insert(T,<span class="built_in">array</span>[i]);</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>二叉排序树的删除<br>删除结点时要将断开的二叉链表重新链接。<br>具体方法：</p>
+<li>二叉排序树的查找<br>设欲查找值为K,将K与根结点的关键字值比较，若相对则查找成功，若其值大于K则在根结点的左子树中查找，若其值小于K则在根结点的右子树中查找。  <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">BSTNode *<span class="title">BST_Serach</span><span class="params">(BiTree T,ElemType key)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(T&amp;&amp;key!=T-&gt;data)&#123;</span><br><span class="line">        <span class="keyword">if</span>(key&gt;T-&gt;data)</span><br><span class="line">            T=T-&gt;rchild;</span><br><span class="line">        <span class="keyword">else</span> T=T-&gt;lchild;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> T;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<ul>
-<li>若删除结点时叶子结点，直接删除</li>
-<li>若删除结点z只有一颗左子树或右子树，则让z的子树代替z的位置</li>
-<li>若删除结点z既有左子树又有右子树，则另z的直接前驱(或直接后继)替代z，再删除原来的直接前驱(或直接后继)<br>【注：直接前驱或直接后继指排序序列中离z最近的左右两个结点】</li>
-</ul>
-<ol>
-<li>二叉排序树的查找效率<br>二叉排序树的查找性能与树的高度有关，若二叉排序树是只有左孩子的单子树，其平均查找长度为O(n)，若为平衡二叉树则平均查找长度为O(log<sub>2</sub>n)。</li>
-</ol>
-<h2 id="平衡二叉树"><a href="#平衡二叉树" class="headerlink" title="平衡二叉树"></a>平衡二叉树</h2><ol>
-<li><p>平衡二叉树的定义<br>左右子树高度差的绝对值不超过1的二叉树称为平衡二叉树(AVL树)，定义左子树与右子树的高度差为该结点的平衡因子，平衡因子取值为{-1,0,1}。</p>
-</li>
-<li><p>平衡二叉树的插入<br>插入方法：若插入结点导致平衡二叉树失衡，找到离插入结点最近的失衡结点A，对以A为根的子树进行调整，使其重新平衡。<br>失衡调整规律：</p>
-</li>
-<li>LL平衡旋转(右单旋转)：结点A的左孩子的左子树上插入新结点导致失衡，需要一次右旋操作，将A的左孩子右旋代替A。</li>
-<li>RR平衡旋转(左单旋转)：与LL平衡旋转相反。</li>
-<li>LR平衡旋转(先左后右双旋转)：结点A的左孩子B的右子树C上插新结点导致失衡。需要两次旋转，先将C左旋到B的位置，再将C右旋到A的位置</li>
-<li><p>RL平衡旋转(先右后左双旋转)：与LR平衡旋转相反。</p>
-</li>
-<li><p>平衡二叉树的查找<br>平均查找长度O(log<sub>2</sub>n)。</p>
-</li>
-</ol>
-<h2 id="哈夫曼树和哈夫曼编码"><a href="#哈夫曼树和哈夫曼编码" class="headerlink" title="哈夫曼树和哈夫曼编码"></a>哈夫曼树和哈夫曼编码</h2><ol>
-<li><p>哈夫曼树的定义<br>结点的权：一个数值<br>结点的带权路径长度：根到该结点的路径长度与其权值的乘积。<br>树的带权路径长度(WPL)：树中所有叶子结点的带权路径长度之和。<br>带权路径长度最小的二叉树称为哈夫曼树，也称为最优二叉树。</p>
-</li>
-<li><p>哈夫曼树的构造</p>
-<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span> N个结点作为N棵树构成森林F</span><br><span class="line"><span class="number">2.</span> 构造新结点，其左右子树为F中根结点权值最小的两棵树，其权值为左右子树根结点的权值之和。</span><br><span class="line"><span class="number">3.</span> 删除上步骤所选两棵树，将新树加入F</span><br><span class="line"><span class="number">4.</span> 重复<span class="number">2</span>、<span class="number">3</span>步骤直到只剩下一棵树。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>哈夫曼编码<br>对一字符串序列，将每个出现的字符作为一个结点，其权值为它该字符的出现频率，构造出对应哈夫曼树。在哈夫曼树中，转向左孩子的边标记为0，转向右孩子的指针标记为1，则各个字符的编码为根到该字符的路径上边标记的序列。</p>
-</li>
-</ol>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/[学习总结]数据结构_树与二叉树的应用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2700,326 +2928,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/[学习总结]计算机网络_计算机网络体系结构/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/[学习总结]计算机网络_计算机网络体系结构/" itemprop="url">计算机网络体系结构</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T13:57:12+08:00">
-                2018-07-17
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-18T00:20:34+08:00">
-                2018-07-18
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
-                    <span itemprop="name">计算机网络</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  895 字
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="计算机网络概述"><a href="#计算机网络概述" class="headerlink" title="计算机网络概述"></a>计算机网络概述</h2><h3 id="计算机网络的概念"><a href="#计算机网络的概念" class="headerlink" title="计算机网络的概念"></a>计算机网络的概念</h3><p>计算机网络是互联的、自治的计算机系统的集合</p>
-<h3 id="计算机网络的组成"><a href="#计算机网络的组成" class="headerlink" title="计算机网络的组成"></a>计算机网络的组成</h3><ol>
-<li>组成成分：</li>
-</ol>
-<ul>
-<li>硬件</li>
-<li>软件</li>
-<li>协议</li>
-</ul>
-<ol>
-<li>工作方式</li>
-</ol>
-<ul>
-<li>边缘部分：用户主机</li>
-<li>核心部分：提供连通性、服务的网络和路由器</li>
-</ul>
-<ol>
-<li>功能组成</li>
-</ol>
-<ul>
-<li>通讯子网：传输介质、通讯设备、网络协议组成</li>
-<li>资源子网：实现资源共享功能的设备及软件集合</li>
-</ul>
-<h3 id="计算机网络功能"><a href="#计算机网络功能" class="headerlink" title="计算机网络功能"></a>计算机网络功能</h3><ol>
-<li>数据通信</li>
-<li>资源共享</li>
-<li>分布式处理</li>
-<li>提高可靠性</li>
-<li>负载均衡</li>
-</ol>
-<h3 id="计算机网络的分类"><a href="#计算机网络的分类" class="headerlink" title="计算机网络的分类"></a>计算机网络的分类</h3><ol>
-<li>按分别范围分类</li>
-</ol>
-<ul>
-<li>广域网(WAN)</li>
-<li>城域网(MAN)</li>
-<li>局域网(LAN)</li>
-<li>个人区域网(PAN)</li>
-</ul>
-<ol>
-<li>按传输技术分类</li>
-</ol>
-<ul>
-<li>广播式网络</li>
-<li>点对点网络</li>
-</ul>
-<ol>
-<li>按拓扑结构分类</li>
-</ol>
-<ul>
-<li>星形网络</li>
-<li>总线形网络</li>
-<li>网络形网络</li>
-</ul>
-<ol>
-<li>按使用者分类</li>
-</ol>
-<ul>
-<li>公用网</li>
-<li>专用网</li>
-</ul>
-<ol>
-<li>按交换技术分类</li>
-</ol>
-<ul>
-<li>电路交换网络：源结点和目标结点间建立专用通路用于传送数据</li>
-<li>报文交换网络：数据封装成报文，通过结点转发传输整个报文，直到到达目的结点</li>
-<li>分组交换网络：数据分成较短的固定长度数据块并封装成分组，以存储-转发方式传输</li>
-</ul>
-<ol>
-<li>按传输介质分类</li>
-</ol>
-<ul>
-<li>有线网络</li>
-<li>无线网络</li>
-</ul>
-<h3 id="计算机网络的性能指标"><a href="#计算机网络的性能指标" class="headerlink" title="计算机网络的性能指标"></a>计算机网络的性能指标</h3><ol>
-<li>带宽：网络通信线路所能传送数据的能力，单位是“比特每秒”(b/s)</li>
-<li>时延：数据从一端传送到另一端的时间</li>
-</ol>
-<ul>
-<li>发送时延：</li>
-<li>传播时延</li>
-<li>处理时延</li>
-<li>排队时延</li>
-<li>总时延：以上四种时延之和</li>
-</ul>
-<ol>
-<li>时延带宽积：传播时延 X 信道带宽</li>
-<li>往返时延(RTT)： </li>
-<li>吞吐量： 单位时间通过某个网络的数据量，受网络带宽限制</li>
-<li>速率：主机传送数据的速率，最高数据率即为带宽，单位为b/s，Kb/s(K=10^3),Mb/s(M=10^6),Gb/s(G=10^9)</li>
-</ol>
-<h2 id="计算机网络体系结构与参考模型"><a href="#计算机网络体系结构与参考模型" class="headerlink" title="计算机网络体系结构与参考模型"></a>计算机网络体系结构与参考模型</h2><h3 id="计算机网络分层结构"><a href="#计算机网络分层结构" class="headerlink" title="计算机网络分层结构"></a>计算机网络分层结构</h3><ol>
-<li>体系结构：计算机各层及其协议的集合</li>
-<li>分层基本原则</li>
-</ol>
-<ul>
-<li>每一层实现功能相对独立</li>
-<li>各层之间界面清晰，交流少</li>
-<li>各层功能的定义独立于具体实现</li>
-<li>下层对上层独立，上层单向使用下层服务</li>
-<li>分层结构标准化</li>
-</ul>
-<h3 id="计算机网络协议、接口、服务的概念"><a href="#计算机网络协议、接口、服务的概念" class="headerlink" title="计算机网络协议、接口、服务的概念"></a>计算机网络协议、接口、服务的概念</h3><ol>
-<li>协议：控制对等实体进行通信的规则的集合</li>
-<li>接口：相邻两层交换信息的连接点</li>
-<li>服务：下层为紧相邻的上层提高的功能调用，交换命令称为服务原语：请求、指示、响应、证实。</li>
-<li>服务类型</li>
-</ol>
-<ul>
-<li>面向连接服务与无连接服务<ul>
-<li>面向连接服务：如TCP</li>
-<li>无连接服务：如IP、UDP</li>
-</ul>
-</li>
-<li>可靠服务和不可靠服务<ul>
-<li>可靠服务：网络具有纠错、检错、应答功能，保证可靠传输</li>
-<li>不可靠服务：不保证可靠传输</li>
-</ul>
-</li>
-<li>有应答服务和无应答服务<ul>
-<li>有应答服务：如文件传输服务</li>
-<li>无应答服务：如WWW服务</li>
-</ul>
-</li>
-</ul>
-<h3 id="ISO-OSI参考模型和TCP-IP模型"><a href="#ISO-OSI参考模型和TCP-IP模型" class="headerlink" title="ISO/OSI参考模型和TCP/IP模型"></a>ISO/OSI参考模型和TCP/IP模型</h3><ol>
-<li>OSI参考模型</li>
-</ol>
-<ul>
-<li>物理层</li>
-<li>数据链路层</li>
-<li>网络层</li>
-<li>传输层</li>
-<li>会话层</li>
-<li>表示层</li>
-<li>应用层</li>
-</ul>
-<ol>
-<li>TCP/IP 模型</li>
-</ol>
-<ul>
-<li>网络接口层</li>
-<li>网际层</li>
-<li>传输层</li>
-<li>应用层</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3074,7 +2982,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -3163,7 +3071,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">31.0k</span>
+    <span title="Site words total count">34.0k</span>
   
 </div>
 
