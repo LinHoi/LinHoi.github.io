@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="操作系统," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="内存管理概念内存管理的概念 内存管理：操作系统对内存的换分和动态规划称为内存管理 内存管理的功能  内存空间的分配与回收 地址转换 内存空间扩展 存储保护   进程运行的基本原理  程序装入与链接 编译：将源代码编译成目标模块 链接：将目标模块和库函数链接成装入模块 静态链接 装入时动态链接 运行时动态链接   装入：将装入模块装入内存运行 绝对装入：程序逻辑地址和实际内存地址相同 可重定位装入(">
+<meta name="keywords" content="操作系统">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内存管理">
+<meta property="og:url" content="http://yoursite.com/2018/07/13/[学习总结]操作系统_内存管理/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="内存管理概念内存管理的概念 内存管理：操作系统对内存的换分和动态规划称为内存管理 内存管理的功能  内存空间的分配与回收 地址转换 内存空间扩展 存储保护   进程运行的基本原理  程序装入与链接 编译：将源代码编译成目标模块 链接：将目标模块和库函数链接成装入模块 静态链接 装入时动态链接 运行时动态链接   装入：将装入模块装入内存运行 绝对装入：程序逻辑地址和实际内存地址相同 可重定位装入(">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/3.jpg">
+<meta property="og:image" content="http://yoursite.com/images/分段地址变换机构.jpg">
+<meta property="og:image" content="http://yoursite.com/images/段页式.jpg">
+<meta property="og:updated_time" content="2018-07-14T05:39:45.414Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内存管理">
+<meta name="twitter:description" content="内存管理概念内存管理的概念 内存管理：操作系统对内存的换分和动态规划称为内存管理 内存管理的功能  内存空间的分配与回收 地址转换 内存空间扩展 存储保护   进程运行的基本原理  程序装入与链接 编译：将源代码编译成目标模块 链接：将目标模块和库函数链接成装入模块 静态链接 装入时动态链接 运行时动态链接   装入：将装入模块装入内存运行 绝对装入：程序逻辑地址和实际内存地址相同 可重定位装入(">
+<meta name="twitter:image" content="http://yoursite.com/images/3.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/13/[学习总结]操作系统_内存管理/"/>
+
+
+
+
+
+  <title>内存管理 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/13/[学习总结]操作系统_内存管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内存管理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-13T07:55:12+08:00">
+                2018-07-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-14T13:39:45+08:00">
+                2018-07-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,027 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="内存管理概念"><a href="#内存管理概念" class="headerlink" title="内存管理概念"></a>内存管理概念</h2><h3 id="内存管理的概念"><a href="#内存管理的概念" class="headerlink" title="内存管理的概念"></a>内存管理的概念</h3><ol>
+<li>内存管理：操作系统对内存的换分和动态规划称为内存管理</li>
+<li><p>内存管理的功能</p>
+<ul>
+<li>内存空间的分配与回收</li>
+<li>地址转换</li>
+<li>内存空间扩展</li>
+<li>存储保护</li>
+</ul>
+</li>
+<li><p>进程运行的基本原理</p>
+<ol>
+<li>程序装入与链接<ul>
+<li>编译：将源代码编译成目标模块</li>
+<li>链接：将目标模块和库函数链接成装入模块<ul>
+<li>静态链接</li>
+<li>装入时动态链接</li>
+<li>运行时动态链接</li>
+</ul>
+</li>
+<li>装入：将装入模块装入内存运行<ul>
+<li>绝对装入：程序逻辑地址和实际内存地址相同</li>
+<li>可重定位装入(静态重定位)：装入模块装入内存时，进行重定位(地址转换)</li>
+<li>动态运行时装入(动态重定位)：地址转换在程序执行时进行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>逻辑地址空间和物理地址空间  <ul>
+<li>相对地址：目标模块从0号单元开始编址，相对该地址的地址即为相对地址</li>
+<li>逻辑地址：内存中物理单元的集合称为逻辑地址空间，它是地址转换的最终地址</li>
+<li>地址重定位：逻辑地址转换为物理地址</li>
+</ul>
+</li>
+<li>内存保护<ul>
+<li>重定位寄存器</li>
+<li>界地址寄存器</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="覆盖和交换"><a href="#覆盖和交换" class="headerlink" title="覆盖和交换"></a>覆盖和交换</h3><ol>
+<li>覆盖<br> 将用户空间分成固定区和覆盖区，固定区存放活跃的部分，覆盖区存放即将访的段，其它段存放在外存。覆盖用于一个进程或进程中，覆盖技术对程序员不透明，已成历史。</li>
+<li>交换<br> 将处于等待状态的进程序从内存移到辅存称为换出，将准备好竞争CPU运行的程序从辅存移到内存称为换入。交换技术用于不同进程之间</li>
+</ol>
+<h3 id="连续分配管理方式"><a href="#连续分配管理方式" class="headerlink" title="连续分配管理方式"></a>连续分配管理方式</h3><pre><code>连续分配方式指为一个程序分配一个连续的内存空间。
+</code></pre><ol>
+<li>单一连续分配<br> 内存分为系统区和用户区，系统区给操作系统使用，用户区给一道用户程序使用，只能用在单任务操作系统中</li>
+<li><p>固定分区分配<br> 用户空间划分为若干个固定大小的区域，每个分区只装入一道程序。分区有等大小分区和不等大小分区。固定分区有内部碎片</p>
+</li>
+<li><p>动态分区分配<br> 动态分区分配又称为可变分区分配。在进程装入内存时，根据进程大小动态建立分区。动态分区分配会造成外部碎片。<br> 动态分区分配策略：</p>
+<ul>
+<li>首次适应算法（First Fit）</li>
+<li>最佳适应（Best Fit）</li>
+<li>最坏适应（Worst Fit）</li>
+<li>邻近适应（Next Fit）</li>
+</ul>
+</li>
+</ol>
+<h3 id="非连续分配管理方式"><a href="#非连续分配管理方式" class="headerlink" title="非连续分配管理方式"></a>非连续分配管理方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">非连续分配指一个程序分散地装入到不相邻的内存分区中。</span><br><span class="line">按照分区分配是否固定分为分页存储管理和分段存储管理。</span><br><span class="line">分页存储管理中又依据运行程序时是否把全部页面都装入内存才运行分为基本分页存储管理和请求分页存储管理。</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>基本分页存储管理方式<br> 将主存空间划分为大小相等的块，进程执行时，以块为单位申请块空间。<br> 分页管理不会产生外部碎片，每个进程平均产生半个块大小的内部碎片（页内碎片）</p>
+<ol>
+<li>分页存储的基本概念<ul>
+<li>页面：进程中的块称为页，内存中的块称为页框，在外存的称为块</li>
+<li>地址结构：<br>  |31    …    12|11    …   0|<br>  |—-|—-|<br>  |页号P|页内偏移量W|</li>
+<li>页表：页表在内存中，用于建立进程页号到内存中物理块号的地址映射</li>
+</ul>
+</li>
+<li>基本地址变换机构： 将逻辑地址转换为物理地址</li>
+<li>具有块表的地址变换机构<br><img src="/images/3.jpg" alt="地址变换机构">  </li>
+<li>二级页表</li>
+</ol>
+</li>
+<li><p>基本分段存储管理方式  </p>
+<ol>
+<li>分段</li>
+<li>段表</li>
+<li>地址变换机构<br> <img src="/images/分段地址变换机构.jpg" width="80%" align="center"></li>
+<li>段的共享与保护</li>
+</ol>
+</li>
+<li>段页式管理方式<br> <img src="/images/段页式.jpg" alt="段页式"></li>
+</ol>
+<h2 id="虚拟内存管理"><a href="#虚拟内存管理" class="headerlink" title="虚拟内存管理"></a>虚拟内存管理</h2><h3 id="虚拟内存管理的基本概念"><a href="#虚拟内存管理的基本概念" class="headerlink" title="虚拟内存管理的基本概念"></a>虚拟内存管理的基本概念</h3><ol>
+<li>传统存储管理方式特征<ul>
+<li>一次性：作业要一次全部装入内存后才能运行</li>
+<li>驻留性：作业装入内存后，一直驻留在内存中</li>
+</ul>
+</li>
+<li>局部性原理<ul>
+<li>时间局部性：</li>
+<li>空间局部性：</li>
+</ul>
+</li>
+<li>虚拟存储器定义和特征<br> 虚拟存储器指具有请求调入功能和置换功能，能从逻辑上对内存容量就那些扩展的一种存储系统。<br> 主要特征：<ul>
+<li>多次性：允许作业分多次调入内存运行</li>
+<li>对换性：允许作业进行换入和换出</li>
+<li>虚拟性：逻辑容量=内存容量+外存容量</li>
+</ul>
+</li>
+<li>虚拟存储技术的实现<br> 实现方式：<ul>
+<li>请求分页存储管理</li>
+<li>请求分段存储管理</li>
+<li>请求段页式存储管理<br>硬件支持：</li>
+<li>内存和外存</li>
+<li>中断机构</li>
+<li>地址变换机构</li>
+<li>页(段)表机制</li>
+</ul>
+</li>
+</ol>
+<h3 id="请求分页管理方式"><a href="#请求分页管理方式" class="headerlink" title="请求分页管理方式"></a>请求分页管理方式</h3><ol>
+<li>页表机制<br> 页表项:<ul>
+<li>页号</li>
+<li>物理块号</li>
+<li>状态位P：标记该页是否已调入内存</li>
+<li>访问字段A：记录本页的访问次数</li>
+<li>修改位M：标志该页调入内存后是否被修改</li>
+<li>外存地址： 该页的外存地址</li>
+</ul>
+</li>
+<li>缺页中断机构  <ul>
+<li>在指令执行期间发生，属于内部中断</li>
+<li>一条指令执行期间可能发生多次缺页中断</li>
+</ul>
+</li>
+<li>地址变换机构<br> 地址变换时先检索快表：<ul>
+<li>如果在块表中找到对应页，修改页表项的访问位，利用页表项的物理块号和页内地址形成物理地址。</li>
+<li>如果找不到，则检索内存中的页表，找到对应页号，查看页表项中的状态位P，若该页未调入内存，则产生缺页中断，请求从外存中把该页调入内存。</li>
+</ul>
+</li>
+</ol>
+<h3 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h3><p>进程运行时，若其访问的页面不在内存中，且内存已经没有足够空间，则要从内存中换出页面，选择调出页面的算法称为页面置换算法。</p>
+<ol>
+<li>最佳置换算法(OPT):调出最长时间内不再使用的页面</li>
+<li>先进先出页面置换算法(FIFO)：调出最早调入的页面会产生Belady异常(分配物理块数增大而缺页次数反而增加)</li>
+<li>最近最久未使用置换算法(LRU)：</li>
+<li>时钟置换算法(CLOCK)或最近未用算法(NRU)：调入的页面使用位初始值设为1并形成一个循环，指针指向第一个页面。每次调换时从指针处开始扫描循环，若使用位为1则置为0，指针后移；若使用位为0，则置换该页面，指针后移。</li>
+</ol>
+<h3 id="页面分配策略"><a href="#页面分配策略" class="headerlink" title="页面分配策略"></a>页面分配策略</h3><ol>
+<li>置换策略<br> 固定/可变分配：考虑进程分配的物理块是否是固定的<br> 局部/全局置换：考虑是只在进程内部置换还是可以使用其他物理块<br> 组合策略有：<ul>
+<li>固定分配局部置换</li>
+<li>可变分配全局置换</li>
+<li>可变分配局部置换</li>
+<li>因为固定分配限制进程的可用物理块所有没有固定分配全局置换</li>
+</ul>
+</li>
+<li>调入页面时机  <ul>
+<li>预调页策略：运行前调页，由程序员指定调页策略</li>
+<li>请求调页策略：运行期间调页</li>
+</ul>
+</li>
+<li>从何处调入页面<br> 文件区存放文件，采用离散分配；对换区存放对换页面，采用连续分配<ul>
+<li>从对换区调入</li>
+<li>从文件区调入</li>
+</ul>
+</li>
+</ol>
+<h3 id="抖动"><a href="#抖动" class="headerlink" title="抖动"></a>抖动</h3><pre><code>抖动是指频繁的页面调度行为
+</code></pre><h3 id="工作集"><a href="#工作集" class="headerlink" title="工作集"></a>工作集</h3><pre><code>工作集(驻留集)指某段时间间隔内，进程要访问的页面集合，合理选择工作集大小可以防止抖动现象
+</code></pre><h3 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/操作系统/" rel="tag"># 操作系统</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/12/[学习总结]操作系统_进程管理_死锁/" rel="next" title="进程管理-死锁">
+                <i class="fa fa-chevron-left"></i> 进程管理-死锁
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/16/[学习总结]操作系统_文件管理/" rel="prev" title="文件管理">
+                文件管理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存管理概念"><span class="nav-text">内存管理概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#内存管理的概念"><span class="nav-text">内存管理的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#覆盖和交换"><span class="nav-text">覆盖和交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连续分配管理方式"><span class="nav-text">连续分配管理方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非连续分配管理方式"><span class="nav-text">非连续分配管理方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟内存管理"><span class="nav-text">虚拟内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟内存管理的基本概念"><span class="nav-text">虚拟内存管理的基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求分页管理方式"><span class="nav-text">请求分页管理方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页面置换算法"><span class="nav-text">页面置换算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#页面分配策略"><span class="nav-text">页面分配策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抖动"><span class="nav-text">抖动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作集"><span class="nav-text">工作集</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#地址翻译"><span class="nav-text">地址翻译</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">35.3k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

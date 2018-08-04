@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1 线性表的定义和基本操作1.1 线性表的定义线性表是具有相同数据类型的n(n≧0)个数据元素的有限序列。在线性表中，除第一个元素外，每个元素有且仅有一个直接前驱；除最后一个元素外，每个元素有且仅有一个直接后继。线性表特点：  表中元素个数有限 表中元素具有逻辑顺序性 每个元素都是数据元素 元素的数据类型相同 表中元素具有抽象性  1.2 线性表的基本操作InitList(&amp;amp;L)Lengt">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性表">
+<meta property="og:url" content="http://yoursite.com/2018/07/26/[学习总结]数据结构_线性表/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="1 线性表的定义和基本操作1.1 线性表的定义线性表是具有相同数据类型的n(n≧0)个数据元素的有限序列。在线性表中，除第一个元素外，每个元素有且仅有一个直接前驱；除最后一个元素外，每个元素有且仅有一个直接后继。线性表特点：  表中元素个数有限 表中元素具有逻辑顺序性 每个元素都是数据元素 元素的数据类型相同 表中元素具有抽象性  1.2 线性表的基本操作InitList(&amp;amp;L)Lengt">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-28T02:44:26.164Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线性表">
+<meta name="twitter:description" content="1 线性表的定义和基本操作1.1 线性表的定义线性表是具有相同数据类型的n(n≧0)个数据元素的有限序列。在线性表中，除第一个元素外，每个元素有且仅有一个直接前驱；除最后一个元素外，每个元素有且仅有一个直接后继。线性表特点：  表中元素个数有限 表中元素具有逻辑顺序性 每个元素都是数据元素 元素的数据类型相同 表中元素具有抽象性  1.2 线性表的基本操作InitList(&amp;amp;L)Lengt">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/26/[学习总结]数据结构_线性表/"/>
+
+
+
+
+
+  <title>线性表 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/26/[学习总结]数据结构_线性表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">线性表</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-26T15:23:12+08:00">
+                2018-07-26
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-28T10:44:26+08:00">
+                2018-07-28
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据结构/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,908 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-线性表的定义和基本操作"><a href="#1-线性表的定义和基本操作" class="headerlink" title="1 线性表的定义和基本操作"></a>1 线性表的定义和基本操作</h2><h3 id="1-1-线性表的定义"><a href="#1-1-线性表的定义" class="headerlink" title="1.1 线性表的定义"></a>1.1 线性表的定义</h3><p>线性表是具有相同数据类型的n(n≧0)个数据元素的有限序列。在线性表中，除第一个元素外，每个元素有且仅有一个直接前驱；除最后一个元素外，每个元素有且仅有一个直接后继。<br>线性表特点：</p>
+<ul>
+<li>表中元素个数有限</li>
+<li>表中元素具有逻辑顺序性</li>
+<li>每个元素都是数据元素</li>
+<li>元素的数据类型相同</li>
+<li>表中元素具有抽象性</li>
+</ul>
+<h3 id="1-2-线性表的基本操作"><a href="#1-2-线性表的基本操作" class="headerlink" title="1.2 线性表的基本操作"></a>1.2 线性表的基本操作</h3><p>InitList(&amp;L)<br>Length(L)<br>LocateElem(L,e)<br>GetElem(L,i)<br>ListInsert(&amp;L,i,e)<br>ListDelect(&amp;L,i,&amp;e)<br>PrintList(L)<br>Empty(L)<br>DestoryList(&amp;L)  </p>
+<a id="more"></a>
+<h2 id="2-线性表的顺序表示"><a href="#2-线性表的顺序表示" class="headerlink" title="2 线性表的顺序表示"></a>2 线性表的顺序表示</h2><h3 id="2-1-顺序表的定义"><a href="#2-1-顺序表的定义" class="headerlink" title="2.1 顺序表的定义"></a>2.1 顺序表的定义</h3><p>线性表的顺序存储称为顺序表，顺序表的特点是表中元素的逻辑顺序与其物理顺序相同。<br>线性表的顺序存储类型描述如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MaxSize 100</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    ElemType data[MaxSize];</span><br><span class="line">    <span class="keyword">int</span> length;</span><br><span class="line">&#125;SqList;</span><br></pre></td></tr></table></figure></p>
+<p>上述采用静态分配方式分配内存，也可采用动态分配方式，描述如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> InitSie 100</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    ElemType *data;</span><br><span class="line">    <span class="keyword">int</span> MaxSie,length;</span><br><span class="line">&#125;SqList;</span><br></pre></td></tr></table></figure></p>
+<p>C语言中动态分配语句为<br><b>L.data=(ElemType*)malloca(sizeof(ElemType)*InitSize</b><br>C++中的动态分配语句是：<br><b>L.data= new ElemType(InitSize)</b>  </p>
+<p>顺序表的最主要特点是<strong>随机访问</strong>，即通过首地址和元素序号直接访问元素。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注：顺序表的存储结构是随机存取，而链表的存储结构是顺序存取，注意区分。</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-2-顺序表上基本操作的实现"><a href="#2-2-顺序表上基本操作的实现" class="headerlink" title="2.2 顺序表上基本操作的实现"></a>2.2 顺序表上基本操作的实现</h3><ol>
+<li><p>插入操作<br>插入算法的评价时间复杂度为O(n)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListInsert</span><span class="params">(SqList &amp;L,<span class="keyword">int</span> i,ElemType e)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i&lt;=<span class="number">1</span>||i&gt;L.length+<span class="number">1</span>)           <span class="comment">//判断i是否越界</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(L.length==MaxSize)            <span class="comment">//判断空间是否满</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=L.length;j&gt;=i;j--)&#123;    <span class="comment">//移动元素</span></span><br><span class="line">        L.data[j]=L.data[j<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    L.data[i<span class="number">-1</span>]=e;                   <span class="comment">//插入元素  </span></span><br><span class="line">    L.length++;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除操作<br>删除操作的时间复杂度为O(n)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">ListDelect</span><span class="params">(SqList &amp;L,<span class="keyword">int</span> i,ElemType &amp;e)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i&lt;<span class="number">1</span>||i&gt;L.length)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    e=L.data[i<span class="number">-1</span>];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=i<span class="number">-1</span>;j&lt;L.length<span class="number">-1</span>;j++)&#123;</span><br><span class="line">        L.data[j]=L.data[j+<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    L.length--;</span><br><span class="line">    <span class="keyword">return</span> ture;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>顺序查找/按值查找<br>在顺序表L中查找第一个元素等于e的元素，并返回其位序。<br>顺序查找的时间复杂度为O(n)</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">LocateElem</span><span class="params">(SqList L,ElemType e)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;L.length;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(L.data[i]==e)</span><br><span class="line">            <span class="keyword">return</span> i+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h2 id="3-线性表的链式表示"><a href="#3-线性表的链式表示" class="headerlink" title="3 线性表的链式表示"></a>3 线性表的链式表示</h2><h3 id="3-1-单链表的定义"><a href="#3-1-单链表的定义" class="headerlink" title="3.1 单链表的定义"></a>3.1 单链表的定义</h3><p>线性表的链式存储称为单链表，它通过一组任意的存储单元存储线性表中的元素。对每个链表结点有数据域和指针域，数据域存放该元素自身信息，指针域指向后继结点。<br>单链表的结构类型描述如下<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">LNode</span>&#123;</span></span><br><span class="line">    ElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">LNode</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125;LNode,*LinkList;</span><br></pre></td></tr></table></figure></p>
+<p>单链表中的元素离散地分布在存储空间中，不能直接访问。查找特定结点时，需要从表头开始遍历。依次查找。<br><strong>头结点</strong>： 在单链表的第一个结点之前附加一个节点，称为头结点。<br><strong>头指针</strong>：指向头结点的非空指针</p>
+<h3 id="3-2-单链表上基本操作的实现"><a href="#3-2-单链表上基本操作的实现" class="headerlink" title="3.2 单链表上基本操作的实现"></a>3.2 单链表上基本操作的实现</h3><ol>
+<li><p>头插法建立单链表<br>算法思想：将新节点插入到头结点之后。<br>时间复杂度：O(n)。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LinkList <span class="title">CreateList</span><span class="params">(LinkList &amp;L)</span></span>&#123;</span><br><span class="line">    LNode *s;</span><br><span class="line">    L=(LinkList)malloca(<span class="keyword">sizeof</span>(LinkList));</span><br><span class="line">    <span class="keyword">int</span> x;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">    <span class="keyword">while</span>(x!=<span class="number">9999</span>)&#123;</span><br><span class="line">        s=(LNode)malloca(<span class="keyword">sizeof</span>(LinkList));</span><br><span class="line">        s-&gt;data=x;</span><br><span class="line">        s-&gt;next=L-&gt;next;</span><br><span class="line">        L-&gt;next=s;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>采用尾插法建立单链表<br>算法思想：将新节点插入到表尾，修改表尾指针</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LinkList <span class="title">CreateList</span><span class="params">(LinkList &amp;L)</span></span>&#123;</span><br><span class="line">    LNode *s;</span><br><span class="line">    L=(LinkList)malloca(<span class="keyword">sizeof</span>(LinkList));          <span class="comment">//为表分配内存</span></span><br><span class="line">    LNode *r = L;                                   <span class="comment">//临时指针r用于指向表尾元素</span></span><br><span class="line">    <span class="keyword">int</span> x;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">    <span class="keyword">while</span>(x!=<span class="number">9999</span>)&#123;                                 <span class="comment">//以x=9999为循环结束标志</span></span><br><span class="line">        s=(LNode*)malloca(<span class="keyword">sizeof</span>(LinkList));        <span class="comment">//为新节点分配内存</span></span><br><span class="line">        s-&gt;data=x;                                  <span class="comment">//</span></span><br><span class="line">        r-&gt;next=s;                                  <span class="comment">//连接新节点</span></span><br><span class="line">        r = s;                                      <span class="comment">//修改表尾指针</span></span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%d"</span>,&amp;x);</span><br><span class="line">    &#125;</span><br><span class="line">    r-&gt;next = <span class="literal">NULL</span>;                                 <span class="comment">//表尾的next域为空</span></span><br><span class="line">    <span class="keyword">return</span> L;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按序号查找结点值<br>算法思想：从头指针开始，顺指针next域逐个往下搜索,找到第i个结点。<br>时间复杂度：O(n)。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LNode *<span class="title">GetElem</span><span class="params">(LinkList L,<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> count=<span class="number">0</span>;</span><br><span class="line">    LNode *p = L-&gt;next;          <span class="comment">//找到第一个节点</span></span><br><span class="line">    <span class="keyword">if</span>(i==<span class="number">0</span>)                     <span class="comment">//若查找第0个节点，返回链表的头结点</span></span><br><span class="line">        <span class="keyword">return</span> L;</span><br><span class="line">    <span class="keyword">if</span>(i&lt;<span class="number">1</span>)                      <span class="comment">//越界判断</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>；</span><br><span class="line">    <span class="keyword">while</span>(count&lt;i&amp;&amp;p)&#123;           <span class="comment">//边计数边移动指针，找到第i个结点</span></span><br><span class="line">        p=p-&gt;next;</span><br><span class="line">        count++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>按值查找表结点<br>算法思想：从第一个结点开始，依次比对结点数据域和给定值e，若有相等的返回该结点指针，否则返回NULL。<br>时间复杂度：O(n)。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">LNode *<span class="title">LocateElem</span><span class="params">(LinkList L,ElemType e)</span></span>&#123;</span><br><span class="line">    LNode *p = L-&gt;next;             <span class="comment">//第一个结点</span></span><br><span class="line">    <span class="keyword">while</span>(p!=<span class="literal">NULL</span>&amp;&amp;P-&gt;data!=e)&#123;     <span class="comment">//判断结点是否存在后再判断data域是否相等</span></span><br><span class="line">        p=p-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>结点插入操作<br>算法思想：先找到第i-1个结点，再插入新的第i个结点，之后修改指针<br>时间复杂度：O(n)。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LinkListInsert</span><span class="params">(LinkList &amp;L,<span class="keyword">int</span> i,ElemType e)</span></span>&#123;</span><br><span class="line">    LNode *p = GetElem(LinkList L,i<span class="number">-1</span>);    <span class="comment">//找到第i-1个结点</span></span><br><span class="line">    <span class="keyword">if</span>(p==<span class="literal">NULL</span>)                            <span class="comment">//判断结点是否存在</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    LNode *s=(LNode*)malloca(<span class="keyword">sizeof</span>(LNode));  <span class="comment">//创建新结点</span></span><br><span class="line">    s-&gt;data = e;</span><br><span class="line">    s-&gt;next = p-&gt;next</span><br><span class="line">    p-&gt;next = s;</span><br><span class="line">    <span class="keyword">return</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>删除结点操作<br>算法思想：先找到第i-1个结点，修改其指针域为下下个结点，再释放的i个结点<br>时间复杂度：O(n)。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LinkListDelect</span><span class="params">(LinkList &amp;L,<span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">    LNode *p = GetElem(LinkList L,i<span class="number">-1</span>);        <span class="comment">//找到第i-1个结点</span></span><br><span class="line">    <span class="keyword">if</span>(p==<span class="literal">NULL</span>||p-&gt;next==<span class="literal">NULL</span>)                <span class="comment">//若第i-1或的i个结点不存在，直接返回</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    q = p-&gt;next;                              <span class="comment">//暂存待删除结点</span></span><br><span class="line">    p-&gt;next=p-&gt;next-&gt;next;</span><br><span class="line">    <span class="built_in">free</span>(q);                                  <span class="comment">//释放存储空间</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="2-3-双链表"><a href="#2-3-双链表" class="headerlink" title="2.3 双链表"></a>2.3 双链表</h3><p>双链表结点类型描述<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">DNode</span>&#123;</span></span><br><span class="line">    ElemType data;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">DNode</span> *<span class="title">prior</span>,*<span class="title">next</span>;</span></span><br><span class="line">&#125;DNode,*DLinklist;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><p>双链表的插入操作<br>在双链表中的p指针所指结点后插入新节点*s的代码片段</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s-&gt;next = p-&gt;next;</span><br><span class="line">p-&gt;next-&gt;prior = s;</span><br><span class="line">p-&gt;next =s;</span><br><span class="line">s-&gt;prior =p;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>双链表的删除操作</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">p-&gt;next = q-&gt;next;</span><br><span class="line">q-&gt;next-&gt;prior = p;</span><br><span class="line"><span class="built_in">free</span>(q);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="2-4-循坏链表"><a href="#2-4-循坏链表" class="headerlink" title="2.4 循坏链表"></a>2.4 循坏链表</h3><ol>
+<li>循环单链表<br>循环单链表中的最后一个结点指针指向头结点。</li>
+<li>循环双链表<br>在循环单链表和双链表基础上，头结点的poior指针指向表尾结点。</li>
+</ol>
+<h3 id="2-5-静态链表"><a href="#2-5-静态链表" class="headerlink" title="2.5 静态链表"></a>2.5 静态链表</h3><p>静态链表结点包含数据域和指针域，这里的指针是结点的相对地址，静态链表需要预先分配一块连续的内存空间。</p>
+<h3 id="2-6-顺序表和链表的比较"><a href="#2-6-顺序表和链表的比较" class="headerlink" title="2.6 顺序表和链表的比较"></a>2.6 顺序表和链表的比较</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>顺序表</th>
+<th>链表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存取方式</td>
+<td>顺序存取和随机存取</td>
+<td>顺序存取</td>
+</tr>
+<tr>
+<td>存储方式</td>
+<td>逻辑相邻元素物理存储位置也相邻</td>
+<td>逻辑相邻元素物理存储位置不一定相邻</td>
+</tr>
+<tr>
+<td>操作复杂度</td>
+<td>查找、插入和删除：O(n)</td>
+<td>查找、插入和删除:O(1)</td>
+</tr>
+<tr>
+<td>空间分配</td>
+<td>静态存储分配</td>
+<td>动态存储分配</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/25/[学习总结]数据结构_绪论/" rel="next" title="数据结构绪论">
+                <i class="fa fa-chevron-left"></i> 数据结构绪论
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/28/[学习总结]数据结构_栈和队列/" rel="prev" title="栈和队列">
+                栈和队列 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-线性表的定义和基本操作"><span class="nav-text">1 线性表的定义和基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-线性表的定义"><span class="nav-text">1.1 线性表的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-线性表的基本操作"><span class="nav-text">1.2 线性表的基本操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-线性表的顺序表示"><span class="nav-text">2 线性表的顺序表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-顺序表的定义"><span class="nav-text">2.1 顺序表的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-顺序表上基本操作的实现"><span class="nav-text">2.2 顺序表上基本操作的实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-线性表的链式表示"><span class="nav-text">3 线性表的链式表示</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-单链表的定义"><span class="nav-text">3.1 单链表的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-单链表上基本操作的实现"><span class="nav-text">3.2 单链表上基本操作的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-双链表"><span class="nav-text">2.3 双链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-循坏链表"><span class="nav-text">2.4 循坏链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-静态链表"><span class="nav-text">2.5 静态链表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-顺序表和链表的比较"><span class="nav-text">2.6 顺序表和链表的比较</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">35.3k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
