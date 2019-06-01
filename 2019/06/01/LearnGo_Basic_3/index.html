@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Go，学习笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="说明本文为GO语言基础的学习笔记，涉及异常处理和文件读写。">
+<meta name="keywords" content="Go，学习笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hikari">
+<meta property="og:url" content="http://yoursite.com/2019/06/01/LearnGo_Basic_3/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="说明本文为GO语言基础的学习笔记，涉及异常处理和文件读写。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-01T05:03:47.254Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hikari">
+<meta name="twitter:description" content="说明本文为GO语言基础的学习笔记，涉及异常处理和文件读写。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/01/LearnGo_Basic_3/"/>
+
+
+
+
+
+  <title> | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/LearnGo_Basic_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-01T12:07:12+08:00">
+                2019-06-01
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-01T13:03:47+08:00">
+                2019-06-01
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,055 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>本文为GO语言基础的学习笔记，涉及异常处理和文件读写。<br><a id="more"></a><br>异常处理和文件读写</p>
+<h2 id="error-接口"><a href="#error-接口" class="headerlink" title="error 接口"></a>error 接口</h2><p>error 用于提示编译时异常和运行时异常等<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"errors"</span></span><br><span class="line">)</span><br><span class="line"><span class="function">func <span class="title">divide</span><span class="params">(a <span class="keyword">int</span>, b <span class="keyword">int</span>)</span> <span class="params">(value <span class="keyword">int</span>, err error)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> b == <span class="number">0</span> &#123;</span><br><span class="line">		err = errors.New(<span class="string">"0不能作为除数"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		value = a / b</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">func main() &#123;</span><br><span class="line">	value,err:=divide(<span class="number">10</span>,<span class="number">0</span>)</span><br><span class="line">	<span class="comment">//err不过不等于空表示有错误信息</span></span><br><span class="line">	<span class="keyword">if</span> err != nil&#123;</span><br><span class="line">		fmt.Println(err)</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Println(value)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="panic-异常处理"><a href="#panic-异常处理" class="headerlink" title="panic 异常处理"></a>panic 异常处理</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//Do SomeThing</span></span><br><span class="line">	<span class="built_in">panic</span>(<span class="string">"hello, world"</span>) <span class="comment">//调用后程序终止运行</span></span><br><span class="line">	<span class="comment">//以后的代码不会被运行</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="defer-延迟调用"><a href="#defer-延迟调用" class="headerlink" title="defer 延迟调用"></a>defer 延迟调用</h2><p>defer函数会在程序运行结束前调用，<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	a := <span class="number">10</span></span><br><span class="line">	b := <span class="number">20</span></span><br><span class="line">	<span class="keyword">defer</span> <span class="function"><span class="keyword">func</span><span class="params">(a <span class="keyword">int</span> , b <span class="keyword">int</span>)</span></span> &#123;</span><br><span class="line">		fmt.Println(a)</span><br><span class="line">		fmt.Println(b)</span><br><span class="line">	&#125;(a,b)  <span class="comment">//虽然是延迟调用，但是传入参数已经提前确定</span></span><br><span class="line">	a = <span class="number">100</span></span><br><span class="line">	b = <span class="number">200</span></span><br><span class="line">	fmt.Println(a)</span><br><span class="line">	fmt.Println(b)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//输出顺序100， 200，  10，  20</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Stdin-标准输入"><a href="#Stdin-标准输入" class="headerlink" title="Stdin 标准输入"></a>Stdin 标准输入</h2><h3 id="os-Stdin中读取"><a href="#os-Stdin中读取" class="headerlink" title="os.Stdin中读取"></a>os.Stdin中读取</h3><p>  os.Stdin.Read()<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">func <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">//申请缓存空间</span></span><br><span class="line">        var buffer [<span class="number">512</span>]byte</span><br><span class="line">        <span class="comment">//将输入读入缓存</span></span><br><span class="line">        n, err := os.Stdin.Read(buffer[:])</span><br><span class="line">        <span class="keyword">if</span> err != nil &#123;</span><br><span class="line">                fmt.Println(<span class="string">"read error:"</span>, err)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        fmt.Println(<span class="string">"count:"</span>, n, <span class="string">", msg:"</span>, <span class="built_in">string</span>(buffer[:]))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="bufio读取输入"><a href="#bufio读取输入" class="headerlink" title="bufio读取输入"></a>bufio读取输入</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line"></span><br><span class="line">        <span class="string">"bufio"</span></span><br><span class="line">        <span class="string">"fmt"</span></span><br><span class="line">        <span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function">func <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        reader := bufio.NewReader(os.Stdin)</span><br><span class="line"></span><br><span class="line">        result, err := reader.ReadString(<span class="string">'\n'</span>)</span><br><span class="line">        <span class="keyword">if</span> err != nil &#123;</span><br><span class="line">                fmt.Println(<span class="string">"read error:"</span>, err)</span><br><span class="line">        &#125;</span><br><span class="line">        fmt.Println(<span class="string">"result:"</span>, result)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><h3 id="文件创建"><a href="#文件创建" class="headerlink" title="文件创建"></a>文件创建</h3><p>创建文件： fp，err = os.Creat(“文件路径”)<br>打开文件: fp.OpenFile()<br>文件关闭： fp.Close()<br>文件写入： fp.WriteString(“content”)  fp. Write([]byte)<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fileCreate</span><span class="params">()</span></span>&#123;</span><br><span class="line">	fp, err := os.Create(<span class="string">"F:/test.txt"</span>)</span><br><span class="line">	<span class="keyword">if</span> err!= <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"create file failed"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> fp.Close()</span><br><span class="line">	n ,_ := fp.WriteString(<span class="string">"Hello Nanari\r\n"</span>)</span><br><span class="line">	fmt.Println(n)</span><br><span class="line">	fp.WriteString(<span class="string">"O hai yo\r\n"</span>)</span><br><span class="line">	<span class="comment">//通过字符串获取字符切片</span></span><br><span class="line">	b := []<span class="keyword">byte</span>(<span class="string">"Good morning Nanari"</span>)</span><br><span class="line">	fp.Write(b)</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">fileOpen</span><span class="params">()</span></span>&#123;</span><br><span class="line">	fp, err := os.Open(<span class="string">"F:/test.txt"</span>)</span><br><span class="line">	<span class="keyword">if</span> err!=<span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"Open File Error"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	b :=<span class="built_in">make</span>([]<span class="keyword">byte</span>,<span class="number">256</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">//fp.Read(b)</span></span><br><span class="line">	<span class="comment">//fmt.Println((string(b)))</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//for循环调用两次</span></span><br><span class="line">	<span class="comment">// err 的值变化： nil ——&gt; EOF</span></span><br><span class="line">	<span class="keyword">for</span>&#123;</span><br><span class="line">		n,err := fp.Read(b)</span><br><span class="line">		<span class="keyword">if</span> err == io.EOF&#123;</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">		fmt.Println((<span class="keyword">string</span>(b[:n])))</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Openwrite</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//os.OpenFile()可以设置读写权限</span></span><br><span class="line">	<span class="comment">//os.Open()是只读的</span></span><br><span class="line">	fp, err := os.OpenFile(<span class="string">"F:/test.txt"</span>,os.O_RDWR,<span class="number">6</span>)</span><br><span class="line">	<span class="keyword">if</span> err!= <span class="literal">nil</span>&#123;</span><br><span class="line">		fmt.Println(<span class="string">"Open Fail"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> fp.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">//建立缓存用于接收输入</span></span><br><span class="line">	b := <span class="built_in">make</span>([]<span class="keyword">byte</span>,<span class="number">256</span>)</span><br><span class="line">	os.Stdin.Read(b)</span><br><span class="line">	<span class="comment">// 找到文件末尾，在其 0 byte之后写入</span></span><br><span class="line">	n,_ := fp.Seek(<span class="number">0</span>,io.SeekEnd)</span><br><span class="line">	fp.WriteAt(b,n )</span><br><span class="line">	</span><br><span class="line">	fmt.Println(<span class="keyword">string</span>(b))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="文件拷贝"><a href="#文件拷贝" class="headerlink" title="文件拷贝"></a>文件拷贝</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">copyFile</span><span class="params">()</span></span>&#123;</span><br><span class="line">	fp1, err1 := os.Open(<span class="string">"F:/test.txt"</span>)</span><br><span class="line">	<span class="keyword">if</span> err1 != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"Open Error"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	fp2, err2 := os.Create(<span class="string">"F:/copy.txt"</span>)</span><br><span class="line">	<span class="keyword">if</span>  err2 != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"Craate Error"</span>)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> fp1.Close()</span><br><span class="line">	<span class="keyword">defer</span> fp2.Close()</span><br><span class="line"></span><br><span class="line">	b := <span class="built_in">make</span>([]<span class="keyword">byte</span>,<span class="number">256</span>)</span><br><span class="line">	<span class="keyword">for</span>&#123;</span><br><span class="line">		n,err := fp1.Read(b)</span><br><span class="line">		<span class="keyword">if</span> err== io.EOF&#123;</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">		fp2.Write(b[:n])</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println(<span class="string">"copy success"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h2><p>查找子串： sub := strings.Contains(str,”subString”) //返回值为布尔类型<br>查找子串并返回下标： index := strings.Index(str,”substring”)<br>拼接子串： str_join := strings.Join(str,” “)<br>字符串重复： str := strings.Repeat(str,2)<br>字符串替换： str := strings,Replace(sourceStr,toBereplacedStr,ReplaceStr,RepalceTime)</p>
+<pre><code>* ReplaceTime = -1 表示全部替换  
+</code></pre><p>字符串切割，返回[]string: s := strings.Split(sr,”-“)<br>字符串去首尾： s:= strings.Trim(str,”sub”)<br>字符串去空格： s:= strings.Fields(str)<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">stringsDemo</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="comment">//查找</span></span><br><span class="line">	str := <span class="string">"Hello"</span></span><br><span class="line">	value := strings.Contains(str,<span class="string">"lo"</span>)</span><br><span class="line">	i := strings.Index(str,<span class="string">"lo"</span>)</span><br><span class="line">	fmt.Println(i) <span class="comment">//3</span></span><br><span class="line">	<span class="keyword">if</span> value &#123;</span><br><span class="line">		fmt.Println(str,<span class="string">"contain"</span>,<span class="string">"lo"</span>)  <span class="comment">//Hello contain lo</span></span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"no find"</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//拼接</span></span><br><span class="line">	str2 := []<span class="keyword">string</span>&#123;<span class="string">"I"</span>,<span class="string">"am"</span>,<span class="string">"ironman"</span>&#125;</span><br><span class="line">	str3 := strings.Join(str2,<span class="string">" "</span>)</span><br><span class="line">	fmt.Println(str3) <span class="comment">//I am ironman</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//重复</span></span><br><span class="line">	str4 := strings.Repeat(str,<span class="number">2</span>)</span><br><span class="line">	fmt.Println(str4) <span class="comment">//HelloHello</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//替换</span></span><br><span class="line">	str5 := strings.Replace(str4,<span class="string">"He"</span>,<span class="string">"She"</span>,<span class="number">-1</span>)</span><br><span class="line">	fmt.Println(str5) <span class="comment">//ShelloShello</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//切割</span></span><br><span class="line">	number := <span class="string">"123-345-567-789"</span></span><br><span class="line">	str6 := strings.Split(number,<span class="string">"-"</span>)</span><br><span class="line">	fmt.Println(str6) <span class="comment">//[123 345 567 789]</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//去首尾</span></span><br><span class="line">	str7 :=<span class="string">"++++++++Cplusplus+++++++"</span></span><br><span class="line">	str8 := strings.Trim(str7,<span class="string">"+"</span>)</span><br><span class="line">	fmt.Println(str8)<span class="comment">//Cplusplus</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//去空格</span></span><br><span class="line">	str9 :=<span class="string">"karata    dai   jyo  bu     ?"</span></span><br><span class="line">	str10 := strings.Fields(str9)</span><br><span class="line">	fmt.Println(str10)<span class="comment">//[karata dai jyo bu ?]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Go，学习笔记/" rel="tag"># Go，学习笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/01/goplExercise_1/" rel="next" title="Gopl 练习题题解">
+                <i class="fa fa-chevron-left"></i> Gopl 练习题题解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/01/goProgramLanguage_9/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#error-接口"><span class="nav-text">error 接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#panic-异常处理"><span class="nav-text">panic 异常处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#defer-延迟调用"><span class="nav-text">defer 延迟调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stdin-标准输入"><span class="nav-text">Stdin 标准输入</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#os-Stdin中读取"><span class="nav-text">os.Stdin中读取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bufio读取输入"><span class="nav-text">bufio读取输入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件"><span class="nav-text">文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文件创建"><span class="nav-text">文件创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件读写"><span class="nav-text">文件读写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件拷贝"><span class="nav-text">文件拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串处理"><span class="nav-text">字符串处理</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">50.6k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

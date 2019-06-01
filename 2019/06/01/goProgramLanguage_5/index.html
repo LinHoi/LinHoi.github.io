@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="The Go Programming Language说明本文为GOPL第五章学习笔记">
+<meta name="description" content="说明本文为GOPL第五章学习笔记">
 <meta name="keywords" content="Gopl，学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gopl 第五章 函数">
 <meta property="og:url" content="http://yoursite.com/2019/06/01/goProgramLanguage_5/index.html">
 <meta property="og:site_name" content="Hikari">
-<meta property="og:description" content="The Go Programming Language说明本文为GOPL第五章学习笔记">
+<meta property="og:description" content="说明本文为GOPL第五章学习笔记">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-01T04:37:42.837Z">
+<meta property="og:updated_time" content="2019-06-01T04:50:07.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gopl 第五章 函数">
-<meta name="twitter:description" content="The Go Programming Language说明本文为GOPL第五章学习笔记">
+<meta name="twitter:description" content="说明本文为GOPL第五章学习笔记">
 
 
 
@@ -308,7 +308,7 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-01T12:37:42+08:00">
+              <time title="更新于" itemprop="dateModified" datetime="2019-06-01T12:50:07+08:00">
                 2019-06-01
               </time>
             
@@ -358,7 +358,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,494 字
+                  1,490 字
                 </span>
               
 
@@ -383,7 +383,7 @@
       
 
       
-        <h1 id="The-Go-Programming-Language"><a href="#The-Go-Programming-Language" class="headerlink" title="The Go Programming Language"></a>The Go Programming Language</h1><h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>本文为GOPL第五章学习笔记<br><a id="more"></a></p>
+        <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>本文为GOPL第五章学习笔记<br><a id="more"></a></p>
 <h2 id="第五章-函数"><a href="#第五章-函数" class="headerlink" title="第五章 函数"></a>第五章 函数</h2><h3 id="遍历获取一个网址的全部url"><a href="#遍历获取一个网址的全部url" class="headerlink" title="遍历获取一个网址的全部url"></a>遍历获取一个网址的全部url</h3><h4 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h4><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"golang.org/x/net/html"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"><span class="comment">//本框架代码忽略所有error判断</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//遍历获取全部链接</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">visit</span><span class="params">(links []<span class="keyword">string</span>, n *html.Node)</span> []<span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> n.Type == html.ElementNode &amp;&amp; n.Data == <span class="string">"a"</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> _, a := <span class="keyword">range</span> n.Attr &#123;</span><br><span class="line">			<span class="keyword">if</span> a.Key == <span class="string">"href"</span>  &amp;&amp; strings.Contains(a.Val,<span class="string">"http"</span>) &#123;</span><br><span class="line">				links = <span class="built_in">append</span>(links, a.Val)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> c := n.FirstChild; c != <span class="literal">nil</span>; c = c.NextSibling &#123;</span><br><span class="line">		links = visit(links, c)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> links</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//解析根地址</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findlinks2</span><span class="params">()</span> []<span class="title">string</span></span>&#123;</span><br><span class="line">		resp,_ := http.Get(<span class="string">"http://hao123.com"</span>)</span><br><span class="line">		doc,_ := html.Parse(resp.Body)</span><br><span class="line">		resp.Body.Close()</span><br><span class="line">		<span class="keyword">return</span> visit(<span class="literal">nil</span>,doc)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	links := findlinks2()</span><br><span class="line">	<span class="keyword">for</span> _,link := <span class="keyword">range</span> links&#123;</span><br><span class="line">		fmt.Println(link)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <hr>
 <h3 id="获取一个网页的全部标签"><a href="#获取一个网页的全部标签" class="headerlink" title="获取一个网页的全部标签"></a>获取一个网页的全部标签</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"golang.org/x/net/html"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">)</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	url := <span class="string">"http://baidu.com"</span></span><br><span class="line">	outline(url)</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">outline</span><span class="params">(url <span class="keyword">string</span>)</span></span>&#123;</span><br><span class="line">	resp,_ := http.Get(url)</span><br><span class="line">	<span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">	doc,_ := html.Parse(resp.Body)</span><br><span class="line">	forEachNode(doc,startElement,endElement)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//将函数pre 和post 作为参数传入</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">forEachNode</span><span class="params">(n *html.Node,pre,post <span class="keyword">func</span>(n *html.Node)</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//若pre函数不为空则调用</span></span><br><span class="line">	<span class="keyword">if</span> pre != <span class="literal">nil</span>&#123;</span><br><span class="line">		pre(n)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> c:= n.FirstChild;c!=<span class="literal">nil</span>;c = c.NextSibling&#123;</span><br><span class="line">		forEachNode(c,pre,post)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//若post函数不为空则调用</span></span><br><span class="line">	<span class="keyword">if</span> post != <span class="literal">nil</span>&#123;</span><br><span class="line">		post(n)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> depth <span class="keyword">int</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">startElement</span><span class="params">(n *html.Node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> n.Type == html.ElementNode&#123;</span><br><span class="line">		fmt.Printf(<span class="string">"%*s&lt;%s&gt;\n"</span>,depth*<span class="number">2</span>,<span class="string">""</span>,n.Data)</span><br><span class="line">		depth++</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">endElement</span><span class="params">(n *html.Node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> n.Type == html.ElementNode&#123;</span><br><span class="line">		depth--</span><br><span class="line">		fmt.Printf(<span class="string">"%*s&lt;%s&gt;\n"</span>,depth*<span class="number">2</span>,<span class="string">""</span>,n.Data)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*输出</span></span><br><span class="line"><span class="comment">&lt;html&gt;</span></span><br><span class="line"><span class="comment">  &lt;head&gt;</span></span><br><span class="line"><span class="comment">    &lt;meta&gt;</span></span><br><span class="line"><span class="comment">    &lt;meta&gt;</span></span><br><span class="line"><span class="comment">  &lt;head&gt;</span></span><br><span class="line"><span class="comment">  &lt;body&gt;</span></span><br><span class="line"><span class="comment">  &lt;body&gt;</span></span><br><span class="line"><span class="comment">&lt;html&gt;</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
@@ -421,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/01/goplExercise_1/" rel="next" title="Gopl 练习题题解">
-                <i class="fa fa-chevron-left"></i> Gopl 练习题题解
+              <a href="/2019/06/01/goProgramLanguage_11/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
               </a>
             
           </div>
@@ -431,8 +431,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/01/goProgramLanguage_6/" rel="prev" title="Gopl 第六章 方法">
-                Gopl 第六章 方法 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/01/goProgramLanguage_8/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -514,7 +514,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -536,7 +536,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -585,7 +585,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#The-Go-Programming-Language"><span class="nav-text">The Go Programming Language</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五章-函数"><span class="nav-text">第五章 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历获取一个网址的全部url"><span class="nav-text">遍历获取一个网址的全部url</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#框架"><span class="nav-text">框架</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取一个网页的全部标签"><span class="nav-text">获取一个网页的全部标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓扑排序"><span class="nav-text">拓扑排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#层次遍历，遍历一个URL所能到达的全部URL"><span class="nav-text">层次遍历，遍历一个URL所能到达的全部URL</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五章-函数"><span class="nav-text">第五章 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#遍历获取一个网址的全部url"><span class="nav-text">遍历获取一个网址的全部url</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#框架"><span class="nav-text">框架</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#获取一个网页的全部标签"><span class="nav-text">获取一个网页的全部标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓扑排序"><span class="nav-text">拓扑排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#层次遍历，遍历一个URL所能到达的全部URL"><span class="nav-text">层次遍历，遍历一个URL所能到达的全部URL</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -619,7 +619,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">41.6k</span>
+    <span title="Site words total count">50.6k</span>
   
 </div>
 
