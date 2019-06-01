@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Mysql," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1 基本命令查看：    show databases；    show tables； 创建：    create database basename charset utf8； 删除：    drop database basename； 建表语句:    create table stu(    snum int,    sname varchar(10)    )engine myisam">
+<meta name="keywords" content="Mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql基本语法">
+<meta property="og:url" content="http://yoursite.com/2018/08/07/[学习总结]数据库_MySQL/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="1 基本命令查看：    show databases；    show tables； 创建：    create database basename charset utf8； 删除：    drop database basename； 建表语句:    create table stu(    snum int,    sname varchar(10)    )engine myisam">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-08-08T01:16:12.193Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySql基本语法">
+<meta name="twitter:description" content="1 基本命令查看：    show databases；    show tables； 创建：    create database basename charset utf8； 删除：    drop database basename； 建表语句:    create table stu(    snum int,    sname varchar(10)    )engine myisam">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/07/[学习总结]数据库_MySQL/"/>
+
+
+
+
+
+  <title>MySql基本语法 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/07/[学习总结]数据库_MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySql基本语法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-07T21:37:12+08:00">
+                2018-08-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-08-08T09:16:12+08:00">
+                2018-08-08
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  983 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-基本命令"><a href="#1-基本命令" class="headerlink" title="1 基本命令"></a>1 基本命令</h2><p><strong>查看</strong>：<br>    show databases；<br>    show tables；</p>
+<p><strong>创建</strong>：<br>    create database basename charset utf8；</p>
+<p><strong>删除</strong>：<br>    drop database basename；</p>
+<p><strong>建表语句</strong>:<br>    create table stu(<br>    snum int,<br>    sname varchar(10)<br>    )engine myisam charset utf8;</p>
+<a id="more"></a>
+<p><strong>删除表</strong>:<br>    drop table stu；</p>
+<p><strong>重命名表</strong>:<br>    rename table stu to newstu；</p>
+<p><strong>插入数据</strong>:<br>    insert into newstu values<br>    (1,”wang”),<br>    (2,”lin”);</p>
+<p><strong>查看内容</strong>：<br>    select * from newstu;</p>
+<p><strong>清空表数据</strong>：<br>    truncate newstu;</p>
+<h2 id="2-表的增删改查"><a href="#2-表的增删改查" class="headerlink" title="2 表的增删改查"></a>2 表的增删改查</h2><p><strong>输出sql文件</strong>：<br>    tee D:\xxx.sql<br><strong>建表语句</strong>：<br>    create table class(<br>    id int primary key auto_increment,<br>    sname varchar(10) not null default ‘’,<br>    gender char(1) not null default ‘’,<br>    company varchar(20) not null default ‘’,<br>    salary decimal(6,2) not null default 0.00,<br>    fanbu smallint not null default 0<br>    )engine myisam charset utf8;</p>
+<blockquote>
+<p>建表过程就是对各个字段进行声明的过程</p>
+</blockquote>
+<p><strong>查看表结构</strong>：<br>    desc class；</p>
+<p><strong>添加</strong>：<br>    insert into class<br>    (id,sname,gender,company,salary,fanbu)<br>    values<br>    (4,’xxx’,’x’,’xxxx’,1111.11,111);</p>
+<p><strong>修改数据值</strong>：<br>    update tablename<br>    set fanbu=999<br>    where id=6 and sname=‘xxx’;</p>
+<p><strong>修改表结构</strong>：<br>    加列：<br>    alter table 表名 add 列名称 列类型 列参数；（加的列处于表的最后）<br>    alter table 表名 add 列名称 列类型 列参数 after 某列；<br>    alter table 表名 add 列名称 列类型 列参数 first；<br>    删除列：<br>    alter table 表名 drop 列名；<br>    修改列参数：<br>    alter table 表名 modify 列名 列类型 列参数；<br>    修改列名和列类型：<br>    alter table 表名 change 旧列名 新列名 列类型 列参数；</p>
+<p><strong>删除</strong>：<br>    delete from表名<br>    where expr</p>
+<p><strong>查找</strong>：<br>    select sname，company，salary from class<br>    where id=3</p>
+<blockquote>
+<p>  【注】select <em> 表示选择整行<br>  【记忆】：select 列名 from 表名 where 表达式<br>  【查询模型】：把列看做变量，遍历每一行，对哪一行where表达式为真，哪一行就被选出<br><em>*where表达式</em></em>：<br>    where后接表达式，表达式的类型可以是：<br>    in（a,s,d,f）<br>    not in (q,e)<br>    between a and b<br>    and<br>    or<br>    like<br>【注】like用于模糊查询<br>例如 where name like ‘xxx%’；<br>%匹配任意字符<br>_匹配任意单一字符</p>
+</blockquote>
+<h2 id="3-查询进阶"><a href="#3-查询进阶" class="headerlink" title="3 查询进阶"></a>3 查询进阶</h2><p><strong>group by</strong>：<br>    group by用于结合聚合函数，根据一个或对多个列对结果集进行分组<br>    常用聚合函数有：<br>    max<br>    min<br>    sum<br>    avg<br>    count</p>
+<p><strong>having</strong>：<br>    与where直接对表进行操作不同<br>    having+表达式用于对表的结果集进行操作</p>
+<blockquote>
+<p>where group having 综合运用<br>要求：查询出2门及2门以上不及格者的平均成绩（难度在于所有成绩的平均成绩）<br>mysql&gt; insert into result<br>    -&gt; values<br>    -&gt; (‘张三’,’数学’,90),<br>    -&gt; (‘张三’,’语文’,50),<br>    -&gt; (‘张三’,’地理’,40),<br>    -&gt; (‘李四’,’语文’,55),<br>    -&gt; (‘李四’,’政治’,45),<br>    -&gt; (‘王五’,’政治’,38)<br>    -&gt; ;<br>mysql&gt; select * from result;<br>+————+————-+———-+<br>| name   | subject | score |<br>+————+————-+———-+<br>| 张三   | 数学    |    90 |<br>| 张三   | 语文    |    50 |<br>| 张三   | 地理    |    40 |<br>| 李四   | 语文    |    55 |<br>| 李四   | 政治    |    45 |<br>| 王五   | 政治    |    38 |<br>+————+————-+———-+<br>mysql&gt; select name,avg(score),sum(score<60) as="" c="" -=""> from result<br>    -&gt; group by name<br>    -&gt; having c&gt;=2;<br>+————+——————+———+<br>| name   | avg(score) | c    |<br>+————+——————+———+<br>| 张三   |    60.0000 |    2 |<br>| 李四   |    50.0000 |    2 |<br>+————+——————+———+</60)></p>
+</blockquote>
+<p><strong>order by</strong>：<br>    order by对结果集进行排序，order需要在where、group和having后执行。<br>    “order by 列名 desc”为降序排序；“order by 列名 asc ”为升序排序。</p>
+<p><strong>limit</strong>：<br>    limit用于限制结果条数，语句放在最后。<br>    语法为：limit[offset] N<br>    offset:偏移量———-&gt;跳过offset行<br>    N————-&gt;取出条目</p>
+<h2 id="4-子查询"><a href="#4-子查询" class="headerlink" title="4 子查询"></a>4 子查询</h2><p><strong>where型子查询</strong>：<br>    把内层查询结果作为外层查询的比较条件，即sql语句的嵌套<br>    例：<br>    SELECT goods_id,goods_name FROM goods<br>    WHERE goods_id IN<br>    (SELECT MAX(goods_id) FROM goods GROUP BY cat_id);</p>
+<p><strong>from型子查询</strong>：<br>    内层sql的查询结果作为一张临时表提供给外层sql再次查询<br>    例：<br>    select * from<br>    (select goods_id,goods_name,cat_id from goods<br>    order by cat_id asc,goods_id desc) as tmp<br>    group by cat_id; </p>
+<h2 id="5-连接"><a href="#5-连接" class="headerlink" title="5 连接"></a>5 连接</h2><p><strong>全连接</strong>(两表相乘)：<br>    select * from table1,table2;</p>
+<p><strong>左连接</strong>：<br>    假设A表在左（不动），B表在A表的右边滑动<br>    A表与B表通过一个关系来筛选B的表的行<br>    A left join B on 条件     条件为真，则B表对应的行取出<br>    例：<br>    select goods_id,goods_name,goods.cat_id,cat_name<br>    from goods left join category<br>    on goods.cat_id = category.cat_id;</p>
+<p><strong>右连接</strong>：<br>    A left join B 等价于 B right join A</p>
+<p><strong>内连接</strong>：<br>    A inner join B 就是左右连接取交集</p>
+<p><strong>union</strong>:<br>    union合并2条或多条语句的结果。<br>    语法：sql1 union sql2</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/05/[学习总结]数据结构_排序/" rel="next" title="排序">
+                <i class="fa fa-chevron-left"></i> 排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/01/goplExercise_1/" rel="prev" title="Gopl 练习题题解">
+                Gopl 练习题题解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基本命令"><span class="nav-text">1 基本命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-表的增删改查"><span class="nav-text">2 表的增删改查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-查询进阶"><span class="nav-text">3 查询进阶</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-子查询"><span class="nav-text">4 子查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-连接"><span class="nav-text">5 连接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">41.6k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

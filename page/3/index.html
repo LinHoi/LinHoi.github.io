@@ -177,22 +177,22 @@
     <ul id="menu" class="menu">
       
         
-        <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
             
             关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
           </a>
         </li>
       
@@ -245,6 +245,937 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/13/[学习总结]操作系统_内存管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/13/[学习总结]操作系统_内存管理/" itemprop="url">内存管理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-13T07:55:12+08:00">
+                2018-07-13
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-14T13:39:45+08:00">
+                2018-07-14
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,027 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="内存管理概念"><a href="#内存管理概念" class="headerlink" title="内存管理概念"></a>内存管理概念</h2><h3 id="内存管理的概念"><a href="#内存管理的概念" class="headerlink" title="内存管理的概念"></a>内存管理的概念</h3><ol>
+<li>内存管理：操作系统对内存的换分和动态规划称为内存管理</li>
+<li><p>内存管理的功能</p>
+<ul>
+<li>内存空间的分配与回收</li>
+<li>地址转换</li>
+<li>内存空间扩展</li>
+<li>存储保护</li>
+</ul>
+</li>
+<li><p>进程运行的基本原理</p>
+<ol>
+<li>程序装入与链接<ul>
+<li>编译：将源代码编译成目标模块</li>
+<li>链接：将目标模块和库函数链接成装入模块<ul>
+<li>静态链接</li>
+<li>装入时动态链接</li>
+<li>运行时动态链接</li>
+</ul>
+</li>
+<li>装入：将装入模块装入内存运行<ul>
+<li>绝对装入：程序逻辑地址和实际内存地址相同</li>
+<li>可重定位装入(静态重定位)：装入模块装入内存时，进行重定位(地址转换)</li>
+<li>动态运行时装入(动态重定位)：地址转换在程序执行时进行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>逻辑地址空间和物理地址空间  <ul>
+<li>相对地址：目标模块从0号单元开始编址，相对该地址的地址即为相对地址</li>
+<li>逻辑地址：内存中物理单元的集合称为逻辑地址空间，它是地址转换的最终地址</li>
+<li>地址重定位：逻辑地址转换为物理地址</li>
+</ul>
+</li>
+<li>内存保护<ul>
+<li>重定位寄存器</li>
+<li>界地址寄存器</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="覆盖和交换"><a href="#覆盖和交换" class="headerlink" title="覆盖和交换"></a>覆盖和交换</h3><ol>
+<li>覆盖<br> 将用户空间分成固定区和覆盖区，固定区存放活跃的部分，覆盖区存放即将访的段，其它段存放在外存。覆盖用于一个进程或进程中，覆盖技术对程序员不透明，已成历史。</li>
+<li>交换<br> 将处于等待状态的进程序从内存移到辅存称为换出，将准备好竞争CPU运行的程序从辅存移到内存称为换入。交换技术用于不同进程之间</li>
+</ol>
+<h3 id="连续分配管理方式"><a href="#连续分配管理方式" class="headerlink" title="连续分配管理方式"></a>连续分配管理方式</h3><pre><code>连续分配方式指为一个程序分配一个连续的内存空间。
+</code></pre><ol>
+<li>单一连续分配<br> 内存分为系统区和用户区，系统区给操作系统使用，用户区给一道用户程序使用，只能用在单任务操作系统中</li>
+<li><p>固定分区分配<br> 用户空间划分为若干个固定大小的区域，每个分区只装入一道程序。分区有等大小分区和不等大小分区。固定分区有内部碎片</p>
+</li>
+<li><p>动态分区分配<br> 动态分区分配又称为可变分区分配。在进程装入内存时，根据进程大小动态建立分区。动态分区分配会造成外部碎片。<br> 动态分区分配策略：</p>
+<ul>
+<li>首次适应算法（First Fit）</li>
+<li>最佳适应（Best Fit）</li>
+<li>最坏适应（Worst Fit）</li>
+<li>邻近适应（Next Fit）</li>
+</ul>
+</li>
+</ol>
+<h3 id="非连续分配管理方式"><a href="#非连续分配管理方式" class="headerlink" title="非连续分配管理方式"></a>非连续分配管理方式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">非连续分配指一个程序分散地装入到不相邻的内存分区中。</span><br><span class="line">按照分区分配是否固定分为分页存储管理和分段存储管理。</span><br><span class="line">分页存储管理中又依据运行程序时是否把全部页面都装入内存才运行分为基本分页存储管理和请求分页存储管理。</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>基本分页存储管理方式<br> 将主存空间划分为大小相等的块，进程执行时，以块为单位申请块空间。<br> 分页管理不会产生外部碎片，每个进程平均产生半个块大小的内部碎片（页内碎片）</p>
+<ol>
+<li>分页存储的基本概念<ul>
+<li>页面：进程中的块称为页，内存中的块称为页框，在外存的称为块</li>
+<li>地址结构：<br>  |31    …    12|11    …   0|<br>  |—-|—-|<br>  |页号P|页内偏移量W|</li>
+<li>页表：页表在内存中，用于建立进程页号到内存中物理块号的地址映射</li>
+</ul>
+</li>
+<li>基本地址变换机构： 将逻辑地址转换为物理地址</li>
+<li>具有块表的地址变换机构<br><img src="/images/3.jpg" alt="地址变换机构">  </li>
+<li>二级页表</li>
+</ol>
+</li>
+<li><p>基本分段存储管理方式  </p>
+<ol>
+<li>分段</li>
+<li>段表</li>
+<li>地址变换机构<br> <img src="/images/分段地址变换机构.jpg" width="80%" align="center"></li>
+<li>段的共享与保护</li>
+</ol>
+</li>
+<li>段页式管理方式<br> <img src="/images/段页式.jpg" alt="段页式"></li>
+</ol>
+<h2 id="虚拟内存管理"><a href="#虚拟内存管理" class="headerlink" title="虚拟内存管理"></a>虚拟内存管理</h2><h3 id="虚拟内存管理的基本概念"><a href="#虚拟内存管理的基本概念" class="headerlink" title="虚拟内存管理的基本概念"></a>虚拟内存管理的基本概念</h3><ol>
+<li>传统存储管理方式特征<ul>
+<li>一次性：作业要一次全部装入内存后才能运行</li>
+<li>驻留性：作业装入内存后，一直驻留在内存中</li>
+</ul>
+</li>
+<li>局部性原理<ul>
+<li>时间局部性：</li>
+<li>空间局部性：</li>
+</ul>
+</li>
+<li>虚拟存储器定义和特征<br> 虚拟存储器指具有请求调入功能和置换功能，能从逻辑上对内存容量就那些扩展的一种存储系统。<br> 主要特征：<ul>
+<li>多次性：允许作业分多次调入内存运行</li>
+<li>对换性：允许作业进行换入和换出</li>
+<li>虚拟性：逻辑容量=内存容量+外存容量</li>
+</ul>
+</li>
+<li>虚拟存储技术的实现<br> 实现方式：<ul>
+<li>请求分页存储管理</li>
+<li>请求分段存储管理</li>
+<li>请求段页式存储管理<br>硬件支持：</li>
+<li>内存和外存</li>
+<li>中断机构</li>
+<li>地址变换机构</li>
+<li>页(段)表机制</li>
+</ul>
+</li>
+</ol>
+<h3 id="请求分页管理方式"><a href="#请求分页管理方式" class="headerlink" title="请求分页管理方式"></a>请求分页管理方式</h3><ol>
+<li>页表机制<br> 页表项:<ul>
+<li>页号</li>
+<li>物理块号</li>
+<li>状态位P：标记该页是否已调入内存</li>
+<li>访问字段A：记录本页的访问次数</li>
+<li>修改位M：标志该页调入内存后是否被修改</li>
+<li>外存地址： 该页的外存地址</li>
+</ul>
+</li>
+<li>缺页中断机构  <ul>
+<li>在指令执行期间发生，属于内部中断</li>
+<li>一条指令执行期间可能发生多次缺页中断</li>
+</ul>
+</li>
+<li>地址变换机构<br> 地址变换时先检索快表：<ul>
+<li>如果在块表中找到对应页，修改页表项的访问位，利用页表项的物理块号和页内地址形成物理地址。</li>
+<li>如果找不到，则检索内存中的页表，找到对应页号，查看页表项中的状态位P，若该页未调入内存，则产生缺页中断，请求从外存中把该页调入内存。</li>
+</ul>
+</li>
+</ol>
+<h3 id="页面置换算法"><a href="#页面置换算法" class="headerlink" title="页面置换算法"></a>页面置换算法</h3><p>进程运行时，若其访问的页面不在内存中，且内存已经没有足够空间，则要从内存中换出页面，选择调出页面的算法称为页面置换算法。</p>
+<ol>
+<li>最佳置换算法(OPT):调出最长时间内不再使用的页面</li>
+<li>先进先出页面置换算法(FIFO)：调出最早调入的页面会产生Belady异常(分配物理块数增大而缺页次数反而增加)</li>
+<li>最近最久未使用置换算法(LRU)：</li>
+<li>时钟置换算法(CLOCK)或最近未用算法(NRU)：调入的页面使用位初始值设为1并形成一个循环，指针指向第一个页面。每次调换时从指针处开始扫描循环，若使用位为1则置为0，指针后移；若使用位为0，则置换该页面，指针后移。</li>
+</ol>
+<h3 id="页面分配策略"><a href="#页面分配策略" class="headerlink" title="页面分配策略"></a>页面分配策略</h3><ol>
+<li>置换策略<br> 固定/可变分配：考虑进程分配的物理块是否是固定的<br> 局部/全局置换：考虑是只在进程内部置换还是可以使用其他物理块<br> 组合策略有：<ul>
+<li>固定分配局部置换</li>
+<li>可变分配全局置换</li>
+<li>可变分配局部置换</li>
+<li>因为固定分配限制进程的可用物理块所有没有固定分配全局置换</li>
+</ul>
+</li>
+<li>调入页面时机  <ul>
+<li>预调页策略：运行前调页，由程序员指定调页策略</li>
+<li>请求调页策略：运行期间调页</li>
+</ul>
+</li>
+<li>从何处调入页面<br> 文件区存放文件，采用离散分配；对换区存放对换页面，采用连续分配<ul>
+<li>从对换区调入</li>
+<li>从文件区调入</li>
+</ul>
+</li>
+</ol>
+<h3 id="抖动"><a href="#抖动" class="headerlink" title="抖动"></a>抖动</h3><pre><code>抖动是指频繁的页面调度行为
+</code></pre><h3 id="工作集"><a href="#工作集" class="headerlink" title="工作集"></a>工作集</h3><pre><code>工作集(驻留集)指某段时间间隔内，进程要访问的页面集合，合理选择工作集大小可以防止抖动现象
+</code></pre><h3 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/12/[学习总结]操作系统_进程管理_死锁/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/12/[学习总结]操作系统_进程管理_死锁/" itemprop="url">进程管理-死锁</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T22:22:12+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:21:43+08:00">
+                2018-07-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  472 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="死锁的概念"><a href="#死锁的概念" class="headerlink" title="死锁的概念"></a>死锁的概念</h3><ol>
+<li>死锁的定义<br> 多个进程因为竞争资源和造成的一种相互等待的现象</li>
+<li>死锁产生原因  <ul>
+<li>系统资源竞争</li>
+<li>进程推进顺序非法</li>
+</ul>
+</li>
+<li>死锁产生的必要条件  <ul>
+<li>互斥条件</li>
+<li>不剥夺条件</li>
+<li>请求和饱和条件</li>
+<li>循环等待条件</li>
+</ul>
+</li>
+</ol>
+<h3 id="死锁的处理策略"><a href="#死锁的处理策略" class="headerlink" title="死锁的处理策略"></a>死锁的处理策略</h3><ol>
+<li>预防死锁：破坏死锁产生的四个必要条件中的一个或多个</li>
+<li>避免死锁：防止系统进入不安全状态</li>
+<li>死锁检测和解除：不采取限制，检测到再解除</li>
+</ol>
+<h3 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h3><ol>
+<li>系统安全状态<br> 系统按照某种进程推进顺序（P1,P2,…,Pn),为每个进程Pi分配其所需资源，直到满足每个进程的最大资源需求，使每个进程都可以顺利完成，此时称P1,P2,…,Pn为安全序列，如果系统无法找到一个安全序列，则称系统处于不安全状态。</li>
+<li>银行家算法<br> 银行家算法是最著名的死锁避免算法。<ol>
+<li>数据结构描述  <ul>
+<li>可利用资源矢量Available：Available[i]=K表示系统现有Ri类资源K个</li>
+<li>最大需求矩阵Max：Max[i,j]=K，表示进程i需要Rj类资源的最大数目为K</li>
+<li>分配矩阵Allocation：Allocation[i,j]=K ,表示进程i已经分配到了Rj类资源数目为K</li>
+<li>需求矩阵Need：Need[i,j]=K，表示进程i还需要Rj类资源数目为K</li>
+</ul>
+</li>
+<li>算法描述</li>
+<li>安全性算法  </li>
+</ol>
+</li>
+</ol>
+<h3 id="死锁检测和解除"><a href="#死锁检测和解除" class="headerlink" title="死锁检测和解除"></a>死锁检测和解除</h3><ol>
+<li>资源分配图<br> 请求边，分配边</li>
+<li><p>死锁定理<br> S为死锁的条件是当且仅当S状态的资源分配图是不可完全化简的。<br> 资源分配图化简：</p>
+</li>
+<li><p>死锁解除  </p>
+<ul>
+<li>资源剥夺法</li>
+<li>撤销进程法</li>
+<li>进程回退法</li>
+</ul>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/12/[学习总结]操作系统_进程管理_经典同步问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/12/[学习总结]操作系统_进程管理_经典同步问题/" itemprop="url">进程管理-经典同步问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-12T15:34:12+08:00">
+                2018-07-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:18:29+08:00">
+                2018-07-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/操作系统/" itemprop="url" rel="index">
+                    <span itemprop="name">操作系统</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  602 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="生产者消费者问题"><a href="#生产者消费者问题" class="headerlink" title="生产者消费者问题"></a>生产者消费者问题</h2><ol>
+<li>问题描述<br> 生产者进程和消费者进程共享一个缓冲区，只有缓冲区未满时，生产者进程才可以吧消息放入缓冲区，只有当缓冲区非空时，消费者进程才可以从中取消息，缓冲区为临界资源</li>
+<li>思路<br> 解决互斥和同步PV操作问题</li>
+<li>代码  <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">semaphore mutex=<span class="number">1</span>;</span><br><span class="line">semaphore full=<span class="number">0</span>;</span><br><span class="line">semaphore empty=n;</span><br><span class="line">producer()&#123;</span><br><span class="line">    <span class="keyword">while</span>（<span class="number">1</span>）&#123;</span><br><span class="line">        生产数据；</span><br><span class="line">        P(empty);</span><br><span class="line">        P(mutex);</span><br><span class="line">        数据放入缓冲区；</span><br><span class="line">        V（mutex）；</span><br><span class="line">        V(full);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">comsumer()&#123;</span><br><span class="line">    <span class="keyword">while</span>（<span class="number">1</span>）&#123;</span><br><span class="line">        P(full);</span><br><span class="line">        P(mutex);</span><br><span class="line">        从缓冲区中取出数据；</span><br><span class="line">        V(mutex);</span><br><span class="line">        V(empty);</span><br><span class="line">        消费数据；</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="读者-写者问题"><a href="#读者-写者问题" class="headerlink" title="读者-写者问题"></a>读者-写者问题</h2><ol>
+<li>问题描述<br> 有读者进程和写者进程，关系如下：  <ul>
+<li>多个读者可同时对文件进行读操作</li>
+<li>只允许一个写者往文件写数据</li>
+<li>写者完成工作之前，不允许其他读者或写者操作</li>
+<li>写者执行操作之间，应让已有读者和写者全部退出</li>
+</ul>
+</li>
+<li>思路<br> 写者和写者、读者都互斥；读者与写者互斥，读者间同步<br> 利用count记录读者数目，mutex用于count的互斥访问，rx用于读写者的互斥访问</li>
+<li>代码<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> count =<span class="number">0</span>;</span><br><span class="line">semaphore mutex=<span class="number">1</span>;</span><br><span class="line">semaphore re=<span class="number">1</span>;</span><br><span class="line">writer()&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        P(rw);</span><br><span class="line">        写入数据；</span><br><span class="line">        V(rw)；</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">reader()&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">        P(mutex);</span><br><span class="line">        <span class="keyword">if</span>(count == <span class="number">0</span>)</span><br><span class="line">            P(rw);</span><br><span class="line">        count++;</span><br><span class="line">        V(mutex);</span><br><span class="line">        读；</span><br><span class="line">        P(mutex);</span><br><span class="line">        count--;</span><br><span class="line">        <span class="keyword">if</span>(count == <span class="number">0</span>)</span><br><span class="line">            V(rw);</span><br><span class="line">        V(mutex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="哲学家进餐问题"><a href="#哲学家进餐问题" class="headerlink" title="哲学家进餐问题"></a>哲学家进餐问题</h2><ol>
+<li>问题描述<br> 一张圆桌上坐在五个哲学家，每个哲学家左右两边各有一只筷子，哲学家一次只能拿一只筷子，拿到两只筷子才可以进餐，否则等待，进餐后放下筷子，继续思考。</li>
+<li><p>思路<br> 定义互斥型号量数组chopstick[5]={1,1,1,1,1},用于对筷子的互斥访问,哲学家编号0—4，哲学家i左边的筷子为编号i；右边的筷子为编号（i+1）%5;mutex表示对筷子的互信号量</p>
+</li>
+<li><p>代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">semaphore chopstick[<span class="number">5</span>]=&#123;<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;</span><br><span class="line">Pi()&#123;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        p(mutex);</span><br><span class="line">        P(chopstick[i]);</span><br><span class="line">        P(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>]);</span><br><span class="line">        V(mutex);</span><br><span class="line">        eat;</span><br><span class="line">        V(chopstick[i]);</span><br><span class="line">        V(chopstick[(i+<span class="number">1</span>)%<span class="number">5</span>]);</span><br><span class="line">        think;</span><br><span class="line">    &#125;<span class="keyword">while</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="吸烟者问题"><a href="#吸烟者问题" class="headerlink" title="吸烟者问题"></a>吸烟者问题</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/11/[设定]Galaxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/11/[设定]Galaxy/" itemprop="url">设定稿</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-11T22:37:12+08:00">
+                2018-07-11
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:40:59+08:00">
+                2018-07-12
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设定稿/" itemprop="url" rel="index">
+                    <span itemprop="name">设定稿</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  806 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="时间理论"><a href="#时间理论" class="headerlink" title="时间理论"></a>时间理论</h2><h3 id="時恒定律"><a href="#時恒定律" class="headerlink" title="時恒定律"></a>時恒定律</h3><ol>
+<li>概念<br>　　時是物体（任何世界也是一个特殊物体）的固有属性，它是时间之上的第五维属性。一个未曾进行人为时间操作的世界称为父世界，在平行宇宙的观点下，父世界是单一世界，任何一个父世界的“时”总量是恒定的，可由“时律公式“计算。假如父世界进行超越时空、重返过去或未来的操作，父世界会被分裂为若干个子世界，子世界的时总量与父世界的相等，利用该原理可以检测一个世界是否进行过人为操作，在这里，世界并不仅包括大型的集合体，也包括个体，任何一个个体都可以称为一个独立的世界。一个世界进行时操作会对周围世界产生影响，影响程度可用时相关公式计算,一般情况下影响程度与时间和空间的距离成正比。</li>
+<li>时与物体<br>　　时属性是衡量物体存在的一个关键属性，对任意物体，时总量越多物体存在越稳定，时总量越少物体越不稳定，随着时操作的进行，父物体被分裂为多个子物体，时的量值也会衰减，当时的量值低于一定数值时，物体的存在将无法在时间和空间维度稳定维持，存在消失的风险。据此，时操作应该严格限制，通常对重要世界或物体的时操作是无法进行的，要进行此类操作需要世界级的执行权限，该权限可由个体申请，由银河联合委员会通过审议决定是否开放，其审议过程异常繁杂，无法再短时间完成。</li>
+<li>时监控站<br>　　时监控站由银河政府建立，位于五维空间（显然要监控五维属性，其存在维度就不能低于五维），目的在于监控目标世界的时量变化，。时监控站的筹备与建立耗时200年，是银河史上最大的工程之一。  </li>
+</ol>
+<p>….</p>
+<h2 id="通信网络理论"><a href="#通信网络理论" class="headerlink" title="通信网络理论"></a>通信网络理论</h2><h3 id="超空间中继站"><a href="#超空间中继站" class="headerlink" title="超空间中继站"></a>超空间中继站</h3><p>　　电磁波通信无法摆脱速度的限制，在超距离传输中的延时和距离成正比，若将信息传输到一光年之外处，会有一年的延迟，且为了应对电磁波衰减，必须建立数量极大的中继站，成本昂贵，电磁波通信注定其只能在一个小范围世界内使用，无法在全银河进行推广。<br>　　超空间理论的发展，为银河通信成为可能，其主要依据实体就是超空间中继站，任意两个超空间中继站间的传输延迟都可以控制在毫秒级。</p>
+<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h2 id="机器人"><a href="#机器人" class="headerlink" title="机器人"></a>机器人</h2><h3 id="机器人的种类"><a href="#机器人的种类" class="headerlink" title="机器人的种类"></a>机器人的种类</h3><h3 id="机器人设计原则"><a href="#机器人设计原则" class="headerlink" title="机器人设计原则"></a>机器人设计原则</h3><h2 id="交通运输"><a href="#交通运输" class="headerlink" title="交通运输"></a>交通运输</h2><h3 id="超空间运输"><a href="#超空间运输" class="headerlink" title="超空间运输"></a>超空间运输</h3><h2 id="教育"><a href="#教育" class="headerlink" title="教育"></a>教育</h2><h3 id="大学"><a href="#大学" class="headerlink" title="大学"></a>大学</h3><h3 id="图书馆"><a href="#图书馆" class="headerlink" title="图书馆"></a>图书馆</h3><h3 id="教育网络"><a href="#教育网络" class="headerlink" title="教育网络"></a>教育网络</h3><h2 id="计算机技术"><a href="#计算机技术" class="headerlink" title="计算机技术"></a>计算机技术</h2><h3 id="超级计算机"><a href="#超级计算机" class="headerlink" title="超级计算机"></a>超级计算机</h3><h3 id="计算机规范"><a href="#计算机规范" class="headerlink" title="计算机规范"></a>计算机规范</h3><h2 id="农业"><a href="#农业" class="headerlink" title="农业"></a>农业</h2><h3 id="农业世界"><a href="#农业世界" class="headerlink" title="农业世界"></a>农业世界</h3><h3 id="运输通道"><a href="#运输通道" class="headerlink" title="运输通道"></a>运输通道</h3><h2 id="人类"><a href="#人类" class="headerlink" title="人类"></a>人类</h2><h3 id="新人类"><a href="#新人类" class="headerlink" title="新人类"></a>新人类</h3><h3 id="基因操作"><a href="#基因操作" class="headerlink" title="基因操作"></a>基因操作</h3><p>　　</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -1631,7 +2562,7 @@ if __name__ == &#39;__main__&#39;:
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1642,7 +2573,7 @@ if __name__ == &#39;__main__&#39;:
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1653,7 +2584,7 @@ if __name__ == &#39;__main__&#39;:
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1706,7 +2637,7 @@ if __name__ == &#39;__main__&#39;:
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -1720,7 +2651,7 @@ if __name__ == &#39;__main__&#39;:
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">37.8k</span>
+    <span title="Site words total count">41.6k</span>
   
 </div>
 
