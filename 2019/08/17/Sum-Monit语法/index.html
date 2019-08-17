@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Monit," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="名称Monit ： 监控Unix系统服务的辅助软件   总览monit [options]  说明Monit是Unix系统上管理和监控进程、程序、文件、目录和文件系统的辅助软件。Monit可以启动、重启、关闭进程。monit也可以监控目录、文件和文件系统的变化，比如文件的时间戳、校验和以及文件大小的变化。Monit通过可配置的 控制文件 进行监控。控制文件格式自由。Monit可以将log写入sys">
+<meta name="keywords" content="Monit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Monit 语法指南">
+<meta property="og:url" content="http://yoursite.com/2019/08/17/Sum-Monit语法/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="名称Monit ： 监控Unix系统服务的辅助软件   总览monit [options]  说明Monit是Unix系统上管理和监控进程、程序、文件、目录和文件系统的辅助软件。Monit可以启动、重启、关闭进程。monit也可以监控目录、文件和文件系统的变化，比如文件的时间戳、校验和以及文件大小的变化。Monit通过可配置的 控制文件 进行监控。控制文件格式自由。Monit可以将log写入sys">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-17T02:29:17.274Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Monit 语法指南">
+<meta name="twitter:description" content="名称Monit ： 监控Unix系统服务的辅助软件   总览monit [options]  说明Monit是Unix系统上管理和监控进程、程序、文件、目录和文件系统的辅助软件。Monit可以启动、重启、关闭进程。monit也可以监控目录、文件和文件系统的变化，比如文件的时间戳、校验和以及文件大小的变化。Monit通过可配置的 控制文件 进行监控。控制文件格式自由。Monit可以将log写入sys">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/17/Sum-Monit语法/"/>
+
+
+
+
+
+  <title>Monit 语法指南 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Sum-Monit语法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Monit 语法指南</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T10:37:12+08:00">
+                2019-08-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-17T10:29:17+08:00">
+                2019-08-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Monit/" itemprop="url" rel="index">
+                    <span itemprop="name">Monit</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7,606 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h2><p>Monit ： 监控Unix系统服务的辅助软件  </p>
+<h2 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h2><p>monit [options] <arguments></arguments></p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>Monit是Unix系统上管理和监控进程、程序、文件、目录和文件系统的辅助软件。<br>Monit可以启动、重启、关闭进程。monit也可以监控目录、文件和文件系统的变化，比如文件的时间戳、校验和以及文件大小的变化。<br>Monit通过可配置的 控制文件 进行监控。控制文件格式自由。<br>Monit可以将log写入syslog（系统log）或自己的log文件，也可以自定义警告信息来提醒你发生的错误。Monit提供一个HTTP的交互界面供你接入Monit程序。  </p>
+<h2 id="监控什么"><a href="#监控什么" class="headerlink" title="监控什么"></a>监控什么</h2><ol>
+<li>监控本地后台进程（process）   </li>
+<li>监控本地文件、目录和文件系统  </li>
+<li>监控网络连接  </li>
+<li>测试程序（programs）和脚本（scripts)  <ul>
+<li>测试一个程序的退出值，如果退出值表明错误发生可以采取一些行动或发出警告</li>
+</ul>
+</li>
+<li>监控本地系统资源，比如CPU利用率和系统负载  </li>
+</ol>
+<a id="more"></a>
+<h2 id="一般操作"><a href="#一般操作" class="headerlink" title="一般操作"></a>一般操作</h2><p>Monit由控制行命令和控制文件（monitrc）控制。monitrc的优先级比控制行命令低。<br>monitrc的默认位置为~/.monitic或/etc/monitrc等。你也可以通过以下命令指定monitrc的位置<br>经排查packetfence的控制文件为/etc/monit.conf<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ monit -c /var/monit/monitrc</span><br></pre></td></tr></table></figure></p>
+<p>在Monit启动之前，你可以检查控制文件的语法错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ monit -t</span><br></pre></td></tr></table></figure></p>
+<p>启动命令是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ monit</span><br></pre></td></tr></table></figure></p>
+<p>Monit 会作为后台进程周期运行。</p>
+<h3 id="选项"><a href="#选项" class="headerlink" title="选项"></a>选项</h3><p>所有选项和用法可通过以下命令查看：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ monit -h</span><br></pre></td></tr></table></figure></p>
+<p>这些命令都可以在控制文件monitrc中直接设置，建议采用直接写入monitrc文件的做法。  </p>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><p>Monit启动后可以调用以下命令（以下命令省略前缀monit）：  </p>
+<ol>
+<li>start all<ul>
+<li>启动控制文件中的所有服务并监控</li>
+</ul>
+</li>
+<li>start <name> <ul>
+<li>启动特定服务</li>
+</ul>
+</name></li>
+<li>stop all<ul>
+<li>停止控制文件中的所有服务并取消监控  </li>
+</ul>
+</li>
+<li>stop <name><br> -停止特定服务并取消监控 </name></li>
+<li>restart all<ul>
+<li>关闭后再启动所有服务 </li>
+</ul>
+</li>
+<li>restart <name><ul>
+<li>重启特定服务  </li>
+</ul>
+</name></li>
+<li>monitor all<ul>
+<li>监控控制文件中的所有服务</li>
+</ul>
+</li>
+<li>monitor <name><ul>
+<li>监控特定服务</li>
+</ul>
+</name></li>
+<li>unmonitor</li>
+<li>status <name><br>-打印特定服务的信息</name></li>
+<li>reload<br>重新读入控制文件，关闭后重开log文件，初始化 Monit进程</li>
+<li>quit<br>关闭Monit进程</li>
+</ol>
+<h2 id="Monit控制文件"><a href="#Monit控制文件" class="headerlink" title="Monit控制文件"></a>Monit控制文件</h2><p>控制文件默认位置在 ~/.monitrc。如果不存在，会依次查找/etc/monitrc,@sysconfdir@/monitrc 最后是 ./monitrc。<br>@sysconfdir@ 在安装monit的configure阶段时确定由./configure —sysconfdir后面的参数确定。 例如： ./configure —sysconfdir /var/monit/etc 会让 Monit 在 /var/monit/etc 目录下查找monitrc文件。<br>Monit采用自己的控制语言（DSL）。<br>注释以#开头<br>你可以在入口处添加 ‘if’, ‘and’, ‘with(in)’, ‘has’, ‘us(ing|e)’, ‘on(ly)’, ‘then’, ‘for’, ‘of’等噪声关键字，这些关键字会被忽略，但可以让控制语言更易读。<br>DSL语言中有三种符号：</p>
+<pre><code>- 语法
+- 数字
+- 字符串
+    - 字符串可以加引用或不加引用
+    - 不加引号的字符串由字符和数字组成，不含空格
+    - 字符串可以嵌套，外层为双引号内层为单引号
+    - 加引号的数字当做字符串
+</code></pre><p>在语法层面上，控制文件中包含三种类型的入口：  </p>
+<ol>
+<li>set</li>
+<li>include</li>
+<li>服务入口</li>
+</ol>
+<h3 id="Service-checks"><a href="#Service-checks" class="headerlink" title="Service checks"></a>Service checks</h3><p>所有的服务入口以check关键字开头，后接服务类型。每个入口都要一个唯一的名字，用来作为该服务的标识。<br>Monit支持9种类型  </p>
+<ol>
+<li>process<blockquote>
+<p>CHECK PROCESS <unique name=""> <pidfile <path=""> | MATCHING <regex>&gt;</regex></pidfile></unique></p>
+</blockquote>
+</li>
+<li>file<blockquote>
+<p>  CHECK FILE <unique name=""> PATH <path></path></unique></p>
+</blockquote>
+</li>
+<li>fifo<blockquote>
+<p>  CHECK FIFO <unique name=""> PATH <path></path></unique></p>
+</blockquote>
+</li>
+<li>filesystem<blockquote>
+<p>  CHECK FILESYSTEM <unique name=""> PATH <string></string></unique></p>
+</blockquote>
+</li>
+<li>directory<blockquote>
+<p> CHECK DIRECTORY <unique name=""> PATH <path></path></unique></p>
+</blockquote>
+</li>
+<li>remote host<blockquote>
+<p> CHECK HOST <unique name=""> ADDRESS <host></host></unique></p>
+</blockquote>
+</li>
+<li>system<blockquote>
+<p> CHECK SYSTEM <unique name=""></unique></p>
+</blockquote>
+</li>
+<li>program<blockquote>
+<p> CHECK PROGRAM <unique name=""> PATH <executable file=""> [TIMEOUT <number> SECONDS]<br><file>包含程序或脚本的绝对路径，如果程序没有在number时间内运行完毕，Monit会关闭它。</file></number></executable></unique></p>
+</blockquote>
+</li>
+<li>network<blockquote>
+<p>CHECK NETWORK <unique name=""> <address <ipaddress=""> | INTERFACE <name>&gt;</name></address></unique></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="LOGGING"><a href="#LOGGING" class="headerlink" title="LOGGING"></a>LOGGING</h2><p>Moint会记录运行状态和错误信息到文件中或系统的syslog中，在monitrc控制文件中用“set log”声明来进行log设置。<br>为了让monit将log输出到指定文件，使用“set log /var/log/monit log”语法，该语句会覆盖先前的log设置，也可以选择二选一的做法。<br>如果通过命令行 的  <strong>-l</strong> 参数设定syslog或控制文件中有“set log syslog”声明。monit会使用系统后台的syslog进程根据优先级分配信息来记录信息。<br>为了关闭log设置，可以在控制文件中不设置“set log”语法并且不在命令行使用 -l 参数。<br>log的文件格式如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[date] priority : message</span><br></pre></td></tr></table></figure></p>
+<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[CET Jan  5 18:49:29] info : &apos;localhost&apos; Monit started</span><br></pre></td></tr></table></figure></p>
+<h2 id="终端输出"><a href="#终端输出" class="headerlink" title="终端输出"></a>终端输出</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set terminal batch</span><br></pre></td></tr></table></figure>
+<h2 id="DAEMON-MODE"><a href="#DAEMON-MODE" class="headerlink" title="DAEMON MODE"></a>DAEMON MODE</h2><p>使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SET DAEMON &lt;seconds&gt;</span><br><span class="line">    [[WITH] START DELAY &lt;seconds&gt;]</span><br></pre></td></tr></table></figure></p>
+<p>设置monit运行周期</p>
+<h2 id="INIT-SUPPORT"><a href="#INIT-SUPPORT" class="headerlink" title="INIT SUPPORT"></a>INIT SUPPORT</h2><p>“set init”可以让monit作为前台服务运行</p>
+<h2 id="INCLUDE-文件"><a href="#INCLUDE-文件" class="headerlink" title="INCLUDE 文件"></a>INCLUDE 文件</h2><p>monitrc控制文件可以包含附件控制文件<br>语法为：</p>
+<blockquote>
+<p> INCLUDE <globstring><br>例如：<br>include /etc/monit.d/*.cfg<br>会将monit.d文件加下所有已cfg为后缀的文件包含到控制文件中。</globstring></p>
+</blockquote>
+<h2 id="SSL-选项"><a href="#SSL-选项" class="headerlink" title="SSL 选项"></a>SSL 选项</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># Enable certificate verification for all SSL connections</span></span><br><span class="line"><span class="comment"># Self-signed certificates are not allowed by default</span></span><br><span class="line"><span class="built_in">set</span> ssl options &#123;</span><br><span class="line">        verify: <span class="built_in">enable</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Verify certificate (via global setting)</span></span><br><span class="line"><span class="comment"># Allow self-signed certificate for this check</span></span><br><span class="line">check host example with address example.com</span><br><span class="line">        <span class="keyword">if</span> failed</span><br><span class="line">                port 443</span><br><span class="line">                protocol https</span><br><span class="line">                with ssl options &#123;selfsigned: allow&#125;</span><br><span class="line">        <span class="keyword">then</span> alert</span><br><span class="line"></span><br><span class="line"><span class="comment"># Do not verify example2.com's certificate (override global setting)</span></span><br><span class="line">check host example2 with address example2.com</span><br><span class="line">        <span class="keyword">if</span> failed</span><br><span class="line">                port 443</span><br><span class="line">                protocol https</span><br><span class="line">                with ssl options &#123;verify: <span class="built_in">disable</span>&#125;</span><br><span class="line">        <span class="keyword">then</span> alert</span><br></pre></td></tr></table></figure>
+<h2 id="MONIT-HTTPD"><a href="#MONIT-HTTPD" class="headerlink" title="MONIT HTTPD"></a>MONIT HTTPD</h2><p>可以在控制文件中进行设置使monit得到HTTP支持。</p>
+<h3 id="UNIX-SOCKET支持"><a href="#UNIX-SOCKET支持" class="headerlink" title="UNIX SOCKET支持"></a>UNIX SOCKET支持</h3><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SET HTTPD UNIXSOCKET &lt;path&gt;</span><br><span class="line">    [UID &lt;uid | username&gt;]</span><br><span class="line">    [GID &lt;gid | groupname&gt;]</span><br><span class="line">    [PERMISSION &lt;octal number&gt;]</span><br><span class="line">    ALLOW &lt;user:password&gt;+</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set httpd unixsocket /var/run/monit.sock</span><br><span class="line">    allow username:password</span><br></pre></td></tr></table></figure></p>
+<h3 id="TCP-PORT-支持"><a href="#TCP-PORT-支持" class="headerlink" title="TCP PORT 支持"></a>TCP PORT 支持</h3><p>语法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SET HTTPD PORT &lt;number&gt;</span><br><span class="line">      [ADDRESS &lt;hostname | IP-address&gt;]</span><br><span class="line">      [[with] SSL &#123;pemfile: &lt;path&gt;&#125;]</span><br><span class="line">      ALLOW &lt;user:password | IP-address | IP-range&gt;+</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set httpd port 2812</span><br><span class="line">     allow username:password</span><br></pre></td></tr></table></figure></p>
+<h2 id="警告信息"><a href="#警告信息" class="headerlink" title="警告信息"></a>警告信息</h2><p>monit会在以下情况产生警告<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">o A service does not exist (e.g. process is not running)</span><br><span class="line">o Cannot read service data (e.g. cannot get filesystem usage)</span><br><span class="line">o Execution of a service related script failed (e.g. start failed)</span><br><span class="line">o Invalid service type (e.g. if path points to directory instead of file)</span><br><span class="line">o Custom test script returned error</span><br><span class="line">o Ping test failed</span><br><span class="line">o TCP/UDP connection and/or port test failed</span><br><span class="line">o Resource usage test failed (e.g. cpu usage too high)</span><br><span class="line">o Checksum mismatch or change (e.g. file changed)</span><br><span class="line">o File size test failed (e.g. file too large)</span><br><span class="line">o Timestamp test failed (e.g. file is older then expected)</span><br><span class="line">o Permission test failed (e.g. file mode doesn&apos;t match)</span><br><span class="line">o An UID test failed (e.g. file owned by different user)</span><br><span class="line">o A GID test failed (e.g. file owned by different group)</span><br><span class="line">o A process&apos; PID changed out of Monit&apos;s control</span><br><span class="line">o A process&apos; PPID changed out of Monit control</span><br><span class="line">o Too many service recovery attempts failed</span><br><span class="line">o A file content test found a match</span><br><span class="line">o Filesystem flags changed</span><br><span class="line">o A service action was performed by administrator</span><br><span class="line">o A network link failed</span><br><span class="line">o A network link capacity changed</span><br><span class="line">o A network link saturation failed</span><br><span class="line">o A network link upload/download rate failed</span><br><span class="line">o Monit was started, stopped or reloaded</span><br></pre></td></tr></table></figure></p>
+<p>为了通过邮件取得警告信息，可以设置全局“set alert” 声明，或在单个服务内使用alert关键字声明</p>
+<h2 id="设置警告接受者"><a href="#设置警告接受者" class="headerlink" title="设置警告接受者"></a>设置警告接受者</h2><p>当事件发生时，，moni会发送警告，警告有全局警告和局部警告两种。 </p>
+<p>全局警告：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET ALERT mail-address [[NOT] &#123;event, ...&#125;] [REMINDER cycles]</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set alert foo@bar</span><br></pre></td></tr></table></figure></p>
+<p>该语句表示对任意被监控的服务，每当发生警告是都会发送信息到foo@bar。</p>
+<p>局部警告：<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALERT mail-address [[NOT] &#123;event, ...&#125;] [REMINDER cycles]</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">check host myhost with address 1.2.3.4</span><br><span class="line">    if failed port 3306 protocol mysql then alert</span><br><span class="line">    if failed port 80 protocol http then alert</span><br><span class="line">    alert foo@baz # Local service alert</span><br></pre></td></tr></table></figure></p>
+<p>你可以联合全局警告和局部警告，如果会发生冲突，局部警告优先级比全局警告高，会覆盖全局警告。</p>
+<h3 id="设置事件过滤器"><a href="#设置事件过滤器" class="headerlink" title="设置事件过滤器"></a>设置事件过滤器</h3><p>如果你想只对特定事件发送警告，可以将这些事件列在一个事件块中：</p>
+<blockquote>
+<p>set alert foo@bar only on { timeout, nonexist }<br> set alert foo@bar but not on { instance }<br>事件类型如下:</p>
+<h2 id="Event-Failure-state-Success-state"><a href="#Event-Failure-state-Success-state" class="headerlink" title=" Event:     | Failure state:              | Success state:"></a> Event:     | Failure state:              | Success state:</h2><p> action     | “Action failed”             | “Action done”<br> checksum   | “Checksum failed”           | “Checksum succeeded”<br> bytein     | “Download bytes exceeded”   | “Download bytes ok”<br> byteout    | “Upload bytes exceeded”     | “Upload bytes ok”<br> connection | “Connection failed”         | “Connection succeeded”<br> content    | “Content failed”,           | “Content succeeded”<br> data       | “Data access error”         | “Data access succeeded”<br> exec       | “Execution failed”          | “Execution succeeded”<br> fsflags    | “Filesystem flags failed”   | “Filesystem flags succeeded”<br> gid        | “GID failed”                | “GID succeeded”<br> icmp       | “Ping failed”               | “Ping succeeded”<br> instance   | “Monit instance changed”    | “Monit instance changed not”<br> invalid    | “Invalid type”              | “Type succeeded”<br> link       | “Link down”                 | “Link up”<br> nonexist   | “Does not exist”            | “Exists”<br> packetin   | “Download packets exceeded” | “Download packets ok”<br> packetout  | “Upload packets exceeded”   | “Upload packets ok”<br> permission | “Permission failed”         | “Permission succeeded”<br> pid        | “PID failed”                | “PID succeeded”<br> ppid       | “PPID failed”               | “PPID succeeded”<br> resource   | “Resource limit matched”    | “Resource limit succeeded”<br> saturation | “Saturation exceeded”       | “Saturation ok”<br> size       | “Size failed”               | “Size succeeded”<br> speed      | “Speed failed”              | “Speed ok”<br> status     | “Status failed”             | “Status succeeded”<br> timeout    | “Timeout”                   | “Timeout recovery”<br> timestamp  | “Timestamp failed”          | “Timestamp succeeded”<br> uid        | “UID failed”                | “UID succeeded”<br> uptime     | “Uptime failed”             | “Uptime succeeded”</p>
+</blockquote>
+<h3 id="设置error-reminder"><a href="#设置error-reminder" class="headerlink" title="设置error reminder"></a>设置error reminder</h3><p>一般的警告只会提醒一次，设置reminder可以进行持续提醒：<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET ALERT mail-address [WITH] REMINDER [ON] number [CYCLES]</span><br></pre></td></tr></table></figure></p>
+<p>例：十个周期之后还是失败，则再次发出警告<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alert foo@bar with reminder on 10 cycles</span><br></pre></td></tr></table></figure></p>
+<h2 id="取消对某些服务的警告"><a href="#取消对某些服务的警告" class="headerlink" title="取消对某些服务的警告"></a>取消对某些服务的警告</h2><p>为了取消某些服务的警告，可以在该服务中使用noalert声明。<br>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set alert foo@bar</span><br><span class="line"></span><br><span class="line">check process p1 with pidfile /var/run/p1.pid</span><br><span class="line"></span><br><span class="line">check process p2 with pidfile /var/run/p2.pid</span><br><span class="line"></span><br><span class="line">check process p3 with pidfile /var/run/p3.pid</span><br><span class="line">    noalert foo@bar</span><br></pre></td></tr></table></figure></p>
+<h3 id="邮件信息格式"><a href="#邮件信息格式" class="headerlink" title="邮件信息格式"></a>邮件信息格式</h3><p>警告邮件格式可以通过“set mail-format”声明设置 。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set mail-format &#123;mail-format&#125;</span><br></pre></td></tr></table></figure></p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">set mail-format &#123;</span><br><span class="line">     from: Monit Support &lt;monit@foo.bar&gt;</span><br><span class="line"> reply-to: support@domain.com</span><br><span class="line">  subject: $SERVICE $EVENT at $DATE</span><br><span class="line">  message: Monit $ACTION $SERVICE at $DATE on $HOST: $DESCRIPTION.</span><br><span class="line">           Yours sincerely,</span><br><span class="line">           monit</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="设置邮件服务器"><a href="#设置邮件服务器" class="headerlink" title="设置邮件服务器"></a>设置邮件服务器</h3><p>邮件服务器的声明采用“set mailserver”声明。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SET MAILSERVER</span><br><span class="line">       &lt;hostname|ip-address&gt;</span><br><span class="line">       [PORT number]</span><br><span class="line">       [USERNAME string] [PASSWORD string]</span><br><span class="line">       [using SSL [with options &#123;...&#125;]</span><br><span class="line">       [CERTIFICATE CHECKSUM [MD5|SHA1] &lt;<span class="built_in">hash</span>&gt;],</span><br><span class="line">       ...</span><br><span class="line">  [with TIMEOUT X SECONDS]</span><br><span class="line">  [using HOSTNAME hostname]</span><br></pre></td></tr></table></figure></p>
+<p>例子：设置两个服务器来应对故障<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">set mailserver smtp.gmail.com, smtp.other.host</span><br></pre></td></tr></table></figure></p>
+<h3 id="事件队列"><a href="#事件队列" class="headerlink" title="事件队列"></a>事件队列</h3><p>如果没有可用的邮件服务器，monit会将事件放入文件系统的队列中，直到服务器联通。</p>
+<h2 id="SERVICIE-METHODS"><a href="#SERVICIE-METHODS" class="headerlink" title="SERVICIE METHODS"></a>SERVICIE METHODS</h2><p>每个服务都有一个关联的start、stop和restart方法。这些方法可以让monit对该服务执行一些操作。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;START | STOP | RESTART&gt; [PROGRAM] = &quot;program&quot;</span><br><span class="line">       [[AS] UID &lt;number | string&gt;]</span><br><span class="line">       [[AS] GID &lt;number | string&gt;]</span><br><span class="line">       [[WITH] TIMEOUT &lt;number&gt; SECOND(S)]</span><br></pre></td></tr></table></figure></p>
+<p>如果program 是一个shell脚本，shell脚本必须以#！开头，并在第一行确定程序使用的解释器，比如：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#！/bin/sh</span></span><br></pre></td></tr></table></figure></p>
+<p>program 必须是可执行文件（比如权限设置为0755）<br>可以通过以下方式直接在program中写脚本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stop = &quot;/bin/sh -c &apos;kill -s SIGTERM `cat /var/run/process.pid`&apos;&quot;</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，program由启动monit的用户执行，如果monit在root用户下运行，你可以通过uid和gid切换执行的program的用户。<br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check process mmonit with pidfile /usr/local/mmonit/mmonit/logs/mmonit.pid</span><br><span class="line">  start program = &quot;/usr/local/mmonit/bin/mmonit&quot; as uid &quot;mmonit&quot; and gid &quot;mmonit&quot;</span><br><span class="line">  stop program = &quot;/usr/local/mmonit/bin/mmonit stop&quot; as uid &quot;mmonit&quot; and gid &quot;mmonit&quot;</span><br></pre></td></tr></table></figure></p>
+<p>默认情况下，monit会在start/stop结束或报错前等待30秒，你可以通过timeout选项覆盖这个时间参数或全局设置set limits。<br>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check process foobar with pidfile /var/run/foobar.pid</span><br><span class="line">  start program = &quot;/etc/init.d/foobar start&quot; with timeout 60 seconds</span><br><span class="line">  stop program = &quot;/etc/init.d/foobar stop&quot;</span><br></pre></td></tr></table></figure></p>
+<h2 id="SERVICE-POLL-TIME"><a href="#SERVICE-POLL-TIME" class="headerlink" title="SERVICE POLL TIME"></a>SERVICE POLL TIME</h2><p>服务通过“set daemon n”声明确定服务检测的周期。<br>例一：每两个周期检测一次<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check process nginx with pidfile /var/run/nginx.pid</span><br><span class="line">      every 2 cycles</span><br></pre></td></tr></table></figure></p>
+<p>例二：在工作日的8AM到7PM检测<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check program checkOracleDatabase</span><br><span class="line">       with path /var/monit/programs/checkoracle.pl</span><br><span class="line">      every &quot;* 8-19 * * 1-5&quot;</span><br></pre></td></tr></table></figure></p>
+<p>例三：不在周日的0AM到3AM检测<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check process mysqld with pidfile /var/run/mysqld.pid</span><br><span class="line">      not every &quot;* 0-3 * * 0&quot;</span><br></pre></td></tr></table></figure></p>
+<h2 id="SERVICE-GROUPS"><a href="#SERVICE-GROUPS" class="headerlink" title="SERVICE GROUPS"></a>SERVICE GROUPS</h2><p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">monit -g &lt;groupname&gt; start</span><br></pre></td></tr></table></figure></p>
+<h2 id="服务监控模式"><a href="#服务监控模式" class="headerlink" title="服务监控模式"></a>服务监控模式</h2><p>monit提供两种服务监控模式：主动和被动。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MODE &lt;ACTIVE | PASSIVE&gt;</span><br></pre></td></tr></table></figure></p>
+<p>主动模式下一旦出现问题就发出警告并重启服务。默认模式为主动模式。<br>被动模式下，除非服务失败了，否则不会发出警告或重启服务。</p>
+<h2 id="系统重启和服务启动"><a href="#系统重启和服务启动" class="headerlink" title="系统重启和服务启动"></a>系统重启和服务启动</h2><p>monit支持3种重启模式： start，nostart，laststate<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SET ONREBOOT &lt;START | NOSTART | LASTSTATE&gt;</span><br></pre></td></tr></table></figure></p>
+<p>start模式下，每次系统重启，monit都会开启，这个模式是默认模式。<br>nostart模式下，系统重启monit不会开启，需要手动开启。<br>laststate模式下，监控的服务与重启前的相同</p>
+<h2 id="服务-RESTART-LIMIT"><a href="#服务-RESTART-LIMIT" class="headerlink" title="服务 RESTART LIMIT"></a>服务 RESTART LIMIT</h2><p>monit会在一个服务在经历一段较长时间拒绝启动或响应后 提供一个重启限制的机制。<br>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if 5 restarts within 5 cycles then exec &quot;/foo/bar&quot;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if 7 restarts within 10 cycles then stop</span><br></pre></td></tr></table></figure>
+<h2 id="服务依赖"><a href="#服务依赖" class="headerlink" title="服务依赖"></a>服务依赖</h2><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEPENDS on service[, service [,...]]</span><br></pre></td></tr></table></figure></p>
+<p>A依赖于B，则B会先于A被检测。<br>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(1) check process apache with pidfile &quot;/var/run/httpd.pid&quot;</span><br><span class="line">(2)    depends on httpd</span><br><span class="line">(3)    ...</span><br><span class="line">(4)</span><br><span class="line">(5) check file httpd with path /usr/bin/httpd</span><br><span class="line">(6)    if failed checksum then stop</span><br></pre></td></tr></table></figure></p>
+<h2 id="SERVICE-TESTS"><a href="#SERVICE-TESTS" class="headerlink" title="SERVICE TESTS"></a>SERVICE TESTS</h2><h3 id="LIMITS"><a href="#LIMITS" class="headerlink" title="LIMITS"></a>LIMITS</h3><p>你可以设定许多限制来调整monit中缓存的大小和timeout值。通常情况下默认值是合适的，如果有需要，你可以修改下列的limit值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SET LIMITS &#123;</span><br><span class="line">  PROGRAMOUTPUT:     &lt;number&gt; &lt;unit&gt;,</span><br><span class="line">  SENDEXPECTBUFFER:  &lt;number&gt; &lt;unit&gt;,</span><br><span class="line">  FILECONTENTBUFFER: &lt;number&gt; &lt;unit&gt;,</span><br><span class="line">  HTTPCONTENTBUFFER: &lt;number&gt; &lt;unit&gt;,</span><br><span class="line">  NETWORKTIMEOUT:    &lt;number&gt; &lt;timeunit&gt;</span><br><span class="line">  PROGRAMTIMEOUT:    &lt;number&gt; &lt;timeunit&gt;</span><br><span class="line">  STOPTIMEOUT:       &lt;number&gt; &lt;timeunit&gt;</span><br><span class="line">  STARTTIMEOUT:      &lt;number&gt; &lt;timeunit&gt;</span><br><span class="line">  RESTARTTIMEOUT:    &lt;number&gt; &lt;timeunit&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中unit是B、KB或MB，timeunit是MS(微妙）或S（秒）。<br>默认值如下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">----------------------------------------------------------------------------------</span><br><span class="line">| Option            | Description                                      | Default |</span><br><span class="line">----------------------------------------------------------------------------------</span><br><span class="line">| programOutput     | <span class="built_in">limit</span> <span class="keyword">for</span> check program output (truncated after) | 512 B   |</span><br><span class="line">| sendExpectBuffer  | <span class="built_in">limit</span> <span class="keyword">for</span> send/expect protocol <span class="built_in">test</span>              | 256 B   |</span><br><span class="line">| fileContentBuffer | <span class="built_in">limit</span> <span class="keyword">for</span> file content <span class="built_in">test</span> (line)               | 512 B   |</span><br><span class="line">| httpContentBuffer | <span class="built_in">limit</span> <span class="keyword">for</span> HTTP content <span class="built_in">test</span> (response body)      | 1 MB    |</span><br><span class="line">| networkTimeout    | timeout <span class="keyword">for</span> network I/O                          | 5 s     |</span><br><span class="line">| programTimeout    | timeout <span class="keyword">for</span> check program                        | 300 s   |</span><br><span class="line">| stopTimeout       | timeout <span class="keyword">for</span> service stop                         | 30 s    |</span><br><span class="line">| startTimeout      | timeout <span class="keyword">for</span> service start                        | 30 s    |</span><br><span class="line">| restartTimeout    | timeout <span class="keyword">for</span> service restart                      | 30 s    |</span><br><span class="line">----------------------------------------------------------------------------------</span><br></pre></td></tr></table></figure></p>
+<h3 id="一般语法"><a href="#一般语法" class="headerlink" title="一般语法"></a>一般语法</h3><p>monit 提供许多if-tests，供你在check声明中多角度测试一个服务。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IF &lt;test&gt; THEN &lt;action&gt; [ELSE IF SUCCEEDED THEN &lt;action&gt;]</span><br></pre></td></tr></table></figure></p>
+<p>action操作会在test为真的时候执行，success操作是可选操作，只会在状态由failure转到成功时执行，如果success操作不设定，monit会默认发送恢复警告。<br>变值测试：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IF CHANGED &lt;test&gt; THEN &lt;action&gt;</span><br></pre></td></tr></table></figure></p>
+<p>每当test值改变时，会执行action。</p>
+<h3 id="ACTION"><a href="#ACTION" class="headerlink" title="ACTION"></a>ACTION</h3><p>你可以选择一下的action进行测试：  </p>
+<ol>
+<li>alert  ： <ul>
+<li>发送警告</li>
+</ul>
+</li>
+<li>restart： <ul>
+<li>重启服务并发送警告，restart会调用设定的restart方法，如果没有设定restart方法，会先调用stop方法再调用start方法</li>
+</ul>
+</li>
+<li>start  ：<ul>
+<li>通过调用服务注册的start方法来启动服务，并发送警告。  </li>
+</ul>
+</li>
+<li>stop   ： <ul>
+<li>通过调用服务注册的stop方法来关闭服务，并发送警告。关闭的服务monit不会再监听，为了再次监听该服务，你必须再网页或命令行进行操作。  </li>
+</ul>
+</li>
+<li><p>exec   ：</p>
+<ul>
+<li><p>用来执行任意program并发送警告。你必须确保program是可执行的（如0755）。如果program需要传入参数，需要将program和参数包在一个带引号的字符串里。选择执行程序的uid和gui参数是可选的。如果测试失败program只会执行一次。如果错误在指定周期依旧存在，可以设置repeat参数让program重复执行。<br>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if failed &lt;test&gt; then exec &quot;/usr/local/bin/sms.sh&quot;</span><br><span class="line">    as uid &quot;nobody&quot; and gid &quot;nobody&quot;</span><br><span class="line">    repeat every 5 cycles</span><br></pre></td></tr></table></figure>
+<p>记住，如果monit是工作在root用户下，除非使用uid和gid关键字，所有的program会拥有超级用户权限。</p>
+</li>
+</ul>
+</li>
+<li>ummonitor：<ul>
+<li>取消监控并发送警告 </li>
+</ul>
+</li>
+</ol>
+<h3 id="错误容忍"><a href="#错误容忍" class="headerlink" title="错误容忍"></a>错误容忍</h3><p>默认情况下，如果发生错误会马上发出警告，但可以利用for 语句给与错误一定的容忍度。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"> FOR &lt;X&gt; CYCLES ...</span><br><span class="line">or:</span><br><span class="line"> &lt;X&gt; [TIMES WITHIN] &lt;Y&gt; CYCLES ...</span><br></pre></td></tr></table></figure></p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if failed</span><br><span class="line">   port 80</span><br><span class="line">   for 3 cycles</span><br><span class="line">then alert</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if failed</span><br><span class="line">   port 80</span><br><span class="line">   for 3 times within 5 cycles</span><br><span class="line">then alert</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check filesystem rootfs with path /dev/hda1</span><br><span class="line"> if space usage &gt; 80% for 5 times within 15 cycles then alert</span><br><span class="line"> if space usage &gt; 90% for 5 cycles then exec &apos;/try/to/free/the/space&apos;</span><br></pre></td></tr></table></figure>
+<h3 id="存在测试"><a href="#存在测试" class="headerlink" title="存在测试"></a>存在测试</h3><p>存在测试是基于被监控对象存在与否来触发action的。它支持process、file、directory、filesystem和fifo服务。  </p>
+<h4 id="NON-EXIST"><a href="#NON-EXIST" class="headerlink" title="NON-EXIST"></a>NON-EXIST</h4><p>语法：</p>
+<blockquote>
+<p> IF [DOES] NOT EXIST THEN <action><br>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check filesystem disk1 with path /dev/sda1</span><br><span class="line">     if does not exist then exec &quot;/sbin/mount...&quot;</span><br></pre></td></tr></table></figure></action></p>
+</blockquote>
+<h4 id="EXIST"><a href="#EXIST" class="headerlink" title="EXIST"></a>EXIST</h4><p>语法：</p>
+<blockquote>
+<p> IF [DOES] EXIST THEN <action><br>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check process vmware matching &quot;vmware&quot;</span><br><span class="line">       if exist then exec &quot;/usr/bin/pkill -9 vmware&quot;</span><br></pre></td></tr></table></figure></action></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check file x with path /some/path/x</span><br><span class="line">      if exist then alert</span><br></pre></td></tr></table></figure>
+<h3 id="资源测试"><a href="#资源测试" class="headerlink" title="资源测试"></a>资源测试</h3><p>monit可以检测一个服务的资源占用数。该测试只能在控制文件中的系统服务或process服务中使用。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IF &lt;resource&gt; &lt;operator&gt; &lt;value&gt; THEN &lt;action&gt;</span><br></pre></td></tr></table></figure></p>
+<p>operator是操作符，包括：</p>
+<pre><code>- C语言中的操作符          ：&quot;&lt;&quot;, &quot;&gt;&quot;, &quot;!=&quot;, &quot;==&quot;
+- shell语言中的操作符  ：&quot;gt&quot;, &quot;lt&quot;, &quot;eq&quot;, &quot;ne&quot; 
+- 自然语言操作符           ：&quot;greater&quot;, &quot;less&quot;, &quot;equal&quot;, &quot;notequal&quot;
+</code></pre><p>value可以是整数或实数。<br>action可选值： “ALERT”, “RESTART”, “START”, “STOP”, “EXEC” or “UNMONITOR”<br>resource由服务类型决定。  </p>
+<h4 id="系统资源测试"><a href="#系统资源测试" class="headerlink" title="系统资源测试"></a>系统资源测试</h4><ol>
+<li><p>LOADAVG([1min|5min|15min])表示系统平均负载，平均负载是在系统运行队列里指定时间内的平均进程数量，<br>例； </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if loadavg (1min) &gt; 90 for 15 cycles then alert</span><br><span class="line">if loadavg (5min) &gt; 80 for 10 cycles then alert</span><br><span class="line">if loadavg (15min) &gt; 70 for 8 cycles then alert</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CPU([user|system|wait]) 是系统在用户空间和内核空间以及I/O所发费的时间所占百分比。<br>“user/system/wait”修饰语是可选的，如果不使用这些修饰语，则测试的是系统总的CPU利用率。<br>例：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if cpu usage &gt; 95% for 10 cycles then alert</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MEMORY 是系统内存使用率或实际使用容量。<br>例：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if memory usage &gt; 75% for 5 cycles then alert</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SWAP 是系统交换交换空间使用容量的占比或实际使用容量。<br>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if swap usage &gt; 20% for 10 cycles then alert</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="进程资源测试"><a href="#进程资源测试" class="headerlink" title="进程资源测试"></a>进程资源测试</h4><ol>
+<li><p>CPU 是进程自身的CPU使用率。<br>例：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if cpu &gt; 10% for 5 cycles then restart</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TOTAL CPU 是进程及其子进程总的CPU占用率<br>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if total cpu &gt; 50% for 10 cycles then restart</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>THREADS是进程总的线程数。<br>例： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if threads &gt; 3 then alert</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CHILDREN 是一个进程的子进程数。<br>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if children &gt; 10 then alert</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MEMORY 是进程自身的内存使用率或使用容量。<br>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if memory usage &gt; 8MB then alert</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TOTAL MEMORY是进程及子进程的内存使用率或使用容量。<br>例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if total memory usage &gt; 1% for 10 cycles then alert</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="PROCESS-DISK-I-O-TEST"><a href="#PROCESS-DISK-I-O-TEST" class="headerlink" title="PROCESS DISK I/O TEST"></a>PROCESS DISK I/O TEST</h3><p>monit可以测试进程的文件系统读写活动。该测试只能用于process的服务类型。monit需要运行在root用户下已激活该测试。  </p>
+<h3 id="文件校验和-测试"><a href="#文件校验和-测试" class="headerlink" title="文件校验和 测试"></a>文件校验和 测试</h3><h3 id="时间戳测试"><a href="#时间戳测试" class="headerlink" title="时间戳测试"></a>时间戳测试</h3><h3 id="文件大小测试"><a href="#文件大小测试" class="headerlink" title="文件大小测试"></a>文件大小测试</h3><h3 id="文件内容测试"><a href="#文件内容测试" class="headerlink" title="文件内容测试"></a>文件内容测试</h3><h3 id="FILESYSTEM-MOUNT-FLAGS-TEST"><a href="#FILESYSTEM-MOUNT-FLAGS-TEST" class="headerlink" title="FILESYSTEM MOUNT FLAGS TEST"></a>FILESYSTEM MOUNT FLAGS TEST</h3><h3 id="空间使用率测试"><a href="#空间使用率测试" class="headerlink" title="空间使用率测试"></a>空间使用率测试</h3><h3 id="索引使用率测试"><a href="#索引使用率测试" class="headerlink" title="索引使用率测试"></a>索引使用率测试</h3><h3 id="DISK-I-O-TEST"><a href="#DISK-I-O-TEST" class="headerlink" title="DISK I/O TEST"></a>DISK I/O TEST</h3><h3 id="权限测试"><a href="#权限测试" class="headerlink" title="权限测试"></a>权限测试</h3><h3 id="UID测试"><a href="#UID测试" class="headerlink" title="UID测试"></a>UID测试</h3><h3 id="GID测试"><a href="#GID测试" class="headerlink" title="GID测试"></a>GID测试</h3><h3 id="PID测试"><a href="#PID测试" class="headerlink" title="PID测试"></a>PID测试</h3><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IF CHANGED PID THEN action</span><br></pre></td></tr></table></figure></p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check process sshd with pidfile /var/run/sshd.pid</span><br><span class="line">       if changed pid then alert</span><br></pre></td></tr></table></figure></p>
+<h3 id="PPID-测试"><a href="#PPID-测试" class="headerlink" title="PPID 测试"></a>PPID 测试</h3><h3 id="运行时间测试"><a href="#运行时间测试" class="headerlink" title="运行时间测试"></a>运行时间测试</h3><p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IF UPTIME [[operator] value [unit]] THEN action</span><br></pre></td></tr></table></figure></p>
+<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">check process myapp with pidfile /var/run/myapp.pid</span><br><span class="line">   start program = &quot;/etc/init.d/myapp start&quot;</span><br><span class="line">   stop program = &quot;/etc/init.d/myapp stop&quot;</span><br><span class="line">   if uptime &gt; 3 days then restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="安全属性测试"><a href="#安全属性测试" class="headerlink" title="安全属性测试"></a>安全属性测试</h3><h3 id="PROGRAM-STATUS-测试"><a href="#PROGRAM-STATUS-测试" class="headerlink" title="PROGRAM STATUS 测试"></a>PROGRAM STATUS 测试</h3><p>你可以测试一个program或脚本的退出值，该测试只能用于program服务类型。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">IF STATUS operator value THEN action</span><br><span class="line">IF CHANGED STATUS THEN action</span><br></pre></td></tr></table></figure></p>
+<p>operator是操作符，包括：</p>
+<pre><code>- C语言中的操作符          ：&quot;&lt;&quot;, &quot;&gt;&quot;, &quot;!=&quot;, &quot;==&quot;
+- shell语言中的操作符  ：&quot;gt&quot;, &quot;lt&quot;, &quot;eq&quot;, &quot;ne&quot; 
+- 自然语言操作符           ：&quot;greater&quot;, &quot;less&quot;, &quot;equal&quot;, &quot;notequal&quot;
+</code></pre><p>action可选值： “ALERT”, “RESTART”, “START”, “STOP”, “EXEC” or “UNMONITOR”<br>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check program myscript with path /usr/local/bin/myscript.sh</span><br><span class="line">      if status != 0 then alert</span><br></pre></td></tr></table></figure></p>
+<p>脚本/usr/local/bin/myscript.sh 内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line">echo test</span><br><span class="line">exit $?</span><br></pre></td></tr></table></figure></p>
+<p>你可以向program中传入参数。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check program list-files with path &quot;/bin/ls -lrt /tmp&quot;</span><br><span class="line">	if status != 0 then alert</span><br></pre></td></tr></table></figure></p>
+<p>程序或脚本的参数是以空格分离的字符串序列。在上例中，字符串’-lrt’和’/tmp/‘是程序’/bin/ls’的参数。如果使用了参数，建议使用’’来包围字符串。如果不含参数，加引号不是必须的。<br>请注意，如果程序是一个脚本，需要在脚本的第一行指定解释器，且程序或脚本必须是可执行的。<br>如果monit是在超级用户下运行的，你可以在其他用户或组下运行程序。<br>例如，下例中’ls’程序在用户www和组staff下运行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check program ls with path &quot;/bin/ls /tmp/&quot; as uid &quot;www&quot;</span><br><span class="line">		and gid &quot;staff&quot;</span><br><span class="line">		if status !=0 then alert</span><br></pre></td></tr></table></figure></p>
+<p>monit会周期的执行程序，如果程序的退出状态与期望值不匹配就执行一些操作。在上例中，monit会在程序退出值不为0时产生警告。通常，0意味着程序退出正常（没有异常，0 error）。  </p>
+<p>程序检测（program check）是异步的，Monit不会去等待程序退出，相反的，Monit会在后台开启程序然后继续检测控制文件中的其他服务。在下个循环中，Monit会检测程序是否结束，如果结束，就收集程序的退出状态。如果这个退出状态意味着错误发生，Monit会产生包含程序的错误输出的警告信息。若该次循环中程序没有退出，Monit会等到下次循环。若程序运行超过五分钟，Monit会杀掉该进程并产生一个超时事件，默认的超时时间可以覆盖。<br>程序检测的异步特性使Monit能够非阻塞的运行，但这有一个副作用：当程序已经结束运行并等待Monit来收集结果时，该进程变成了一个僵尸进程。一个僵尸进程不消耗系统资源（除了保留pid），并处在Monit的控制下，僵尸进程在Monit收集完退出状态时从系统中移除。这意味着每个”check program”都关联着一个运行的进程或者僵尸进程。<br>由很多状态测试都可以使用，例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">check program hwtest with path /usr/local/bin/hwtest.sh</span><br><span class="line">      with timeout 500 seconds</span><br><span class="line">      if status = 1 then alert</span><br><span class="line">      if status = 3 for 5 cycles then exec &quot;/usr/local/bin/emergency.sh&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="网络接口测试"><a href="#网络接口测试" class="headerlink" title="网络接口测试"></a>网络接口测试</h3><h3 id="网络ping测试"><a href="#网络ping测试" class="headerlink" title="网络ping测试"></a>网络ping测试</h3><h3 id="连接测试"><a href="#连接测试" class="headerlink" title="连接测试"></a>连接测试</h3><h2 id="管理Monit实例-M-Monit专属"><a href="#管理Monit实例-M-Monit专属" class="headerlink" title="管理Monit实例(M/Monit专属)"></a>管理Monit实例(M/Monit专属)</h2><p>M/Monit扩展了Monit的功能，能够监控所有的Monit主机。</p>
+<h2 id="配置案例"><a href="#配置案例" class="headerlink" title="配置案例"></a>配置案例</h2><h3 id="start"><a href="#start" class="headerlink" title="start"></a>start</h3><p>最简单的形式是就是check声明，在本例中，我们检测服务是否在运行，如果不在运行就产生警告：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">check process nginx with pidfile /var/run/nginx.pid</span><br></pre></td></tr></table></figure></p>
+<p>为了让Monit在该进程没有运行时启动该进程，需要添加一个start声明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check process nginx with pidfile /var/run/nginx.pid</span><br><span class="line">	start program = &quot;/etc/init.d/nginx start&quot;</span><br></pre></td></tr></table></figure></p>
+<h3 id="stop-failed"><a href="#stop-failed" class="headerlink" title="stop/failed"></a>stop/failed</h3><p>下面是一个更高级的例子用来监控Apache网页服务器，该服务器监听HTTP和HTTPS的默认端口。在该例中，Monit会在Apache服务器不接受端口连接的时候，重启Apache服务器。Monit重启的方法是先执行stop程序，等待进程关闭后（最多30秒），执行start程序，然后等待30秒到服务启动。stat和stop程序的等待时间可以通过“timeout”选项重写。如果你要求发送警告信息，当Monit无法start或stop服务时，会发送一条失败错误信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">check process apache with pidfile /var/run/httpd.pid</span><br><span class="line">	start program = &quot;/etc/init.d/httpd start&quot; with timeout 60 seconds</span><br><span class="line">	stop program = &quot;/etc/init.d/httpd stop&quot;</span><br><span class="line">	if failed port 80 for 2 cycles then restart</span><br><span class="line">	if failed port 443 for 2 cycles then restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="uid-gid"><a href="#uid-gid" class="headerlink" title="uid/gid"></a>uid/gid</h3><p>以下实例展示你可以以指定的用户和组来运行程序。许多后台进程可以自己切换uid和gid，但对于那些没有这种能力的程序，Monit以指定用户启动程序的功能会很有帮助。在这个实例中，我们以标准的nobody用户和组开启 Tomcat Java Servlet Engine。请注意，Monit只能在超级用户下才能切换uid和gid，否则相关声明会被忽略。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">check process tomcat with pidfile /var/run/tomcat.pid</span><br><span class="line">      start program = &quot;/etc/init.d/tomcat start&quot;</span><br><span class="line">            as uid &quot;nobody&quot; and gid &quot;nobody&quot;</span><br><span class="line">      stop program  = &quot;/etc/init.d/tomcat stop&quot;</span><br><span class="line">            # You can also use id numbers instead and write:</span><br><span class="line">            as uid 99 and with gid 99</span><br><span class="line">      if failed port 8080 then alert</span><br></pre></td></tr></table></figure></p>
+<h3 id="udp"><a href="#udp" class="headerlink" title="udp"></a>udp</h3><p>在下例中，我们使用udp进行连接测试，检测name-server是否在运行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">check process named with pidfile /var/run/named.pid</span><br><span class="line">      start program = &quot;/etc/init.d/named start&quot;</span><br><span class="line">      stop program  = &quot;/etc/init.d/named stop&quot;</span><br><span class="line">      if failed port 53 use type udp protocol dns then restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="unix"><a href="#unix" class="headerlink" title="unix"></a>unix</h3><p>下例展示：如果Sophie通过Unix domain socket答应连接时，如何检测<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">check process sophie with pidfile /var/run/sophie.pid</span><br><span class="line">      start program = &quot;/etc/init.d/sophie start&quot;</span><br><span class="line">      stop  program = &quot;/etc/init.d/sophie stop&quot;</span><br><span class="line">      if failed unix /var/run/sophie then restart</span><br></pre></td></tr></table></figure></p>
+<h3 id="apache"><a href="#apache" class="headerlink" title="apache"></a>apache</h3><p>Apache服务器跑在本机，响应基于IP的虚拟主机<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">check process apache with pidfile /var/run/httpd.pid</span><br><span class="line">      start &quot;/etc/init.d/httpd start&quot;</span><br><span class="line">      stop  &quot;/etc/init.d/httpd stop&quot;</span><br><span class="line">      if failed host www.sol.no port 80 then alert</span><br><span class="line">      if failed host shop.sol.no port 443 then alert</span><br><span class="line">      if failed host chat.sol.no port 80 then alert</span><br></pre></td></tr></table></figure></p>
+<p>为确保Monit和HTTP服务器通信，添加一个协议测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">check process apache with pidfile /var/run/httpd.pid</span><br><span class="line">      start &quot;/etc/init.d/httpd start&quot;</span><br><span class="line">      stop  &quot;/etc/init.d/httpd stop&quot;</span><br><span class="line">      if failed</span><br><span class="line">         host www.sol.no port 80 protocol http</span><br><span class="line">      then alert</span><br></pre></td></tr></table></figure></p>
+<p>也可以利用send/expect 机制<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">check process apache with pidfile /var/run/httpd.pid</span><br><span class="line">      start &quot;/etc/init.d/httpd start&quot;</span><br><span class="line">      stop  &quot;/etc/init.d/httpd stop&quot;</span><br><span class="line">      if failed</span><br><span class="line">         host www.sol.no port 80 and</span><br><span class="line">         send &quot;GET / HTTP/1.1\r\nHost: www.sol.no\r\n\r\n&quot;</span><br><span class="line">         expect &quot;HTTP/[0-9\.]&#123;3&#125; 200.*&quot;</span><br><span class="line">      then alert</span><br></pre></td></tr></table></figure></p>
+<h3 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">check host www.tildeslash.com with address www.tildeslash.com</span><br><span class="line">      if failed ping then alert</span><br></pre></td></tr></table></figure>
+<h3 id="checksum"><a href="#checksum" class="headerlink" title="checksum"></a>checksum</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">check process apache with pidfile /var/run/httpd.pid</span><br><span class="line">      start program = &quot;/etc/init.d/httpd start&quot;</span><br><span class="line">      stop program  = &quot;/etc/init.d/httpd stop&quot;</span><br><span class="line">      if failed host www.tildeslash.com port 80 then restart</span><br><span class="line">      depends on apache_bin</span><br><span class="line"></span><br><span class="line">check file apache_bin with path /usr/local/apache/bin/httpd</span><br><span class="line">      if failed checksum then unmonitor</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">check host mmonit.com with address mmonit.com</span><br><span class="line">      if failed</span><br><span class="line">         port 80 protocol http and</span><br><span class="line">         request &quot;/monit/dist/monit-5.7.tar.gz&quot;</span><br><span class="line">         with checksum f9d26b8393736b5dfad837bb13780786</span><br><span class="line">      then alert</span><br></pre></td></tr></table></figure>
+<h3 id="sip"><a href="#sip" class="headerlink" title="sip"></a>sip</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">check process freeswitch</span><br><span class="line">   with pidfile /usr/local/freeswitch/log/freeswitch.pid</span><br><span class="line"> start program = &quot;/usr/local/freeswitch/bin/freeswitch -nc -hp&quot;</span><br><span class="line"> stop program = &quot;/usr/local/freeswitch/bin/freeswitch -stop&quot;</span><br><span class="line"> if total memory &gt; 1000.0 MB for 5 cycles then alert</span><br><span class="line"> if total memory &gt; 1500.0 MB for 5 cycles then alert</span><br><span class="line"> if total memory &gt; 2000.0 MB for 5 cycles then restart</span><br><span class="line"> if cpu &gt; 60% for 5 cycles then alert</span><br><span class="line"> if failed</span><br><span class="line">    port 5060 type udp protocol SIP</span><br><span class="line">    target me@foo.bar and maxforward 10</span><br><span class="line"> then restart</span><br><span class="line"></span><br><span class="line">check process asterisk</span><br><span class="line">  with pidfile /var/run/asterisk/asterisk.pid</span><br><span class="line">  start program = &quot;/usr/sbin/asterisk&quot;</span><br><span class="line">  stop program = &quot;/usr/sbin/asterisk -r -x &apos;shutdown now&apos;&quot;</span><br><span class="line">  if total memory &gt; 1000.0 MB for 5 cycles then alert</span><br><span class="line">  if total memory &gt; 1500.0 MB for 5 cycles then alert</span><br><span class="line">  if total memory &gt; 2000.0 MB for 5 cycles then restart</span><br><span class="line">  if cpu &gt; 60% for 5 cycles then alert</span><br><span class="line">  if failed</span><br><span class="line">     port 5060 type udp protocol SIP</span><br><span class="line">     and target me@foo.bar maxforward 10</span><br><span class="line">  then restart</span><br></pre></td></tr></table></figure>
+<h3 id="every"><a href="#every" class="headerlink" title="every"></a>every</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">check process dynamo with pidfile /etc/dynamo.pid every 2 cycles</span><br><span class="line">      start program = &quot;/etc/init.d/dynamo start&quot;</span><br><span class="line">      stop program  = &quot;/etc/init.d/dynamo stop&quot;</span><br><span class="line">      if failed port 8840 then alert</span><br></pre></td></tr></table></figure>
+<h3 id="group"><a href="#group" class="headerlink" title="group"></a>group</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">check process sybase with pidfile /var/run/sybase.pid</span><br><span class="line">      start = &quot;/etc/init.d/sybase start&quot;</span><br><span class="line">      stop  = &quot;/etc/init.d/sybase stop&quot;</span><br><span class="line">      mode passive</span><br><span class="line">      group database</span><br><span class="line"></span><br><span class="line">check process oracle with pidfile /var/run/oracle.pid</span><br><span class="line">      start program = &quot;/etc/init.d/oracle start&quot;</span><br><span class="line">      stop program  = &quot;/etc/init.d/oracle stop&quot;</span><br><span class="line">      if failed</span><br><span class="line">         port 9001 protocol tns</span><br><span class="line">      then restart</span><br><span class="line">      group database</span><br></pre></td></tr></table></figure>
+<h3 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">check process apache with pidfile /var/run/httpd.pid</span><br><span class="line">      start program = &quot;/etc/init.d/httpd start&quot;</span><br><span class="line">      stop program  = &quot;/etc/init.d/httpd stop&quot;</span><br><span class="line">      if cpu &gt; 40% for 2 cycles then alert</span><br><span class="line">      if total cpu &gt; 60% for 2 cycles then alert</span><br><span class="line">      if total cpu &gt; 80% for 5 cycles then restart</span><br><span class="line">      if mem &gt; 100 MB for 5 cycles then stop</span><br></pre></td></tr></table></figure>
+<h3 id="timestamp"><a href="#timestamp" class="headerlink" title="timestamp"></a>timestamp</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">check file httpd.conf with path /etc/httpd/httpd.conf</span><br><span class="line">       if changed timestamp</span><br><span class="line">          then exec &quot;/etc/init.d/httpd graceful&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="depend"><a href="#depend" class="headerlink" title="depend"></a>depend</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">check process apache with pidfile /var/run/httpd.pid</span><br><span class="line">     start = &quot;/etc/init.d/httpd start&quot;</span><br><span class="line">     stop  = &quot;/etc/init.d/httpd stop&quot;</span><br><span class="line">     alert admin@bar on &#123;nonexist, timeout&#125;</span><br><span class="line">       with mail-format &#123;</span><br><span class="line">             from:     bofh@$HOST</span><br><span class="line">             subject:  apache $EVENT - $ACTION</span><br><span class="line">             message:  This event occurred on $HOST at $DATE.</span><br><span class="line">             Your faithful employee,</span><br><span class="line">             monit</span><br><span class="line">     &#125;</span><br><span class="line">     if failed host www.tildeslash.com  port 80 then restart</span><br><span class="line">     depend httpd_bin</span><br><span class="line">     group apache</span><br><span class="line"></span><br><span class="line">check file httpd_bin with path /usr/local/apache/bin/httpd</span><br><span class="line">      alert security@bar on &#123;checksum, timestamp,</span><br><span class="line">                 permission, uid, gid&#125;</span><br><span class="line">            with mail-format &#123;subject: Alaaarrm! on $HOST&#125;</span><br><span class="line">      if failed checksum</span><br><span class="line">         and expect 8f7f419955cefa0b33a2ba316cba3659</span><br><span class="line">             then unmonitor</span><br><span class="line">      if failed permission 755 then unmonitor</span><br><span class="line">      if failed uid &quot;root&quot; then unmonitor</span><br><span class="line">      if failed gid &quot;root&quot; then unmonitor</span><br><span class="line">      if changed timestamp then alert</span><br><span class="line">      group apache</span><br></pre></td></tr></table></figure>
+<h3 id="After-Oracle-restart-Apache-restart"><a href="#After-Oracle-restart-Apache-restart" class="headerlink" title="After Oracle restart, Apache restart"></a>After Oracle restart, Apache restart</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">check process apache with pidfile /var/run/httpd.pid</span><br><span class="line">      start = &quot;/etc/init.d/httpd start&quot;</span><br><span class="line">      stop  = &quot;/etc/init.d/httpd stop&quot;</span><br><span class="line">      depends on oracle</span><br><span class="line"></span><br><span class="line">check process oracle with pidfile /var/run/oracle.pid</span><br><span class="line">      start = &quot;/etc/init.d/oracle start&quot;</span><br><span class="line">      stop  = &quot;/etc/init.d/oracle stop&quot;</span><br><span class="line">      if failed port 9001 for 5 cycles then restart</span><br></pre></td></tr></table></figure>
+<h3 id="if-oracle-restart-oracle-import-and-oracle-export-restart"><a href="#if-oracle-restart-oracle-import-and-oracle-export-restart" class="headerlink" title="if oracle restart oracle-import and oracle-export restart"></a>if oracle restart oracle-import and oracle-export restart</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">check process oracle with pidfile /var/run/oracle.pid</span><br><span class="line">      start = &quot;/etc/init.d/oracle start&quot;</span><br><span class="line">      stop  = &quot;/etc/init.d/oracle stop&quot;</span><br><span class="line">      if failed port 9001 for 3 cycles then restart</span><br><span class="line"></span><br><span class="line">check process oracle-import</span><br><span class="line">     with pidfile /var/run/oracle-import.pid</span><br><span class="line">      start = &quot;/etc/init.d/oracle-import start&quot;</span><br><span class="line">      stop  = &quot;/etc/init.d/oracle-import stop&quot;</span><br><span class="line">      depends on oracle</span><br><span class="line"></span><br><span class="line">check process oracle-export</span><br><span class="line">     with pidfile /var/run/oracle-export.pid</span><br><span class="line">      start = &quot;/etc/init.d/oracle-export start&quot;</span><br><span class="line">      stop  = &quot;/etc/init.d/oracle-export stop&quot;</span><br><span class="line">      depends on oracle</span><br></pre></td></tr></table></figure>
+<h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><p>~/.monitrc是默认的控制文件。<br>/etc/monitrc:如果默认控制文件 不存在，/etc/下包含monitrc文件，则会使用该文件作为控制文件。<br>./monitrc:如果上述文件都不存在，而该文件存在，则使用该文件为控制文件。<br>~/.monit.pid :防止程序并行运行的锁文件。<br>/run/monit.pid：root模式下防止程序并行运行的锁文件。<br>/var/run/monit.pid ：root模式下防止程序并行运行的锁文件。<br>/etc/monit.pid：root模式下防止程序并行运行的锁文件(root mode, systems without /var/run)。<br>~/.monit：<br>~/.monit.id： 保存Monit自身的ID</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>Monit不使用环境变量，但当Monit执行一个start或stop程序时或执行操作时，会设置一些环境变量供可执行程序取得触发操作（action）的事件信息。<br>以下的环境变量由Monit为每个程序（including check program）设置。</p>
+<h3 id="MONIT-SERVICE"><a href="#MONIT-SERVICE" class="headerlink" title="MONIT_SERVICE"></a>MONIT_SERVICE</h3><p>程序执行的服务名。</p>
+<h3 id="只在service-start-stop-restart-program-和exec-action-上下文中有效的环境变量。"><a href="#只在service-start-stop-restart-program-和exec-action-上下文中有效的环境变量。" class="headerlink" title="只在service start/stop/restart program 和exec action 上下文中有效的环境变量。"></a>只在service start/stop/restart program 和exec action 上下文中有效的环境变量。</h3><ol>
+<li>MONIT_EVENT：                 服务发送的事件</li>
+<li>MONIT_DESCRIPTION：         错误条件的描述</li>
+<li>MONIT_DATE：                 事件发送时间</li>
+<li>MONIT_HOST：                 事件发送主机</li>
+</ol>
+<h3 id="只在check-process-start-stop-restart-program-和-exec-action-上下文中有效的环境变量"><a href="#只在check-process-start-stop-restart-program-和-exec-action-上下文中有效的环境变量" class="headerlink" title="只在check process start/stop/restart program 和 exec action 上下文中有效的环境变量:"></a>只在check process start/stop/restart program 和 exec action 上下文中有效的环境变量:</h3><ol>
+<li>MONIT_PROCESS_PID：         进程pid，如果进程被启动或重启，其值可能为0</li>
+<li>MONIT_PROCESS_MEMORY：     进程内存，如果进程被启动或重启，其值可能为0</li>
+<li>MONIT_PROCESS_CHILDREN：     子进程，如果进程被启动或重启，其值可能为0</li>
+<li>MONIT_PROCESS_CPU_PERCENT:进程cpu%，如果进程被启动或重启，其值可能为0</li>
+</ol>
+<h3 id="只在在check-program-start-stop-restart-program-和-exec-action上下文中有效的环境变量。"><a href="#只在在check-program-start-stop-restart-program-和-exec-action上下文中有效的环境变量。" class="headerlink" title="只在在check program start/stop/restart program 和 exec action上下文中有效的环境变量。"></a>只在在check program start/stop/restart program 和 exec action上下文中有效的环境变量。</h3><ol>
+<li>MONIT_PROGRAM_STATUS：      程序状态（退出值/exit value)</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Monit/" rel="tag"># Monit</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/17/Learn-IPC/" rel="next" title="IPC">
+                <i class="fa fa-chevron-left"></i> IPC
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/17/Sum-Linux工具/" rel="prev" title="Linux常用工具与命令">
+                Linux常用工具与命令 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#名称"><span class="nav-text">名称</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总览"><span class="nav-text">总览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-text">说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#监控什么"><span class="nav-text">监控什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一般操作"><span class="nav-text">一般操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#选项"><span class="nav-text">选项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数"><span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Monit控制文件"><span class="nav-text">Monit控制文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-checks"><span class="nav-text">Service checks</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LOGGING"><span class="nav-text">LOGGING</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#终端输出"><span class="nav-text">终端输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DAEMON-MODE"><span class="nav-text">DAEMON MODE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INIT-SUPPORT"><span class="nav-text">INIT SUPPORT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#INCLUDE-文件"><span class="nav-text">INCLUDE 文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL-选项"><span class="nav-text">SSL 选项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MONIT-HTTPD"><span class="nav-text">MONIT HTTPD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#UNIX-SOCKET支持"><span class="nav-text">UNIX SOCKET支持</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-PORT-支持"><span class="nav-text">TCP PORT 支持</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#警告信息"><span class="nav-text">警告信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置警告接受者"><span class="nav-text">设置警告接受者</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置事件过滤器"><span class="nav-text">设置事件过滤器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Event-Failure-state-Success-state"><span class="nav-text"> Event:     | Failure state:              | Success state:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置error-reminder"><span class="nav-text">设置error reminder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#取消对某些服务的警告"><span class="nav-text">取消对某些服务的警告</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#邮件信息格式"><span class="nav-text">邮件信息格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置邮件服务器"><span class="nav-text">设置邮件服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件队列"><span class="nav-text">事件队列</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SERVICIE-METHODS"><span class="nav-text">SERVICIE METHODS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SERVICE-POLL-TIME"><span class="nav-text">SERVICE POLL TIME</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SERVICE-GROUPS"><span class="nav-text">SERVICE GROUPS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务监控模式"><span class="nav-text">服务监控模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#系统重启和服务启动"><span class="nav-text">系统重启和服务启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务-RESTART-LIMIT"><span class="nav-text">服务 RESTART LIMIT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务依赖"><span class="nav-text">服务依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SERVICE-TESTS"><span class="nav-text">SERVICE TESTS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LIMITS"><span class="nav-text">LIMITS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一般语法"><span class="nav-text">一般语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ACTION"><span class="nav-text">ACTION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#错误容忍"><span class="nav-text">错误容忍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#存在测试"><span class="nav-text">存在测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#NON-EXIST"><span class="nav-text">NON-EXIST</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#EXIST"><span class="nav-text">EXIST</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源测试"><span class="nav-text">资源测试</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#系统资源测试"><span class="nav-text">系统资源测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进程资源测试"><span class="nav-text">进程资源测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PROCESS-DISK-I-O-TEST"><span class="nav-text">PROCESS DISK I/O TEST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件校验和-测试"><span class="nav-text">文件校验和 测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间戳测试"><span class="nav-text">时间戳测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件大小测试"><span class="nav-text">文件大小测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文件内容测试"><span class="nav-text">文件内容测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FILESYSTEM-MOUNT-FLAGS-TEST"><span class="nav-text">FILESYSTEM MOUNT FLAGS TEST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空间使用率测试"><span class="nav-text">空间使用率测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#索引使用率测试"><span class="nav-text">索引使用率测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DISK-I-O-TEST"><span class="nav-text">DISK I/O TEST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#权限测试"><span class="nav-text">权限测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UID测试"><span class="nav-text">UID测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GID测试"><span class="nav-text">GID测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PID测试"><span class="nav-text">PID测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PPID-测试"><span class="nav-text">PPID 测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时间测试"><span class="nav-text">运行时间测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全属性测试"><span class="nav-text">安全属性测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PROGRAM-STATUS-测试"><span class="nav-text">PROGRAM STATUS 测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络接口测试"><span class="nav-text">网络接口测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络ping测试"><span class="nav-text">网络ping测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#连接测试"><span class="nav-text">连接测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管理Monit实例-M-Monit专属"><span class="nav-text">管理Monit实例(M/Monit专属)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置案例"><span class="nav-text">配置案例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#start"><span class="nav-text">start</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stop-failed"><span class="nav-text">stop/failed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#uid-gid"><span class="nav-text">uid/gid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#udp"><span class="nav-text">udp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#unix"><span class="nav-text">unix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apache"><span class="nav-text">apache</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ping"><span class="nav-text">ping</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#checksum"><span class="nav-text">checksum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sip"><span class="nav-text">sip</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#every"><span class="nav-text">every</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#group"><span class="nav-text">group</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CPU"><span class="nav-text">CPU</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#timestamp"><span class="nav-text">timestamp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#depend"><span class="nav-text">depend</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#After-Oracle-restart-Apache-restart"><span class="nav-text">After Oracle restart, Apache restart</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#if-oracle-restart-oracle-import-and-oracle-export-restart"><span class="nav-text">if oracle restart oracle-import and oracle-export restart</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件"><span class="nav-text">文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-text">环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MONIT-SERVICE"><span class="nav-text">MONIT_SERVICE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只在service-start-stop-restart-program-和exec-action-上下文中有效的环境变量。"><span class="nav-text">只在service start/stop/restart program 和exec action 上下文中有效的环境变量。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只在check-process-start-stop-restart-program-和-exec-action-上下文中有效的环境变量"><span class="nav-text">只在check process start/stop/restart program 和 exec action 上下文中有效的环境变量:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#只在在check-program-start-stop-restart-program-和-exec-action上下文中有效的环境变量。"><span class="nav-text">只在在check program start/stop/restart program 和 exec action上下文中有效的环境变量。</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">73.6k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
