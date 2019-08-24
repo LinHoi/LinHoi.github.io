@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Https," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="FireFox 的安全认证无法建立安全连接当你的电脑和网站试图建立安全（https）交流时，Firefox会交叉检查这种尝试以确保网站证书和网站使用的方法确实是安全的。如果Firefox无法建立安全连接，它会显示一个错误页面。 网站问题有些网站试图使用过时的（不再安全的） TLS 机制来尝试安全连接。如果安全连接的建立有问题，Firefox会通过阻止对该类网站的访问来保护你。此时，你会看到一个带有">
+<meta name="keywords" content="Https">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Https安全认证策略">
+<meta property="og:url" content="http://yoursite.com/2019/08/24/Leari-https-安全认证策略/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="FireFox 的安全认证无法建立安全连接当你的电脑和网站试图建立安全（https）交流时，Firefox会交叉检查这种尝试以确保网站证书和网站使用的方法确实是安全的。如果Firefox无法建立安全连接，它会显示一个错误页面。 网站问题有些网站试图使用过时的（不再安全的） TLS 机制来尝试安全连接。如果安全连接的建立有问题，Firefox会通过阻止对该类网站的访问来保护你。此时，你会看到一个带有">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-24T05:28:34.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Https安全认证策略">
+<meta name="twitter:description" content="FireFox 的安全认证无法建立安全连接当你的电脑和网站试图建立安全（https）交流时，Firefox会交叉检查这种尝试以确保网站证书和网站使用的方法确实是安全的。如果Firefox无法建立安全连接，它会显示一个错误页面。 网站问题有些网站试图使用过时的（不再安全的） TLS 机制来尝试安全连接。如果安全连接的建立有问题，Firefox会通过阻止对该类网站的访问来保护你。此时，你会看到一个带有">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/24/Leari-https-安全认证策略/"/>
+
+
+
+
+
+  <title>Https安全认证策略 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/Leari-https-安全认证策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Https安全认证策略</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T13:29:12+08:00">
+                2019-08-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T13:28:34+08:00">
+                2019-08-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Https/" itemprop="url" rel="index">
+                    <span itemprop="name">Https</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,053 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="FireFox-的安全认证"><a href="#FireFox-的安全认证" class="headerlink" title="FireFox 的安全认证"></a>FireFox 的安全认证</h2><h3 id="无法建立安全连接"><a href="#无法建立安全连接" class="headerlink" title="无法建立安全连接"></a>无法建立安全连接</h3><p>当你的电脑和网站试图建立安全（https）交流时，Firefox会交叉检查这种尝试以确保网站证书和网站使用的方法确实是安全的。如果Firefox无法建立安全连接，它会显示一个错误页面。</p>
+<h3 id="网站问题"><a href="#网站问题" class="headerlink" title="网站问题"></a>网站问题</h3><p>有些网站试图使用过时的（不再安全的） TLS 机制来尝试安全连接。如果安全连接的建立有问题，Firefox会通过阻止对该类网站的访问来保护你。此时，你会看到一个带有安全连接错误信息的错误页面。 如果你遇到此问题，请联系网站拥有者并要求他们把 TLS 升级到一个当下仍然安全的版本。</p>
+<h3 id="证书问题"><a href="#证书问题" class="headerlink" title="证书问题"></a>证书问题</h3><h4 id="证书绑定报告"><a href="#证书绑定报告" class="headerlink" title="证书绑定报告"></a>证书绑定报告</h4><p>HTTP 公钥钉扎 (HPKP)是一个安全功能，它能够阻止攻击者使用伪造或错误的证书来冒充某个网站。这项功能允许网站经营者明确地指出谁可以为它们签发有效的证书，而不是随意接受浏览器内置的数百个根证书之一。</p>
+<h4 id="如果出现公钥钉扎错误，是怎么回事？"><a href="#如果出现公钥钉扎错误，是怎么回事？" class="headerlink" title="如果出现公钥钉扎错误，是怎么回事？"></a>如果出现公钥钉扎错误，是怎么回事？</h4><p>如果网站使用公钥钉扎，而其证书链和公钥钉扎不匹配，Firefox 会拒绝连接并显示错误信息，<br>该服务器使用了公钥钉扎(HPKP)，但是其证书链和公钥钉扎不匹配。公钥钉扎不能忽略。<br>错误码：MOZILLA_PKIX_ERROR_KEY_PINNING_FAILURE。</p>
+<a id="more"></a>
+<h3 id="证书内容"><a href="#证书内容" class="headerlink" title="证书内容"></a>证书内容</h3><p>安全网站的证书</p>
+<p>序列号：标识该证书的唯一序列号。</p>
+<p>主题：标识该证书的所有者，例如拥有该证书的组织名称。</p>
+<p>发行者：标识颁发该证书的实体。</p>
+<p>主题备用扩展名称：列出该证书可以标识的网站地址列表。</p>
+<p>签名：验证该证书确实来自发行者的数据。</p>
+<p>签名算法：创建签名使用的算法。</p>
+<p>有效期起始：证书生效时间</p>
+<p>有效期截止：证书过期时间。</p>
+<p>证书用法和扩展密钥用法：指定该证书可用于的用途，例如确认网站的持有者（Web 服务器身份验证）。</p>
+<p>公钥：公/私密钥对的公开部分。公钥与私钥在数学意义上相关联，使用公钥加密的数据只能被对应的私钥解密。</p>
+<p>公钥算法：创建公钥使用的算法。</p>
+<p>指纹：公钥的缩写形式。</p>
+<p>指纹算法：创建指纹使用的算法。</p>
+<h3 id="安全警告码"><a href="#安全警告码" class="headerlink" title="安全警告码"></a>安全警告码</h3><p>当 Firefox 连接到一个安全的网站时（网址最开始为“<a href="https://”），它必须确认该网站出具的证书有效且使用足够高的加密强度，以充分保护您的隐私。如果无法验证，Firefox" target="_blank" rel="noopener">https://”），它必须确认该网站出具的证书有效且使用足够高的加密强度，以充分保护您的隐私。如果无法验证，Firefox</a> 会中止连接到这个网站，并向您显示错误信息页面：警告：有风险。</p>
+<h4 id="MOZILLA-PKIX-ERROR-ADDITIONAL-POLICY-CONSTRAINT-FAILED"><a href="#MOZILLA-PKIX-ERROR-ADDITIONAL-POLICY-CONSTRAINT-FAILED" class="headerlink" title="MOZILLA_PKIX_ERROR _ADDITIONAL_POLICY_CONSTRAINT_FAILED"></a>MOZILLA_PKIX_ERROR _ADDITIONAL_POLICY_CONSTRAINT_FAILED</h4><p>此错误代表网站的证书没有遵循 Mozilla CA 证书计划 中要求的安全政策。大多数浏览器，包括 Firefox，都不信任来自 GeoTrust、RapidSSL、Symantec、Thawte 和 VeriSign 的证书，因为它们过去都没有遵守证书机构的安全纪律。网站主人应该和证书机构一起解决政策性问题。Mozilla CA 证书计划公布了一个影响证书机构的政策活动列表，其中包含了网站主人需要了解的一些细节。</p>
+<h4 id="SEC-ERROR-UNKNOWN-ISSUER"><a href="#SEC-ERROR-UNKNOWN-ISSUER" class="headerlink" title="SEC_ERROR_UNKNOWN_ISSUER"></a>SEC_ERROR_UNKNOWN_ISSUER</h4><p>由于证书发布者未知，所以该证书不可信。<br>服务器可能没有发送适当的中间证书。<br>可能会需要倒入一个额外的根证书。</p>
+<h4 id="MOZILLA-PKIX-ERROR-MITM-DETECTED"><a href="#MOZILLA-PKIX-ERROR-MITM-DETECTED" class="headerlink" title="MOZILLA_PKIX_ERROR_MITM_DETECTED"></a>MOZILLA_PKIX_ERROR_MITM_DETECTED</h4><p>由于证书发布者未知，所以该证书不可信。<br>服务器可能没有发送适当的中间证书。<br>可能会需要倒入一个额外的根证书。</p>
+<h4 id="ERROR-SELF-SIGNED-CERT"><a href="#ERROR-SELF-SIGNED-CERT" class="headerlink" title="ERROR_SELF_SIGNED_CERT"></a>ERROR_SELF_SIGNED_CERT</h4><p>该证书由于是自签名证书而不可信。</p>
+<h4 id="SSL-ERROR-BAD-CERT-DOMAIN"><a href="#SSL-ERROR-BAD-CERT-DOMAIN" class="headerlink" title="SSL_ERROR_BAD_CERT_DOMAIN"></a>SSL_ERROR_BAD_CERT_DOMAIN</h4><p>由于网站使用的证书并不是该网站的有效证书，所以 Firefox 认为网站不可信。通过该网站发送信息可能会有风险，因此你最好联系网站主人先修复问题。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Https/" rel="tag"># Https</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/24/Learn-redis/" rel="next" title="Redis学习笔记">
+                <i class="fa fa-chevron-left"></i> Redis学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/24/Learn-Regexp/" rel="prev" title="正则表达式">
+                正则表达式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#FireFox-的安全认证"><span class="nav-text">FireFox 的安全认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无法建立安全连接"><span class="nav-text">无法建立安全连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网站问题"><span class="nav-text">网站问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证书问题"><span class="nav-text">证书问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#证书绑定报告"><span class="nav-text">证书绑定报告</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如果出现公钥钉扎错误，是怎么回事？"><span class="nav-text">如果出现公钥钉扎错误，是怎么回事？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证书内容"><span class="nav-text">证书内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全警告码"><span class="nav-text">安全警告码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MOZILLA-PKIX-ERROR-ADDITIONAL-POLICY-CONSTRAINT-FAILED"><span class="nav-text">MOZILLA_PKIX_ERROR _ADDITIONAL_POLICY_CONSTRAINT_FAILED</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SEC-ERROR-UNKNOWN-ISSUER"><span class="nav-text">SEC_ERROR_UNKNOWN_ISSUER</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MOZILLA-PKIX-ERROR-MITM-DETECTED"><span class="nav-text">MOZILLA_PKIX_ERROR_MITM_DETECTED</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ERROR-SELF-SIGNED-CERT"><span class="nav-text">ERROR_SELF_SIGNED_CERT</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL-ERROR-BAD-CERT-DOMAIN"><span class="nav-text">SSL_ERROR_BAD_CERT_DOMAIN</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">85.1k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

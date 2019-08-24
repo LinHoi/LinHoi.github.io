@@ -259,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Learn-Linux问题汇总/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/Learn-Go-http-httputil/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lin Hui">
@@ -278,7 +278,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/08/17/Learn-Linux问题汇总/" itemprop="url">Linux系统常见问题集</a></h1>
+                <a class="post-title-link" href="/2019/08/24/Learn-Go-http-httputil/" itemprop="url">GoPackage-httputil</a></h1>
         
 
         <div class="post-meta">
@@ -290,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T10:37:12+08:00">
-                2019-08-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T13:29:12+08:00">
+                2019-08-24
               </time>
             
 
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-17T10:57:38+08:00">
-                2019-08-17
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T13:38:18+08:00">
+                2019-08-24
               </time>
             
           </span>
@@ -325,8 +325,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
                   </a>
                 </span>
 
@@ -356,7 +356,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,383 字
+                  450 字
                 </span>
               
 
@@ -382,14 +382,366 @@
 
       
         
-          <h2 id="yum-install-没有已启用的仓库。"><a href="#yum-install-没有已启用的仓库。" class="headerlink" title="yum install 没有已启用的仓库。"></a>yum install 没有已启用的仓库。</h2><p>使用 apt-get install  </p>
-<h2 id="apt-get-install-ipset-devel-失败"><a href="#apt-get-install-ipset-devel-失败" class="headerlink" title="apt-get install  ipset-devel 失败"></a>apt-get install  ipset-devel 失败</h2><p>ipset-devel 不支持ubuntu</p>
-<h2 id="ip"><a href="#ip" class="headerlink" title="ip"></a>ip</h2><p>ifconfig -a</p>
-<h2 id="查看端口是否开启"><a href="#查看端口是否开启" class="headerlink" title="查看端口是否开启"></a>查看端口是否开启</h2><p>netstat -an | grep 1443  </p>
-<h2 id="查看开启的端口"><a href="#查看开启的端口" class="headerlink" title="查看开启的端口"></a>查看开启的端口</h2><p>netstat -tulpn</p>
+          
+            <h1 id="httputil"><a href="#httputil" class="headerlink" title="httputil"></a>httputil</h1><h2 id="ReversrProxy"><a href="#ReversrProxy" class="headerlink" title="ReversrProxy"></a>ReversrProxy</h2><p>ReverseProxy 是一个http处理器，它接收一个请求，并将请求发送给其他服务器，代理响应到客户端。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> ReverseProxy <span class="keyword">struct</span> &#123;</span><br><span class="line">        <span class="comment">// Director must be a function which modifies</span></span><br><span class="line">        <span class="comment">// the request into a new request to be sent</span></span><br><span class="line">        <span class="comment">// using Transport. Its response is then copied</span></span><br><span class="line">        <span class="comment">// back to the original client unmodified.</span></span><br><span class="line">        <span class="comment">// Director must not access the provided Request</span></span><br><span class="line">        <span class="comment">// after returning.</span></span><br><span class="line">        <span class="comment">//Director是一个函数，它接收一个请求作为参数，</span></span><br><span class="line">        <span class="comment">//修改请求后发送给后端服务器</span></span><br><span class="line">        <span class="comment">//最后将接收到的请求原封不动的发送回客户端。</span></span><br><span class="line">        Director <span class="function"><span class="keyword">func</span><span class="params">(*http.Request)</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        // <span class="title">The</span> <span class="title">transport</span> <span class="title">used</span> <span class="title">to</span> <span class="title">perform</span> <span class="title">proxy</span> <span class="title">requests</span>.</span></span><br><span class="line"><span class="function">        // <span class="title">If</span> <span class="title">nil</span>, <span class="title">http</span>.<span class="title">DefaultTransport</span> <span class="title">is</span> <span class="title">used</span>.</span></span><br><span class="line"><span class="function">        //用于执行代理请求</span></span><br><span class="line"><span class="function">        <span class="title">Transport</span> <span class="title">http</span>.<span class="title">RoundTripper</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        // <span class="title">FlushInterval</span> <span class="title">specifies</span> <span class="title">the</span> <span class="title">flush</span> <span class="title">interval</span></span></span><br><span class="line"><span class="function">        // <span class="title">to</span> <span class="title">flush</span> <span class="title">to</span> <span class="title">the</span> <span class="title">client</span> <span class="title">while</span> <span class="title">copying</span> <span class="title">the</span></span></span><br><span class="line"><span class="function">        // <span class="title">response</span> <span class="title">body</span>.</span></span><br><span class="line"><span class="function">        // <span class="title">If</span> <span class="title">zero</span>, <span class="title">no</span> <span class="title">periodic</span> <span class="title">flushing</span> <span class="title">is</span> <span class="title">done</span>.</span></span><br><span class="line"><span class="function">        // <span class="title">A</span> <span class="title">negative</span> <span class="title">value</span> <span class="title">means</span> <span class="title">to</span> <span class="title">flush</span> <span class="title">immediately</span></span></span><br><span class="line"><span class="function">        // <span class="title">after</span> <span class="title">each</span> <span class="title">write</span> <span class="title">to</span> <span class="title">the</span> <span class="title">client</span>.</span></span><br><span class="line"><span class="function">        // <span class="title">The</span> <span class="title">FlushInterval</span> <span class="title">is</span> <span class="title">ignored</span> <span class="title">when</span> <span class="title">ReverseProxy</span></span></span><br><span class="line"><span class="function">        // <span class="title">recognizes</span> <span class="title">a</span> <span class="title">response</span> <span class="title">as</span> <span class="title">a</span> <span class="title">streaming</span> <span class="title">response</span>;</span></span><br><span class="line"><span class="function">        // <span class="title">for</span> <span class="title">such</span> <span class="title">responses</span>, <span class="title">writes</span> <span class="title">are</span> <span class="title">flushed</span> <span class="title">to</span> <span class="title">the</span> <span class="title">client</span></span></span><br><span class="line"><span class="function">        // <span class="title">immediately</span>.</span></span><br><span class="line"><span class="function">        <span class="title">FlushInterval</span> <span class="title">time</span>.<span class="title">Duration</span></span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        // <span class="title">ErrorLog</span> <span class="title">specifies</span> <span class="title">an</span> <span class="title">optional</span> <span class="title">logger</span> <span class="title">for</span> <span class="title">errors</span></span></span><br><span class="line"><span class="function">        // <span class="title">that</span> <span class="title">occur</span> <span class="title">when</span> <span class="title">attempting</span> <span class="title">to</span> <span class="title">proxy</span> <span class="title">the</span> <span class="title">request</span>.</span></span><br><span class="line"><span class="function">        // <span class="title">If</span> <span class="title">nil</span>, <span class="title">logging</span> <span class="title">goes</span> <span class="title">to</span> <span class="title">os</span>.<span class="title">Stderr</span> <span class="title">via</span> <span class="title">the</span> <span class="title">log</span> <span class="title">package</span>'<span class="title">s</span></span></span><br><span class="line"><span class="function">        // <span class="title">standard</span> <span class="title">logger</span>.</span></span><br><span class="line"><span class="function">        <span class="title">ErrorLog</span> *<span class="title">log</span>.<span class="title">Logger</span> // <span class="title">Go</span> 1.4</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        // <span class="title">BufferPool</span> <span class="title">optionally</span> <span class="title">specifies</span> <span class="title">a</span> <span class="title">buffer</span> <span class="title">pool</span> <span class="title">to</span></span></span><br><span class="line"><span class="function">        // <span class="title">get</span> <span class="title">byte</span> <span class="title">slices</span> <span class="title">for</span> <span class="title">use</span> <span class="title">by</span> <span class="title">io</span>.<span class="title">CopyBuffer</span> <span class="title">when</span></span></span><br><span class="line"><span class="function">        // <span class="title">copying</span> <span class="title">HTTP</span> <span class="title">response</span> <span class="title">bodies</span>.</span></span><br><span class="line"><span class="function">        <span class="title">BufferPool</span> <span class="title">BufferPool</span> // <span class="title">Go</span> 1.6</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        // <span class="title">ModifyResponse</span> <span class="title">is</span> <span class="title">an</span> <span class="title">optional</span> <span class="title">function</span> <span class="title">that</span> <span class="title">modifies</span> <span class="title">the</span></span></span><br><span class="line"><span class="function">        // <span class="title">Response</span> <span class="title">from</span> <span class="title">the</span> <span class="title">backend</span>. <span class="title">It</span> <span class="title">is</span> <span class="title">called</span> <span class="title">if</span> <span class="title">the</span> <span class="title">backend</span></span></span><br><span class="line"><span class="function">        // <span class="title">returns</span> <span class="title">a</span> <span class="title">response</span> <span class="title">at</span> <span class="title">all</span>, <span class="title">with</span> <span class="title">any</span> <span class="title">HTTP</span> <span class="title">status</span> <span class="title">code</span>.</span></span><br><span class="line"><span class="function">        // <span class="title">If</span> <span class="title">the</span> <span class="title">backend</span> <span class="title">is</span> <span class="title">unreachable</span>, <span class="title">the</span> <span class="title">optional</span> <span class="title">ErrorHandler</span> <span class="title">is</span></span></span><br><span class="line"><span class="function">        // <span class="title">called</span> <span class="title">without</span> <span class="title">any</span> <span class="title">call</span> <span class="title">to</span> <span class="title">ModifyResponse</span>.</span></span><br><span class="line"><span class="function">        //</span></span><br><span class="line"><span class="function">        // <span class="title">If</span> <span class="title">ModifyResponse</span> <span class="title">returns</span> <span class="title">an</span> <span class="title">error</span>, <span class="title">ErrorHandler</span> <span class="title">is</span> <span class="title">called</span></span></span><br><span class="line"><span class="function">        // <span class="title">with</span> <span class="title">its</span> <span class="title">error</span> <span class="title">value</span>. <span class="title">If</span> <span class="title">ErrorHandler</span> <span class="title">is</span> <span class="title">nil</span>, <span class="title">its</span> <span class="title">default</span></span></span><br><span class="line"><span class="function">        // <span class="title">implementation</span> <span class="title">is</span> <span class="title">used</span>.</span></span><br><span class="line"><span class="function">        <span class="title">ModifyResponse</span> <span class="title">func</span><span class="params">(*http.Response)</span> <span class="title">error</span> // <span class="title">Go</span> 1.8</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">        // <span class="title">ErrorHandler</span> <span class="title">is</span> <span class="title">an</span> <span class="title">optional</span> <span class="title">function</span> <span class="title">that</span> <span class="title">handles</span> <span class="title">errors</span></span></span><br><span class="line"><span class="function">        // <span class="title">reaching</span> <span class="title">the</span> <span class="title">backend</span> <span class="title">or</span> <span class="title">errors</span> <span class="title">from</span> <span class="title">ModifyResponse</span>.</span></span><br><span class="line"><span class="function">        //</span></span><br><span class="line"><span class="function">        // <span class="title">If</span> <span class="title">nil</span>, <span class="title">the</span> <span class="title">default</span> <span class="title">is</span> <span class="title">to</span> <span class="title">log</span> <span class="title">the</span> <span class="title">provided</span> <span class="title">error</span> <span class="title">and</span> <span class="title">return</span></span></span><br><span class="line"><span class="function">        // <span class="title">a</span> 502 <span class="title">Status</span> <span class="title">Bad</span> <span class="title">Gateway</span> <span class="title">response</span>.</span></span><br><span class="line"><span class="function">        <span class="title">ErrorHandler</span> <span class="title">func</span><span class="params">(http.ResponseWriter, *http.Request, error)</span> // <span class="title">Go</span> 1.11</span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/Learn-Regexp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/24/Learn-Regexp/" itemprop="url">正则表达式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T13:29:12+08:00">
+                2019-08-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T13:42:17+08:00">
+                2019-08-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/正则/" itemprop="url" rel="index">
+                    <span itemprop="name">正则</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  239 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="正则表达式"><a href="#正则表达式" class="headerlink" title="正则表达式"></a>正则表达式</h1><h2 id="匹配域名"><a href="#匹配域名" class="headerlink" title="匹配域名"></a>匹配域名</h2><h3 id="域名格式"><a href="#域名格式" class="headerlink" title="域名格式"></a>域名格式</h3><p>DNS规定，域名中的标号都由英文字母和数字组成，每一个标号不超过63个字符，也不区分大小写字母。  标号中除连字符（-）外不能使用其他的标点符号。级别最低的域名写在最左边，而级别最高的域名写在最右边。<br>由多个标号组成的完整域名总共不超过255个字符。</p>
+<h3 id="域名正则表达式"><a href="#域名正则表达式" class="headerlink" title="域名正则表达式"></a>域名正则表达式</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(?=^.&#123;<span class="number">3</span>,<span class="number">255</span>&#125;$)[a-zA-Z0<span class="number">-9</span>][-a-zA-Z0<span class="number">-9</span>]&#123;<span class="number">0</span>,<span class="number">62</span>&#125;(\.[a-zA-Z0<span class="number">-9</span>][-a-zA-Z0<span class="number">-9</span>]&#123;<span class="number">0</span>,<span class="number">62</span>&#125;)+$</span><br></pre></td></tr></table></figure>
+<p>例如：baidu.com </p>
+<h3 id="匹配网址"><a href="#匹配网址" class="headerlink" title="匹配网址"></a>匹配网址</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(?=^.&#123;<span class="number">3</span>,<span class="number">255</span>&#125;$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0<span class="number">-9</span>][-a-zA-Z0<span class="number">-9</span>]&#123;<span class="number">0</span>,<span class="number">62</span>&#125;(\.[a-zA-Z0<span class="number">-9</span>][-a-zA-Z0<span class="number">-9</span>]&#123;<span class="number">0</span>,<span class="number">62</span>&#125;)+(:\d+)*(\/\w+\.\w+)*$</span><br></pre></td></tr></table></figure>
+<p>例如： <a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a></p>
+<h3 id="匹配http-url"><a href="#匹配http-url" class="headerlink" title="匹配http url"></a>匹配http url</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">^(?=^.&#123;<span class="number">3</span>,<span class="number">255</span>&#125;$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0<span class="number">-9</span>][-a-zA-Z0<span class="number">-9</span>]&#123;<span class="number">0</span>,<span class="number">62</span>&#125;(\.[a-zA-Z0<span class="number">-9</span>][-a-zA-Z0<span class="number">-9</span>]&#123;<span class="number">0</span>,<span class="number">62</span>&#125;)+(:\d+)*(\/\w+\.\w+)*([\?&amp;]\w+=\w*)*$</span><br></pre></td></tr></table></figure>
+<p>例如： <a href="http://www.tetet.com/index.html?q=1&amp;m=test" target="_blank" rel="noopener">http://www.tetet.com/index.html?q=1&amp;m=test</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/Leari-https-安全认证策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/24/Leari-https-安全认证策略/" itemprop="url">Https安全认证策略</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T13:29:12+08:00">
+                2019-08-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T13:28:34+08:00">
+                2019-08-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Https/" itemprop="url" rel="index">
+                    <span itemprop="name">Https</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,053 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="FireFox-的安全认证"><a href="#FireFox-的安全认证" class="headerlink" title="FireFox 的安全认证"></a>FireFox 的安全认证</h2><h3 id="无法建立安全连接"><a href="#无法建立安全连接" class="headerlink" title="无法建立安全连接"></a>无法建立安全连接</h3><p>当你的电脑和网站试图建立安全（https）交流时，Firefox会交叉检查这种尝试以确保网站证书和网站使用的方法确实是安全的。如果Firefox无法建立安全连接，它会显示一个错误页面。</p>
+<h3 id="网站问题"><a href="#网站问题" class="headerlink" title="网站问题"></a>网站问题</h3><p>有些网站试图使用过时的（不再安全的） TLS 机制来尝试安全连接。如果安全连接的建立有问题，Firefox会通过阻止对该类网站的访问来保护你。此时，你会看到一个带有安全连接错误信息的错误页面。 如果你遇到此问题，请联系网站拥有者并要求他们把 TLS 升级到一个当下仍然安全的版本。</p>
+<h3 id="证书问题"><a href="#证书问题" class="headerlink" title="证书问题"></a>证书问题</h3><h4 id="证书绑定报告"><a href="#证书绑定报告" class="headerlink" title="证书绑定报告"></a>证书绑定报告</h4><p>HTTP 公钥钉扎 (HPKP)是一个安全功能，它能够阻止攻击者使用伪造或错误的证书来冒充某个网站。这项功能允许网站经营者明确地指出谁可以为它们签发有效的证书，而不是随意接受浏览器内置的数百个根证书之一。</p>
+<h4 id="如果出现公钥钉扎错误，是怎么回事？"><a href="#如果出现公钥钉扎错误，是怎么回事？" class="headerlink" title="如果出现公钥钉扎错误，是怎么回事？"></a>如果出现公钥钉扎错误，是怎么回事？</h4><p>如果网站使用公钥钉扎，而其证书链和公钥钉扎不匹配，Firefox 会拒绝连接并显示错误信息，<br>该服务器使用了公钥钉扎(HPKP)，但是其证书链和公钥钉扎不匹配。公钥钉扎不能忽略。<br>错误码：MOZILLA_PKIX_ERROR_KEY_PINNING_FAILURE。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/08/17/Learn-Linux问题汇总/#more" rel="contents">
+            <a class="btn" href="/2019/08/24/Leari-https-安全认证策略/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -440,7 +792,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Learn-Monit-with-Python-Scripts/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/Learn-redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lin Hui">
@@ -459,7 +811,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/08/17/Learn-Monit-with-Python-Scripts/" itemprop="url">Monit 和 shell python脚本</a></h1>
+                <a class="post-title-link" href="/2019/08/24/Learn-redis/" itemprop="url">Redis学习笔记</a></h1>
         
 
         <div class="post-meta">
@@ -471,8 +823,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T10:37:12+08:00">
-                2019-08-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T13:29:12+08:00">
+                2019-08-24
               </time>
             
 
@@ -487,8 +839,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-17T10:30:20+08:00">
-                2019-08-17
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T13:26:54+08:00">
+                2019-08-24
               </time>
             
           </span>
@@ -506,8 +858,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Monit/" itemprop="url" rel="index">
-                    <span itemprop="name">Monit</span>
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
                   </a>
                 </span>
 
@@ -537,7 +889,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  884 字
+                  805 字
                 </span>
               
 
@@ -563,10 +915,23 @@
 
       
         
-          <h2 id="python脚本基本写法"><a href="#python脚本基本写法" class="headerlink" title="python脚本基本写法"></a>python脚本基本写法</h2><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="keyword">import</span> os, time, sys</span><br><span class="line">f = open(<span class="string">'/home/hikari/MonitTest/pid/mypython.pid'</span>, <span class="string">'w'</span>)</span><br><span class="line">f.writelines(str(os.getpid()))</span><br><span class="line">f.close()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">99999</span>):</span><br><span class="line">        <span class="keyword">print</span> (<span class="string">"Hello World!"</span>)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">~</span><br></pre></td></tr></table></figure>
+          <h2 id="Reids简介"><a href="#Reids简介" class="headerlink" title="Reids简介"></a>Reids简介</h2><p>Redis是基于键值对的NoSql数据库。<br>redis把数据存放在内存中，读写性能快。</p>
+<h2 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h2><h3 id="速度快"><a href="#速度快" class="headerlink" title="速度快"></a>速度快</h3><ol>
+<li>数据存放在内存</li>
+<li>C语言实现</li>
+<li>单线程，无竞争问题</li>
+</ol>
+<h3 id="键值对数据结构"><a href="#键值对数据结构" class="headerlink" title="键值对数据结构"></a>键值对数据结构</h3><ol>
+<li>值：字符串、哈希、列表、集合、有序集合</li>
+</ol>
+<h2 id="单线程为什么快"><a href="#单线程为什么快" class="headerlink" title="单线程为什么快"></a>单线程为什么快</h2><ol>
+<li>纯内存访问， Redis将所有数据放在内存中， 内存的响应时长大约为100纳秒，这是Redis达到每秒万级别访问的重要基础。</li>
+<li>非阻塞I/O， Redis使用epoll作为I/O多路复用技术的实现。</li>
+<li>单线程可以简化数据结构和算法的实现。 如果对高级编程语言熟悉的读者应该了解并发数据结构实现不但困难而且开发测试比较麻烦。 第二，单线程避免了线程切换和竞态产生的消耗，对于服务端开发来说，锁和线程切换通常是性能杀手</li>
+</ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/08/17/Learn-Monit-with-Python-Scripts/#more" rel="contents">
+            <a class="btn" href="/2019/08/24/Learn-redis/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -617,7 +982,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Learn-Monit-问题集/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/Learn-curl-and-wget/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lin Hui">
@@ -636,7 +1001,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/08/17/Learn-Monit-问题集/" itemprop="url">Monit常见问题集</a></h1>
+                <a class="post-title-link" href="/2019/08/24/Learn-curl-and-wget/" itemprop="url">Curl 和 Wget</a></h1>
         
 
         <div class="post-meta">
@@ -648,8 +1013,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T10:37:12+08:00">
-                2019-08-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T13:29:12+08:00">
+                2019-08-24
               </time>
             
 
@@ -664,8 +1029,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-17T10:27:35+08:00">
-                2019-08-17
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T13:33:44+08:00">
+                2019-08-24
               </time>
             
           </span>
@@ -683,8 +1048,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Monit/" itemprop="url" rel="index">
-                    <span itemprop="name">Monit</span>
+                  <a href="/categories/Shell/" itemprop="url" rel="index">
+                    <span itemprop="name">Shell</span>
                   </a>
                 </span>
 
@@ -714,7 +1079,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,379 字
+                  4,187 字
                 </span>
               
 
@@ -740,11 +1105,11 @@
 
       
         
-          <h2 id="HTTP-interface-is-not-enabled"><a href="#HTTP-interface-is-not-enabled" class="headerlink" title="HTTP interface is not enabled"></a>HTTP interface is not enabled</h2><p>$ vim /etc/monit/monitrc<br>解注释或添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">set httpd port 2812 and</span><br><span class="line">    use address localhost  # only accept connection from localhost</span><br><span class="line">    allow localhost        # allow localhost to connect to the server and</span><br><span class="line">    allow admin:monit      # require user &apos;admin&apos; with password &apos;monit&apos;</span><br></pre></td></tr></table></figure></p>
-<p>$ monit reload<br>$ monit<br>$ monit start all  </p>
+          <h1 id="curl"><a href="#curl" class="headerlink" title="curl"></a>curl</h1><h2 id="帮助列表"><a href="#帮助列表" class="headerlink" title="帮助列表"></a>帮助列表</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line">在以下选项中，(H) 表示仅适用 HTTP/HTTPS ，(F) 表示仅适用于 FTP</span><br><span class="line">    --anyauth       选择 <span class="string">"any"</span> 认证方法 (H)</span><br><span class="line">-a, --append        添加要上传的文件 (F/SFTP)</span><br><span class="line">    --basic         使用HTTP基础认证（Basic Authentication）(H)</span><br><span class="line">    --cacert FILE   CA 证书，用于每次请求认证 (SSL)</span><br><span class="line">    --capath DIR    CA 证书目录 (SSL)</span><br><span class="line">-E, --cert CERT[:PASSWD] 客户端证书文件及密码 (SSL)</span><br><span class="line">    --cert-type TYPE 证书文件类型 (DER/PEM/ENG) (SSL)</span><br><span class="line">    --ciphers LIST  SSL 秘钥 (SSL)</span><br><span class="line">    --compressed    请求压缩 (使用 deflate 或 gzip)</span><br><span class="line">-K, --config FILE   指定配置文件</span><br><span class="line">    --connect-timeout SECONDS  连接超时设置</span><br><span class="line">-C, --<span class="built_in">continue</span>-at OFFSET  断点续转</span><br><span class="line">-b, --cookie STRING/FILE  Cookies字符串或读取Cookies的文件位置 (H)</span><br><span class="line">-c, --cookie-jar FILE  操作结束后，要写入 Cookies 的文件位置 (H)</span><br><span class="line">    --create-dirs   创建必要的本地目录层次结构</span><br><span class="line">    --crlf          在上传时将 LF 转写为 CRLF</span><br><span class="line">    --crlfile FILE  从指定的文件获得PEM格式CRL列表</span><br><span class="line">-d, --data DATA     HTTP POST 数据 (H)</span><br><span class="line">    --data-ascii DATA  ASCII 编码 HTTP POST 数据 (H)</span><br><span class="line">    --data-binary DATA  binary 编码 HTTP POST 数据 (H)</span><br><span class="line">    --data-urlencode DATA  url 编码 HTTP POST 数据 (H)</span><br><span class="line">    --delegation STRING GSS-API 委托权限</span><br><span class="line">    --digest        使用数字身份验证 (H)</span><br><span class="line">    --<span class="built_in">disable</span>-eprt  禁止使用 EPRT 或 LPRT (F)</span><br><span class="line">    --<span class="built_in">disable</span>-epsv  禁止使用 EPSV (F)</span><br><span class="line">-D, --dump-header FILE  将头信息写入指定的文件</span><br><span class="line">    --egd-file FILE  为随机数据设置EGD socket路径(SSL)</span><br><span class="line">    --engine ENGINGE  加密引擎 (SSL). <span class="string">"--engine list"</span> 指定列表</span><br><span class="line">-f, --fail          连接失败时不显示HTTP错误信息 (H)</span><br><span class="line">-F, --form CONTENT  模拟 HTTP 表单数据提交（multipart POST） (H)</span><br><span class="line">    --form-string STRING  模拟 HTTP 表单数据提交 (H)</span><br><span class="line">    --ftp-account DATA  帐户数据提交 (F)</span><br><span class="line">    --ftp-alternative-to-user COMMAND  指定替换 <span class="string">"USER [name]"</span> 的字符串 (F)</span><br><span class="line">    --ftp-create-dirs  如果不存在则创建远程目录 (F)</span><br><span class="line">    --ftp-method [MULTICWD/NOCWD/SINGLECWD] 控制 CWD (F)</span><br><span class="line">    --ftp-pasv      使用 PASV/EPSV 替换 PORT (F)</span><br><span class="line">-P, --ftp-port ADR  使用指定 PORT 及地址替换 PASV (F)</span><br><span class="line">    --ftp-skip-pasv-ip 跳过 PASV 的IP地址 (F)</span><br><span class="line">    --ftp-pret      在 PASV 之前发送 PRET (drftpd) (F)</span><br><span class="line">    --ftp-ssl-ccc   在认证之后发送 CCC (F)</span><br><span class="line">    --ftp-ssl-ccc-mode ACTIVE/PASSIVE  设置 CCC 模式 (F)</span><br><span class="line">    --ftp-ssl-control ftp 登录时需要 SSL/TLS (F)</span><br><span class="line">-G, --get           使用 HTTP GET 方法发送 -d 数据  (H)</span><br><span class="line">-g, --globoff       禁用的 URL 队列 及范围使用 &#123;&#125; 和 []</span><br><span class="line">-H, --header LINE   要发送到服务端的自定义请求头 (H)</span><br><span class="line">-I, --head          仅显示响应文档头</span><br><span class="line">-h, --<span class="built_in">help</span>          显示帮助</span><br><span class="line">-0, --http1.0       使用 HTTP 1.0 (H)</span><br><span class="line">    --ignore-content-length  忽略 HTTP Content-Length 头</span><br><span class="line">-i, --include       在输出中包含协议头 (H/F)</span><br><span class="line">-k, --insecure      允许连接到 SSL 站点，而不使用证书 (H)</span><br><span class="line">    --interface INTERFACE  指定网络接口／地址</span><br><span class="line">-4, --ipv4          将域名解析为 IPv4 地址</span><br><span class="line">-6, --ipv6          将域名解析为 IPv6 地址</span><br><span class="line">-j, --junk-session-cookies 读取文件中但忽略会话cookie (H)</span><br><span class="line">    --keepalive-time SECONDS  keepalive 包间隔</span><br><span class="line">    --key KEY       私钥文件名 (SSL/SSH)</span><br><span class="line">    --key-type TYPE 私钥文件类型 (DER/PEM/ENG) (SSL)</span><br><span class="line">    --krb LEVEL     启用指定安全级别的 Kerberos (F)</span><br><span class="line">    --libcurl FILE  命令的libcurl等价代码</span><br><span class="line">    --<span class="built_in">limit</span>-rate RATE  限制传输速度</span><br><span class="line">-l, --list-only    只列出FTP目录的名称 (F)</span><br><span class="line">    --<span class="built_in">local</span>-port RANGE  强制使用的本地端口号</span><br><span class="line">-L, --location      跟踪重定向 (H)</span><br><span class="line">    --location-trusted 类似 --location 并发送验证信息到其它主机 (H)</span><br><span class="line">-M, --manual        显示全手动</span><br><span class="line">    --mail-from FROM  从这个地址发送邮件</span><br><span class="line">    --mail-rcpt TO  发送邮件到这个接收人(s)</span><br><span class="line">    --mail-auth AUTH  原始电子邮件的起始地址</span><br><span class="line">    --max-filesize BYTES  下载的最大文件大小 (H/F)</span><br><span class="line">    --max-redirs NUM  最大重定向数 (H)</span><br><span class="line">-m, --max-time SECONDS  允许的最多传输时间</span><br><span class="line">    --metalink      处理指定的URL上的XML文件</span><br><span class="line">    --negotiate     使用 HTTP Negotiate 认证 (H)</span><br><span class="line">-n, --netrc         必须从 .netrc 文件读取用户名和密码</span><br><span class="line">    --netrc-optional 使用 .netrc 或 URL; 将重写 -n 参数</span><br><span class="line">    --netrc-file FILE  设置要使用的 netrc 文件名</span><br><span class="line">-N, --no-buffer     禁用输出流的缓存</span><br><span class="line">    --no-keepalive  禁用 connection 的 keepalive</span><br><span class="line">    --no-sessionid  禁止重复使用 SSL session-ID (SSL)</span><br><span class="line">    --noproxy       不使用代理的主机列表</span><br><span class="line">    --ntlm          使用 HTTP NTLM 认证 (H)</span><br><span class="line">-o, --output FILE   将输出写入文件，而非 stdout</span><br><span class="line">    --pass PASS     传递给私钥的短语 (SSL/SSH)</span><br><span class="line">    --post301       在 301 重定向后不要切换为 GET 请求 (H)</span><br><span class="line">    --post302       在 302 重定向后不要切换为 GET 请求 (H)</span><br><span class="line">    --post303       在 303 重定向后不要切换为 GET 请求 (H)</span><br><span class="line">-<span class="comment">#, --progress-bar  以进度条显示传输进度</span></span><br><span class="line">    --proto PROTOCOLS  启用/禁用 指定的协议</span><br><span class="line">    --proto-redir PROTOCOLS  在重定向上 启用/禁用 指定的协议</span><br><span class="line">-x, --proxy [PROTOCOL://]HOST[:PORT] 在指定的端口上使用代理</span><br><span class="line">    --proxy-anyauth 在代理上使用 <span class="string">"any"</span> 认证方法 (H)</span><br><span class="line">    --proxy-basic   在代理上使用 Basic 认证  (H)</span><br><span class="line">    --proxy-digest  在代理上使用 Digest 认证 (H)</span><br><span class="line">    --proxy-negotiate 在代理上使用 Negotiate 认证 (H)</span><br><span class="line">    --proxy-ntlm    在代理上使用 NTLM 认证 (H)</span><br><span class="line">-U, --proxy-user USER[:PASSWORD]  代理用户名及密码</span><br><span class="line">     --proxy1.0 HOST[:PORT]  在指定的端口上使用 HTTP/1.0 代理</span><br><span class="line">-p, --proxytunnel   使用HTTP代理 (用于 CONNECT)</span><br><span class="line">    --pubkey KEY    公钥文件名 (SSH)</span><br><span class="line">-Q, --quote CMD     在传输开始前向服务器发送命令 (F/SFTP)</span><br><span class="line">    --random-file FILE  读取随机数据的文件 (SSL)</span><br><span class="line">-r, --range RANGE   仅检索范围内的字节</span><br><span class="line">    --raw           使用原始HTTP传输，而不使用编码 (H)</span><br><span class="line">-e, --referer       Referer URL (H)</span><br><span class="line">-J, --remote-header-name 从远程文件读取头信息 (H)</span><br><span class="line">-O, --remote-name   将输出写入远程文件</span><br><span class="line">    --remote-name-all 使用所有URL的远程文件名</span><br><span class="line">-R, --remote-time   将远程文件的时间设置在本地输出上</span><br><span class="line">-X, --request COMMAND  使用指定的请求命令</span><br><span class="line">    --resolve HOST:PORT:ADDRESS  将 HOST:PORT 强制解析到 ADDRESS</span><br><span class="line">    --retry NUM   出现问题时的重试次数</span><br><span class="line">    --retry-delay SECONDS 重试时的延时时长</span><br><span class="line">    --retry-max-time SECONDS  仅在指定时间段内重试</span><br><span class="line">-S, --show-error    显示错误. 在选项 -s 中，当 curl 出现错误时将显示</span><br><span class="line">-s, --silent        Silent模式。不输出任务内容</span><br><span class="line">    --socks4 HOST[:PORT]  在指定的 host + port 上使用 SOCKS4 代理</span><br><span class="line">    --socks4a HOST[:PORT]  在指定的 host + port 上使用 SOCKSa 代理</span><br><span class="line">    --socks5 HOST[:PORT]  在指定的 host + port 上使用 SOCKS5 代理</span><br><span class="line">    --socks5-hostname HOST[:PORT] SOCKS5 代理，指定用户名、密码</span><br><span class="line">    --socks5-gssapi-service NAME  为gssapi使用SOCKS5代理服务名称</span><br><span class="line">    --socks5-gssapi-nec  与NEC Socks5服务器兼容</span><br><span class="line">-Y, --speed-limit RATE  在指定限速时间之后停止传输</span><br><span class="line">-y, --speed-time SECONDS  指定时间之后触发限速. 默认 30</span><br><span class="line">    --ssl           尝试 SSL/TLS (FTP, IMAP, POP3, SMTP)</span><br><span class="line">    --ssl-reqd      需要 SSL/TLS (FTP, IMAP, POP3, SMTP)</span><br><span class="line">-2, --sslv2         使用 SSLv2 (SSL)</span><br><span class="line">-3, --sslv3         使用 SSLv3 (SSL)</span><br><span class="line">    --ssl-allow-beast 允许的安全漏洞，提高互操作性(SSL)</span><br><span class="line">    --stderr FILE   重定向 stderr 的文件位置. - means stdout</span><br><span class="line">    --tcp-nodelay   使用 TCP_NODELAY 选项</span><br><span class="line">-t, --telnet-option OPT=VAL  设置 telnet 选项</span><br><span class="line">     --tftp-blksize VALUE  设备 TFTP BLKSIZE 选项 (必须 &gt;512)</span><br><span class="line">-z, --time-cond TIME  基于时间条件的传输</span><br><span class="line">-1, --tlsv1         使用 =&gt; TLSv1 (SSL)</span><br><span class="line">    --tlsv1.0       使用 TLSv1.0 (SSL)</span><br><span class="line">    --tlsv1.1       使用 TLSv1.1 (SSL)</span><br><span class="line">    --tlsv1.2       使用 TLSv1.2 (SSL)</span><br><span class="line">    --trace FILE    将 debug 信息写入指定的文件</span><br><span class="line">    --trace-ascii FILE  类似 --trace 但使用16进度输出</span><br><span class="line">    --trace-time    向 trace/verbose 输出添加时间戳</span><br><span class="line">    --tr-encoding   请求压缩传输编码 (H)</span><br><span class="line">-T, --upload-file FILE  将文件传输（上传）到指定位置</span><br><span class="line">    --url URL       指定所使用的 URL</span><br><span class="line">-B, --use-ascii     使用 ASCII/text 传输</span><br><span class="line">-u, --user USER[:PASSWORD]  指定服务器认证用户名、密码</span><br><span class="line">    --tlsuser USER  TLS 用户名</span><br><span class="line">    --tlspassword STRING TLS 密码</span><br><span class="line">    --tlsauthtype STRING  TLS 认证类型 (默认 SRP)</span><br><span class="line">    --unix-socket FILE    通过这个 UNIX socket 域连接</span><br><span class="line">-A, --user-agent STRING  要发送到服务器的 User-Agent (H)</span><br><span class="line">-v, --verbose       显示详细操作信息</span><br><span class="line">-V, --version       显示版本号并退出</span><br><span class="line">-w, --write-out FORMAT  完成后输出什么</span><br><span class="line">    --xattr        将元数据存储在扩展文件属性中</span><br><span class="line">-q                 .curlrc 如果作为第一个参数无效</span><br></pre></td></tr></table></figure>
+<h2 id="Curl-设置代理"><a href="#Curl-设置代理" class="headerlink" title="Curl 设置代理"></a>Curl 设置代理</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --proxy 127.0.0.1:80 http://www.google.comp</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/08/17/Learn-Monit-问题集/#more" rel="contents">
+            <a class="btn" href="/2019/08/24/Learn-curl-and-wget/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -795,7 +1160,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Learn-Mysql/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/GO源码解析-dispatcher/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lin Hui">
@@ -814,7 +1179,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/08/17/Learn-Mysql/" itemprop="url">Linux下Mysql配置</a></h1>
+                <a class="post-title-link" href="/2019/08/24/GO源码解析-dispatcher/" itemprop="url">Go源码解析-dispatcher</a></h1>
         
 
         <div class="post-meta">
@@ -826,8 +1191,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T10:37:12+08:00">
-                2019-08-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T13:29:12+08:00">
+                2019-08-24
               </time>
             
 
@@ -842,8 +1207,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-17T12:00:42+08:00">
-                2019-08-17
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T14:17:18+08:00">
+                2019-08-24
               </time>
             
           </span>
@@ -861,8 +1226,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">Mysql</span>
+                  <a href="/categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
                   </a>
                 </span>
 
@@ -892,7 +1257,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  353 字
+                  2,811 字
                 </span>
               
 
@@ -918,11 +1283,11 @@
 
       
         
-          <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">wget http://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm</span><br><span class="line">rpm -ivh mysql80-community-release-el7-3.noarch.rpm</span><br><span class="line">yum update</span><br><span class="line">yum install mysql-server</span><br></pre></td></tr></table></figure>
-<h2 id="卸载"><a href="#卸载" class="headerlink" title="卸载"></a>卸载</h2><h3 id="yum方式安装的mysql"><a href="#yum方式安装的mysql" class="headerlink" title="yum方式安装的mysql"></a>yum方式安装的mysql</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum remove mysql mysql-server mysql-libs compat-mysql51 </span><br><span class="line">rm -rf /var/lib/mysql</span><br><span class="line">rm /etc/my.cnf</span><br></pre></td></tr></table></figure>
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>dispatcher是caddy之下的一个模块，其主要作用是对http请求进行屏蔽，代理，转发和加工等操作。</p>
+<h2 id="所在路径"><a href="#所在路径" class="headerlink" title="所在路径"></a>所在路径</h2><p><a href="https://github.com/inverse-inc/packetfence/tree/devel/go/httpdispatcher" target="_blank" rel="noopener">https://github.com/inverse-inc/packetfence/tree/devel/go/httpdispatcher</a></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/08/17/Learn-Mysql/#more" rel="contents">
+            <a class="btn" href="/2019/08/24/GO源码解析-dispatcher/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -973,7 +1338,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Learn-shell/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/Learn-Go-Context/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lin Hui">
@@ -992,7 +1357,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/08/17/Learn-shell/" itemprop="url">shell基本语法</a></h1>
+                <a class="post-title-link" href="/2019/08/24/Learn-Go-Context/" itemprop="url">GoPackage-Context</a></h1>
         
 
         <div class="post-meta">
@@ -1004,8 +1369,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T10:37:12+08:00">
-                2019-08-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T13:29:12+08:00">
+                2019-08-24
               </time>
             
 
@@ -1020,8 +1385,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-17T10:51:52+08:00">
-                2019-08-17
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T13:39:26+08:00">
+                2019-08-24
               </time>
             
           </span>
@@ -1039,8 +1404,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/shell/" itemprop="url" rel="index">
-                    <span itemprop="name">shell</span>
+                  <a href="/categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
                   </a>
                 </span>
 
@@ -1070,7 +1435,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  874 字
+                  1,924 字
                 </span>
               
 
@@ -1096,10 +1461,11 @@
 
       
         
-          <h2 id="n-z"><a href="#n-z" class="headerlink" title="[] [[ ]] -n -z"></a>[] [[ ]] -n -z</h2><p>-n：判断字符串是否非空，为空返回1，为false，非空返回0，为true。<br>-z：判断字符串是否为空，为空返回0，为true，非空返回1，为false。<br>[]: 内部变量需要加双引号<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pid=<span class="string">"123"</span></span><br><span class="line">[-z <span class="string">"<span class="variable">$pid</span>"</span>]</span><br><span class="line">[5 -lt 3] || [3 -gt 2]</span><br><span class="line">[5 -lt 4] &amp;&amp; [3 -gt 4]</span><br><span class="line">[5 -le 5] &amp;&amp; [3 -eq 3]</span><br></pre></td></tr></table></figure></p>
+          <h1 id="Go-Context"><a href="#Go-Context" class="headerlink" title="Go Context"></a>Go Context</h1><h2 id="什么是-Context"><a href="#什么是-Context" class="headerlink" title="什么是 Context"></a>什么是 Context</h2><p>Context译作上下文。<br>可理解为程序单元的一个运行状态、现场、快照。<br>上下上下就是存在上下层的传递，上会把内容传递给下。<br>在Go语言中，程序单元也就指的是Goroutine。</p>
+<p>每个Goroutine在执行之前，都要先知道程序当前的执行状态，通常将这些执行状态封装在一个Context变量中，传递给要执行的Goroutine中。上下文则几乎已经成为传递与请求同生存周期变量的标准方法。在网络编程下，当接收到一个网络请求Request，处理Request时，我们可能需要开启不同的Goroutine来获取数据与逻辑处理，即一个请求Request，会在多个Goroutine中处理。而这些Goroutine可能需要共享Request的一些信息；同时当Request被取消或者超时的时候，所有从这个Request创建的所有Goroutine也应该被结束。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/08/17/Learn-shell/#more" rel="contents">
+            <a class="btn" href="/2019/08/24/Learn-Go-Context/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1409,6 +1775,184 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Learn-IPC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/08/17/Learn-IPC/" itemprop="url">IPC</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T10:37:12+08:00">
+                2019-08-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-17T11:36:36+08:00">
+                2019-08-17
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,743 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="进程间通信（IPC）"><a href="#进程间通信（IPC）" class="headerlink" title="进程间通信（IPC）"></a>进程间通信（IPC）</h2><p>进程间通信（IPC，InterProcess Communication）是指在不同进程之间传播或交换信息。</p>
+<p>IPC的方式通常有管道（包括无名管道和命名管道）、消息队列、信号量、共享存储、Socket、Streams等。其中 Socket和Streams支持不同主机上的两个进程IPC。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/08/17/Learn-IPC/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/RedBook环境设置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1597,555 +2141,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Sum-Monit语法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/17/Sum-Monit语法/" itemprop="url">Monit 语法指南</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T10:37:12+08:00">
-                2019-08-17
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-17T10:29:17+08:00">
-                2019-08-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Monit/" itemprop="url" rel="index">
-                    <span itemprop="name">Monit</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  7,606 字
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="名称"><a href="#名称" class="headerlink" title="名称"></a>名称</h2><p>Monit ： 监控Unix系统服务的辅助软件  </p>
-<h2 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h2><p>monit [options] <arguments></arguments></p>
-<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>Monit是Unix系统上管理和监控进程、程序、文件、目录和文件系统的辅助软件。<br>Monit可以启动、重启、关闭进程。monit也可以监控目录、文件和文件系统的变化，比如文件的时间戳、校验和以及文件大小的变化。<br>Monit通过可配置的 控制文件 进行监控。控制文件格式自由。<br>Monit可以将log写入syslog（系统log）或自己的log文件，也可以自定义警告信息来提醒你发生的错误。Monit提供一个HTTP的交互界面供你接入Monit程序。  </p>
-<h2 id="监控什么"><a href="#监控什么" class="headerlink" title="监控什么"></a>监控什么</h2><ol>
-<li>监控本地后台进程（process）   </li>
-<li>监控本地文件、目录和文件系统  </li>
-<li>监控网络连接  </li>
-<li>测试程序（programs）和脚本（scripts)  <ul>
-<li>测试一个程序的退出值，如果退出值表明错误发生可以采取一些行动或发出警告</li>
-</ul>
-</li>
-<li>监控本地系统资源，比如CPU利用率和系统负载  </li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/08/17/Sum-Monit语法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/17/Learn-IPC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/08/17/Learn-IPC/" itemprop="url">IPC</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-17T10:37:12+08:00">
-                2019-08-17
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2019-08-17T11:36:36+08:00">
-                2019-08-17
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  5,743 字
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="进程间通信（IPC）"><a href="#进程间通信（IPC）" class="headerlink" title="进程间通信（IPC）"></a>进程间通信（IPC）</h2><p>进程间通信（IPC，InterProcess Communication）是指在不同进程之间传播或交换信息。</p>
-<p>IPC的方式通常有管道（包括无名管道和命名管道）、消息队列、信号量、共享存储、Socket、Streams等。其中 Socket和Streams支持不同主机上的两个进程IPC。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/08/17/Learn-IPC/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/01/Go配置和资料/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/01/Go配置和资料/" itemprop="url">Gopl 资料</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-01T12:07:12+08:00">
-                2019-06-01
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2019-06-01T13:08:43+08:00">
-                2019-06-01
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Go/" itemprop="url" rel="index">
-                    <span itemprop="name">Go</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  157 字
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>本文为GO语言学习资料，包括配置和常见问题解决。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/01/Go配置和资料/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2195,7 +2195,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-count">54</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2206,7 +2206,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2217,7 +2217,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2284,7 +2284,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">73.6k</span>
+    <span title="Site words total count">85.1k</span>
   
 </div>
 

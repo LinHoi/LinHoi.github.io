@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Go,源码解析," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介dispatcher是caddy之下的一个模块，其主要作用是对http请求进行屏蔽，代理，转发和加工等操作。 所在路径https://github.com/inverse-inc/packetfence/tree/devel/go/httpdispatcher">
+<meta name="keywords" content="Go,源码解析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Go源码解析-dispatcher">
+<meta property="og:url" content="http://yoursite.com/2019/08/24/GO源码解析-dispatcher/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="简介dispatcher是caddy之下的一个模块，其主要作用是对http请求进行屏蔽，代理，转发和加工等操作。 所在路径https://github.com/inverse-inc/packetfence/tree/devel/go/httpdispatcher">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-24T06:17:18.565Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Go源码解析-dispatcher">
+<meta name="twitter:description" content="简介dispatcher是caddy之下的一个模块，其主要作用是对http请求进行屏蔽，代理，转发和加工等操作。 所在路径https://github.com/inverse-inc/packetfence/tree/devel/go/httpdispatcher">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/24/GO源码解析-dispatcher/"/>
+
+
+
+
+
+  <title>Go源码解析-dispatcher | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/GO源码解析-dispatcher/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Go源码解析-dispatcher</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T13:29:12+08:00">
+                2019-08-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-24T14:17:18+08:00">
+                2019-08-24
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Go/" itemprop="url" rel="index">
+                    <span itemprop="name">Go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,811 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>dispatcher是caddy之下的一个模块，其主要作用是对http请求进行屏蔽，代理，转发和加工等操作。</p>
+<h2 id="所在路径"><a href="#所在路径" class="headerlink" title="所在路径"></a>所在路径</h2><p><a href="https://github.com/inverse-inc/packetfence/tree/devel/go/httpdispatcher" target="_blank" rel="noopener">https://github.com/inverse-inc/packetfence/tree/devel/go/httpdispatcher</a></p>
+<a id="more"></a>
+<h2 id="基本参数和函数解析"><a href="#基本参数和函数解析" class="headerlink" title="基本参数和函数解析"></a>基本参数和函数解析</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Proxy 代理,是一个复杂结构体</span></span><br><span class="line"><span class="comment">//Proxy中包含白名单和黑名单的正则表达式数组</span></span><br><span class="line"><span class="comment">//白名单和黑名单的用途：</span></span><br><span class="line"><span class="comment">//对Proxy的修改是互斥的</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Proxy <span class="keyword">struct</span> &#123;</span><br><span class="line">    endpointWhiteList []*regexp.Regexp</span><br><span class="line">    endpointBlackList []*regexp.Regexp</span><br><span class="line">    mutex             sync.Mutex</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//passthrough是一个十分复杂的结构体</span></span><br><span class="line"><span class="comment">//它用于制定一系列的监测规则</span></span><br><span class="line"><span class="comment">//被检查到符合规则的请求会被403 或 代理转发</span></span><br><span class="line"><span class="comment">//对它的访问是互斥的</span></span><br><span class="line"><span class="keyword">type</span> passthrough <span class="keyword">struct</span> &#123;</span><br><span class="line">    proxypassthrough        []*regexp.Regexp     <span class="comment">//代理转发规则，匹配主机</span></span><br><span class="line">    detectionmechanisms     []*regexp.Regexp     <span class="comment">//侦测机制，匹配域名</span></span><br><span class="line">    DetectionMecanismBypass <span class="keyword">bool</span>                <span class="comment">//是否让检测机通过-直接通往外网</span></span><br><span class="line">    mutex                   sync.Mutex</span><br><span class="line">    PortalURL               <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">map</span>[*net.IPNet]*url.URL  <span class="comment">//二重映射表</span></span><br><span class="line">    URIException            *regexp.regexp                   <span class="comment">//例外，匹配url</span></span><br><span class="line">    SecureRedirect          <span class="keyword">bool</span>                <span class="comment">//安全定向，若为真采用htpps协议，否则采用http协议</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//fqdn是ip和URL的映射表</span></span><br><span class="line"><span class="comment">// fqdn (fully qualified domain name : 正式域名)</span></span><br><span class="line"><span class="keyword">type</span> fqdn <span class="keyword">struct</span> &#123;</span><br><span class="line">    </span><br><span class="line">    FQDN <span class="keyword">map</span>[*net.IPNet]*url.URL</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//passThrough 是监测规则实例</span></span><br><span class="line"><span class="keyword">var</span> passThrough *passthrough</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// NewProxy creates a new instance of proxy.</span></span><br><span class="line"><span class="comment">// It sets request logger using rLogPath as output file or os.Stdout by default.</span></span><br><span class="line"><span class="comment">// If whitePath of blackPath is not empty they are parsed to set endpoint lists.</span></span><br><span class="line"><span class="comment">//NewProxy返回一个新的Proxy实例</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewProxy</span><span class="params">(ctx context.Context)</span> *<span class="title">Proxy</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">//更新代理</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *Proxy)</span> <span class="title">Refresh</span><span class="params">(ctx context.Context)</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// <span class="title">addToEndpointList</span> <span class="title">compiles</span> <span class="title">regex</span> <span class="title">and</span> <span class="title">adds</span> <span class="title">it</span> <span class="title">to</span> <span class="title">an</span> <span class="title">endpointList</span></span></span><br><span class="line"><span class="function">// <span class="title">if</span> <span class="title">regex</span> <span class="title">is</span> <span class="title">valid</span></span></span><br><span class="line"><span class="function">// <span class="title">use</span> <span class="title">t</span> <span class="title">to</span> <span class="title">choose</span> <span class="title">list</span> <span class="title">type</span>: <span class="title">true</span> <span class="title">for</span> <span class="title">whitelist</span> <span class="title">false</span> <span class="title">for</span> <span class="title">blacklist</span></span></span><br><span class="line"><span class="function">//添加终端列表</span></span><br><span class="line"><span class="function">//传入一个字符串最为正则表达式，根据<span class="title">t</span>值决定添加到白名单还是黑名单</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *Proxy)</span> <span class="title">addToEndpointList</span><span class="params">(ctx context.Context, r <span class="keyword">string</span>)</span> <span class="title">error</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// <span class="title">checkEndpointList</span> <span class="title">looks</span> <span class="title">if</span> <span class="title">r</span> <span class="title">is</span> <span class="title">in</span> <span class="title">whitelist</span> <span class="title">or</span> <span class="title">blackllist</span></span></span><br><span class="line"><span class="function">// <span class="title">returns</span> <span class="title">true</span> <span class="title">if</span> <span class="title">endpoint</span> <span class="title">is</span> <span class="title">allowed</span></span></span><br><span class="line"><span class="function">//检查<span class="title">e</span>是否在白名单或黑名单</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *Proxy)</span> <span class="title">checkEndpointList</span><span class="params">(ctx context.Context, e <span class="keyword">string</span>)</span> <span class="title">bool</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// <span class="title">ServeHTTP</span> <span class="title">satisfy</span> <span class="title">HandlerFunc</span> <span class="title">interface</span> <span class="title">and</span></span></span><br><span class="line"><span class="function">// <span class="title">log</span>, <span class="title">authorize</span> <span class="title">and</span> <span class="title">forward</span> <span class="title">requests</span></span></span><br><span class="line"><span class="function">//<span class="title">HTTP</span>服务器主体</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *Proxy)</span> <span class="title">ServeHTTP</span><span class="params">(w http.ResponseWriter, r *http.Request)</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">//<span class="title">Configure</span> <span class="title">add</span> <span class="title">default</span> <span class="title">target</span> <span class="title">in</span> <span class="title">the</span> <span class="title">deny</span> <span class="title">list</span></span></span><br><span class="line"><span class="function">//添加默认目标到拒绝名单</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *Proxy)</span> <span class="title">Configure</span><span class="params">(ctx context.Context, port <span class="keyword">string</span>)</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">//读取配置信息</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *passthrough)</span> <span class="title">readConfig</span><span class="params">(ctx context.Context)</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// <span class="title">newProxyPassthrough</span> <span class="title">instantiate</span> <span class="title">a</span> <span class="title">passthrough</span> <span class="title">and</span> <span class="title">return</span> <span class="title">it</span></span></span><br><span class="line"><span class="function">//生成代理路径实例</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="title">newProxyPassthrough</span><span class="params">(ctx context.Context)</span> *<span class="title">passthrough</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// <span class="title">addFqdnToList</span> <span class="title">add</span> <span class="title">all</span> <span class="title">the</span> <span class="title">passthrough</span> <span class="title">fqdn</span> <span class="title">in</span> <span class="title">a</span> <span class="title">list</span></span></span><br><span class="line"><span class="function">//添加所有经过路径的域名到一个列表</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *passthrough)</span> <span class="title">addFqdnToList</span><span class="params">(ctx context.Context, r <span class="keyword">string</span>)</span> <span class="title">error</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// <span class="title">addDetectionMechanismsToList</span> <span class="title">add</span> <span class="title">all</span> <span class="title">detection</span> <span class="title">mechanisms</span> <span class="title">in</span> <span class="title">a</span> <span class="title">list</span></span></span><br><span class="line"><span class="function">//添加所有的监测机到一个列表</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *passthrough)</span> <span class="title">addDetectionMechanismsToList</span><span class="params">(ctx context.Context, r <span class="keyword">string</span>)</span> <span class="title">error</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// <span class="title">checkProxyPassthrough</span> <span class="title">compare</span> <span class="title">the</span> <span class="title">host</span> <span class="title">to</span> <span class="title">the</span> <span class="title">list</span> <span class="title">of</span> <span class="title">regex</span></span></span><br><span class="line"><span class="function">//将目标主机与列表中正则表示式比较。查看目标主机是否存在于列表中</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *passthrough)</span> <span class="title">checkProxyPassthrough</span><span class="params">(ctx context.Context, e <span class="keyword">string</span>)</span> <span class="title">bool</span> </span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">// <span class="title">checkDetectionMechanisms</span> <span class="title">compare</span> <span class="title">the</span> <span class="title">url</span> <span class="title">to</span> <span class="title">the</span> <span class="title">detection</span> <span class="title">mechanisms</span> <span class="title">regex</span></span></span><br><span class="line"><span class="function">// 将<span class="title">URL</span>和监测机进行比对，查看<span class="title">url</span>是否存在于监测机中</span></span><br><span class="line"><span class="function"><span class="title">func</span> <span class="params">(p *passthrough)</span> <span class="title">checkDetectionMechanisms</span><span class="params">(ctx context.Context, e <span class="keyword">string</span>)</span> <span class="title">bool</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="完整文件解析"><a href="#完整文件解析" class="headerlink" title="完整文件解析"></a>完整文件解析</h2><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> httpdispatcher</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"context"</span></span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">    <span class="string">"net"</span></span><br><span class="line">    <span class="string">"net/http"</span></span><br><span class="line">    <span class="string">"net/http/httputil"</span></span><br><span class="line">    <span class="string">"net/url"</span></span><br><span class="line">    <span class="string">"regexp"</span></span><br><span class="line">    <span class="string">"sync"</span></span><br><span class="line">    <span class="string">"text/template"</span></span><br><span class="line">    <span class="string">"time"</span></span><br><span class="line"></span><br><span class="line">    <span class="string">"github.com/inverse-inc/packetfence/go/log"</span></span><br><span class="line">    <span class="string">"github.com/inverse-inc/packetfence/go/pfconfigdriver"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> Proxy <span class="keyword">struct</span> &#123;</span><br><span class="line">    endpointWhiteList []*regexp.Regexp</span><br><span class="line">    endpointBlackList []*regexp.Regexp</span><br><span class="line">    mutex             sync.Mutex</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> passthrough <span class="keyword">struct</span> &#123;</span><br><span class="line">    proxypassthrough        []*regexp.Regexp</span><br><span class="line">    detectionmechanisms     []*regexp.Regexp</span><br><span class="line">    DetectionMecanismBypass <span class="keyword">bool</span></span><br><span class="line">    mutex                   sync.Mutex</span><br><span class="line">    PortalURL               <span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">map</span>[*net.IPNet]*url.URL</span><br><span class="line">    URIException            *regexp.Regexp</span><br><span class="line">    SecureRedirect          <span class="keyword">bool</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> fqdn <span class="keyword">struct</span> &#123;</span><br><span class="line">    FQDN <span class="keyword">map</span>[*net.IPNet]*url.URL</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> passThrough *passthrough</span><br><span class="line"></span><br><span class="line"><span class="comment">// NewProxy creates a new instance of proxy.</span></span><br><span class="line"><span class="comment">// It sets request logger using rLogPath as output file or os.Stdout by default.</span></span><br><span class="line"><span class="comment">// If whitePath of blackPath is not empty they are parsed to set endpoint lists.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewProxy</span><span class="params">(ctx context.Context)</span> *<span class="title">Proxy</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> p Proxy</span><br><span class="line"></span><br><span class="line">    passThrough = newProxyPassthrough(ctx)</span><br><span class="line">    passThrough.readConfig(ctx)</span><br><span class="line">    <span class="keyword">return</span> &amp;p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Proxy)</span> <span class="title">Refresh</span><span class="params">(ctx context.Context)</span></span> &#123;</span><br><span class="line">    passThrough.readConfig(ctx)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// addToEndpointList compiles regex and adds it to an endpointList</span></span><br><span class="line"><span class="comment">// if regex is valid</span></span><br><span class="line"><span class="comment">// use t to choose list type: true for whitelist false for blacklist</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Proxy)</span> <span class="title">addToEndpointList</span><span class="params">(ctx context.Context, r <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    rgx, err := regexp.Compile(r)</span><br><span class="line">    <span class="keyword">if</span> err == <span class="literal">nil</span> &#123;</span><br><span class="line">        p.mutex.Lock()</span><br><span class="line">        p.endpointBlackList = <span class="built_in">append</span>(p.endpointBlackList, rgx)</span><br><span class="line">        p.mutex.Unlock()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// checkEndpointList looks if r is in whitelist or blackllist</span></span><br><span class="line"><span class="comment">// returns true if endpoint is allowed</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Proxy)</span> <span class="title">checkEndpointList</span><span class="params">(ctx context.Context, e <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> p.endpointBlackList == <span class="literal">nil</span> &amp;&amp; p.endpointWhiteList == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, rgx := <span class="keyword">range</span> p.endpointBlackList &#123;</span><br><span class="line">        <span class="keyword">if</span> rgx.MatchString(e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ServeHTTP satisfy HandlerFunc interface and</span></span><br><span class="line"><span class="comment">// log, authorize and forward requests</span></span><br><span class="line"><span class="comment">//ServeHTTP执行http服务，如果请求主机或请求域名或请求url被检测为不在相关检测列表中</span></span><br><span class="line"><span class="comment">//则放行，之后修改请求的url的destination参数，返回302的跳转响应，之后返回。</span></span><br><span class="line"><span class="comment">//若不放行则进行进一步判断</span></span><br><span class="line"><span class="comment">//如果主机在黑名单中则直接返回403</span></span><br><span class="line"><span class="comment">//若不在黑名单中，则进行反向代理，将请求转发到目标主机</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Proxy)</span> <span class="title">ServeHTTP</span><span class="params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;</span><br><span class="line">    ctx := r.Context()</span><br><span class="line"></span><br><span class="line">    <span class="comment">//请求的目标主机</span></span><br><span class="line">    host := r.Host</span><br><span class="line">    <span class="keyword">var</span> fqdn url.URL</span><br><span class="line">    fqdn.Scheme = r.Header.Get(<span class="string">"X-Forwarded-Proto"</span>)</span><br><span class="line">    fqdn.Host = r.Host</span><br><span class="line">    fqdn.Path = r.RequestURI</span><br><span class="line">    fqdn.ForceQuery = <span class="literal">false</span></span><br><span class="line">    fqdn.RawQuery = <span class="string">""</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> host == <span class="string">""</span> &#123;</span><br><span class="line">        w.WriteHeader(http.StatusBadGateway)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> r.URL.Path == <span class="string">"/kindle-wifi/wifistub.html"</span> &#123;</span><br><span class="line">        log.LoggerWContext(ctx).Debug(fmt.Sprintln(host, <span class="string">"KINDLE WIFI PROBE HANDLING"</span>))</span><br><span class="line">        w.WriteHeader(http.StatusOK)</span><br><span class="line">        w.Write([]<span class="keyword">byte</span>(<span class="string">`&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"&gt;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">&lt;title&gt;Kindle Reachability Probe Page&lt;/title&gt;</span></span><br><span class="line"><span class="string">&lt;META http-equiv="Content-Type" content="text/html; charset=iso-8859-1"&gt;</span></span><br><span class="line"><span class="string">&lt;!--81ce4465-7167-4dcb-835b-dcc9e44c112a created with python 2.5 uuid.uuid4()--&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body bgcolor="#ffffff" text="#000000"&gt;</span></span><br><span class="line"><span class="string">81ce4465-7167-4dcb-835b-dcc9e44c112a</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span>))</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//如果请求目标主机在检测列表中 或者</span></span><br><span class="line">    <span class="comment">//请求域名在监测机中 或者</span></span><br><span class="line">    <span class="comment">//请求域名不在检测机中，但请求url与例外匹配</span></span><br><span class="line">    <span class="comment">//则跳过if语句</span></span><br><span class="line">    <span class="keyword">if</span> !(passThrough.checkProxyPassthrough(ctx, host) || ((passThrough.checkDetectionMechanisms(ctx, fqdn.String()) || passThrough.URIException.MatchString(r.RequestURI)) &amp;&amp; passThrough.DetectionMecanismBypass)) &#123;</span><br><span class="line">        <span class="keyword">if</span> r.Method != <span class="string">"GET"</span> &amp;&amp; r.Method != <span class="string">"HEAD"</span> &#123;</span><br><span class="line">            log.LoggerWContext(ctx).Debug(fmt.Sprintln(host, <span class="string">"FORBIDDEN"</span>))</span><br><span class="line">            w.WriteHeader(http.StatusNotImplemented)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> PortalURL url.URL</span><br><span class="line">        <span class="keyword">var</span> found <span class="keyword">bool</span></span><br><span class="line">        found = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//X-Forwarded-For 记录请求来源的IP地址</span></span><br><span class="line">        <span class="comment">//在测试时需要在请求头添加X-ForWarded-For 参数，用于激发下述循环</span></span><br><span class="line">        srcIP := net.ParseIP(r.Header.Get(<span class="string">"X-Forwarded-For"</span>))</span><br><span class="line">        <span class="keyword">for</span> i := <span class="number">0</span>; i &lt;= <span class="built_in">len</span>(passThrough.PortalURL); i++ &#123;</span><br><span class="line">            <span class="keyword">if</span> found &#123;</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> c, d := <span class="keyword">range</span> passThrough.PortalURL[i] &#123;</span><br><span class="line">                <span class="keyword">if</span> c.Contains(srcIP) &#123;</span><br><span class="line">                    PortalURL = *d</span><br><span class="line">                    found = <span class="literal">true</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">        type IPNet struct &#123;</span></span><br><span class="line"><span class="comment">        IP   IP     // network number</span></span><br><span class="line"><span class="comment">        Mask IPMask // network mask</span></span><br><span class="line"><span class="comment">        &#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (passThrough.checkDetectionMechanisms(ctx, fqdn.String()) || passThrough.URIException.MatchString(r.RequestURI)) &amp;&amp; passThrough.SecureRedirect &#123;</span><br><span class="line">            PortalURL.Scheme = <span class="string">"http"</span></span><br><span class="line">        &#125;</span><br><span class="line">        log.LoggerWContext(ctx).Debug(fmt.Sprintln(host, <span class="string">"Redirect to the portal"</span>))</span><br><span class="line">        <span class="comment">//PortalURL.RawQuery是http的请求参数与对应值，在url的？后面</span></span><br><span class="line">        PortalURL.RawQuery = <span class="string">"destination_url="</span> + r.Header.Get(<span class="string">"X-Forwarded-Proto"</span>) + <span class="string">"://"</span> + host + r.RequestURI</span><br><span class="line">        w.Header().Set(<span class="string">"Location"</span>, PortalURL.String())</span><br><span class="line">        w.WriteHeader(http.StatusFound)</span><br><span class="line">        <span class="comment">//HEAD方法类似于 GET 请求，只不过返回的响应中没有具体的内容，用于获取报头</span></span><br><span class="line">        <span class="keyword">if</span> r.Method != <span class="string">"HEAD"</span> &#123;</span><br><span class="line">            t := template.New(<span class="string">"foo"</span>)</span><br><span class="line">            t, _ = t.Parse(<span class="string">`</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;&lt;title&gt;302 Moved Temporarily&lt;/title&gt;&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;h1&gt;Moved&lt;/h1&gt;</span></span><br><span class="line"><span class="string">        &lt;p&gt;The document has moved &lt;a href="&#123;.String&#125;"&gt;here&lt;/a&gt;.&lt;/p&gt;</span></span><br><span class="line"><span class="string">        &lt;!--&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="string">            &lt;WISPAccessGatewayParam xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.wballiance.net/wispr/wispr_2_0.xsd"&gt;</span></span><br><span class="line"><span class="string">                &lt;Redirect&gt;</span></span><br><span class="line"><span class="string">                    &lt;MessageType&gt;100&lt;/MessageType&gt;</span></span><br><span class="line"><span class="string">                    &lt;ResponseCode&gt;0&lt;/ResponseCode&gt;</span></span><br><span class="line"><span class="string">                    &lt;AccessProcedure&gt;1.0&lt;/AccessProcedure&gt;</span></span><br><span class="line"><span class="string">                    &lt;VersionLow&gt;1.0&lt;/VersionLow&gt;</span></span><br><span class="line"><span class="string">                    &lt;VersionHigh&gt;2.0&lt;/VersionHigh&gt;</span></span><br><span class="line"><span class="string">                    &lt;AccessLocation&gt;CDATA[[isocc=,cc=,ac=,network=PacketFence,]]&lt;/AccessLocation&gt;</span></span><br><span class="line"><span class="string">                    &lt;LocationName&gt;CDATA[[PacketFence]]&lt;/LocationName&gt;</span></span><br><span class="line"><span class="string">                    &lt;LoginURL&gt;&#123;.String&#125;&lt;/LoginURL&gt;</span></span><br><span class="line"><span class="string">                &lt;/Redirect&gt;</span></span><br><span class="line"><span class="string">            &lt;/WISPAccessGatewayParam&gt;--&gt;</span></span><br><span class="line"><span class="string">    &lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;`</span>)</span><br><span class="line">            t.Execute(w, &amp;PortalURL)</span><br><span class="line">        &#125;</span><br><span class="line">        log.LoggerWContext(ctx).Debug(fmt.Sprintln(host, <span class="string">"REDIRECT"</span>))</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//end-if</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//检测目标主机是否在黑名单中，在现情况下，我们并没有对用户访问主机进行限制，可以不处理</span></span><br><span class="line">    <span class="keyword">if</span> !p.checkEndpointList(ctx, host) &#123;</span><br><span class="line">        log.LoggerWContext(ctx).Info(fmt.Sprintln(host, <span class="string">"FORBIDDEN host in blacklist"</span>))</span><br><span class="line">        w.WriteHeader(http.StatusForbidden)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    log.LoggerWContext(ctx).Debug(fmt.Sprintln(host, <span class="string">"REVERSE"</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment">//添加反向代理，将请求转发到 http://host</span></span><br><span class="line">    rp := httputil.NewSingleHostReverseProxy(&amp;url.URL&#123;</span><br><span class="line">        Scheme: <span class="string">"http"</span>,</span><br><span class="line">        Host:   host,</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Uses most defaults of http.DefaultTransport with more aggressive timeouts</span></span><br><span class="line">    <span class="comment">//配置代理参数</span></span><br><span class="line">    <span class="comment">//rp.Transport用于执行代理的请求</span></span><br><span class="line">    rp.Transport = &amp;http.Transport&#123;</span><br><span class="line">        Proxy: http.ProxyFromEnvironment,</span><br><span class="line">        DialContext: (&amp;net.Dialer&#123;</span><br><span class="line">            Timeout:   <span class="number">2</span> * time.Second,</span><br><span class="line">            KeepAlive: <span class="number">2</span> * time.Second,</span><br><span class="line">            DualStack: <span class="literal">true</span>,</span><br><span class="line">        &#125;).DialContext,</span><br><span class="line">        MaxIdleConns:          <span class="number">100</span>,</span><br><span class="line">        IdleConnTimeout:       <span class="number">90</span> * time.Second,</span><br><span class="line">        TLSHandshakeTimeout:   <span class="number">2</span> * time.Second,</span><br><span class="line">        ExpectContinueTimeout: <span class="number">1</span> * time.Second,</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    t := time.Now()</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Pass the context in the request</span></span><br><span class="line">    r = r.WithContext(ctx)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//执行反向代理</span></span><br><span class="line">    rp.ServeHTTP(w, r)</span><br><span class="line">    log.LoggerWContext(ctx).Info(fmt.Sprintln(host, time.Since(t)))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Configure add default target in the deny list</span></span><br><span class="line"><span class="comment">//因为添加了127.0.0.1.所以访问127.0.0.1:2015会返回404 ？？？？ 是吗，还未确认</span></span><br><span class="line"><span class="comment">//Configure把本机添加到了黑名单</span></span><br><span class="line"><span class="comment">//但是在哪里调用了？？？</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *Proxy)</span> <span class="title">Configure</span><span class="params">(ctx context.Context, port <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">    p.addToEndpointList(ctx, <span class="string">"localhost"</span>)</span><br><span class="line">    p.addToEndpointList(ctx, <span class="string">"127.0.0.1"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//readConfig在哪里调用？？？</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *passthrough)</span> <span class="title">readConfig</span><span class="params">(ctx context.Context)</span></span> &#123;</span><br><span class="line">    fencing := pfconfigdriver.Config.PfConf.Fencing</span><br><span class="line">    general := pfconfigdriver.Config.PfConf.General</span><br><span class="line">    portal := pfconfigdriver.Config.PfConf.CaptivePortal</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> scheme <span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">    p.proxypassthrough = <span class="built_in">make</span>([]*regexp.Regexp, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> fencing.ProxyPassthroughs &#123;</span><br><span class="line">        p.addFqdnToList(ctx, v)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    p.detectionmechanisms = <span class="built_in">make</span>([]*regexp.Regexp, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">for</span> _, v := <span class="keyword">range</span> portal.DetectionMecanismUrls &#123;</span><br><span class="line">        p.addDetectionMechanismsToList(ctx, v)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    p.DetectionMecanismBypass = portal.DetectionMecanismBypass == <span class="string">"enabled"</span></span><br><span class="line"></span><br><span class="line">    rgx, _ := regexp.Compile(<span class="string">"CaptiveNetworkSupport"</span>)</span><br><span class="line">    p.URIException = rgx</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> portal.SecureRedirect == <span class="string">"enabled"</span> &#123;</span><br><span class="line">        p.SecureRedirect = <span class="literal">true</span></span><br><span class="line">        scheme = <span class="string">"https"</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        p.SecureRedirect = <span class="literal">false</span></span><br><span class="line">        scheme = <span class="string">"http"</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    index := <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> interfaces pfconfigdriver.ListenInts</span><br><span class="line">    pfconfigdriver.FetchDecodeSocket(ctx, &amp;interfaces)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> keyConfNet pfconfigdriver.PfconfigKeys</span><br><span class="line">    keyConfNet.PfconfigNS = <span class="string">"config::Network"</span></span><br><span class="line">    keyConfNet.PfconfigHostnameOverlay = <span class="string">"yes"</span></span><br><span class="line">    pfconfigdriver.FetchDecodeSocket(ctx, &amp;keyConfNet)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> NetIndexDefault net.IPNet</span><br><span class="line">    <span class="keyword">var</span> portalURLDefault url.URL</span><br><span class="line"></span><br><span class="line">    p.PortalURL = <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">int</span>]<span class="keyword">map</span>[*net.IPNet]*url.URL)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, key := <span class="keyword">range</span> keyConfNet.Keys &#123;</span><br><span class="line">        <span class="keyword">var</span> NetIndex net.IPNet</span><br><span class="line">        <span class="keyword">var</span> portalURL url.URL</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> portal_url fqdn</span><br><span class="line">        portal_url.FQDN = <span class="built_in">make</span>(<span class="keyword">map</span>[*net.IPNet]*url.URL)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> ConfNet pfconfigdriver.NetworkConf</span><br><span class="line">        ConfNet.PfconfigHashNS = key</span><br><span class="line">        pfconfigdriver.FetchDecodeSocket(ctx, &amp;ConfNet)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> portal <span class="keyword">string</span></span><br><span class="line">        <span class="keyword">if</span> ConfNet.PortalFQDN != <span class="string">""</span> &#123;</span><br><span class="line">            portal = ConfNet.PortalFQDN</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            portal = general.Hostname + <span class="string">"."</span> + general.Domain</span><br><span class="line">        &#125;</span><br><span class="line">        portalURL.Host = portal</span><br><span class="line">        portalURL.Path = <span class="string">"/captive-portal"</span></span><br><span class="line">        portalURL.Scheme = scheme</span><br><span class="line"></span><br><span class="line">        NetIndex.Mask = net.IPMask(net.ParseIP(ConfNet.Netmask))</span><br><span class="line">        NetIndex.IP = net.ParseIP(key)</span><br><span class="line"></span><br><span class="line">        p.PortalURL[index] = <span class="built_in">make</span>(<span class="keyword">map</span>[*net.IPNet]*url.URL)</span><br><span class="line">        p.PortalURL[index][&amp;NetIndex] = &amp;portalURL</span><br><span class="line">        index++</span><br><span class="line">    &#125;</span><br><span class="line">    NetIndexDefault.Mask = net.IPMask(net.IPv4zero)</span><br><span class="line">    NetIndexDefault.IP = net.IPv4zero</span><br><span class="line"></span><br><span class="line">    portalURLDefault.Host = general.Hostname + <span class="string">"."</span> + general.Domain</span><br><span class="line">    portalURLDefault.Path = <span class="string">"/captive-portal"</span></span><br><span class="line">    portalURLDefault.Scheme = scheme</span><br><span class="line"></span><br><span class="line">    p.PortalURL[index] = <span class="built_in">make</span>(<span class="keyword">map</span>[*net.IPNet]*url.URL)</span><br><span class="line"></span><br><span class="line">    p.PortalURL[index][&amp;NetIndexDefault] = &amp;portalURLDefault</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// newProxyPassthrough instantiate a passthrough and return it</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">newProxyPassthrough</span><span class="params">(ctx context.Context)</span> *<span class="title">passthrough</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> p passthrough</span><br><span class="line">    <span class="keyword">return</span> &amp;p</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// addFqdnToList add all the passthrough fqdn in a list</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *passthrough)</span> <span class="title">addFqdnToList</span><span class="params">(ctx context.Context, r <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    rgx, err := regexp.Compile(r)</span><br><span class="line">    <span class="keyword">if</span> err == <span class="literal">nil</span> &#123;</span><br><span class="line">        p.mutex.Lock()</span><br><span class="line">        p.proxypassthrough = <span class="built_in">append</span>(p.proxypassthrough, rgx)</span><br><span class="line">        p.mutex.Unlock()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// addDetectionMechanismsToList add all detection mechanisms in a list</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *passthrough)</span> <span class="title">addDetectionMechanismsToList</span><span class="params">(ctx context.Context, r <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    rgx, err := regexp.Compile(r)</span><br><span class="line">    <span class="keyword">if</span> err == <span class="literal">nil</span> &#123;</span><br><span class="line">        p.mutex.Lock()</span><br><span class="line">        p.detectionmechanisms = <span class="built_in">append</span>(p.detectionmechanisms, rgx)</span><br><span class="line">        p.mutex.Unlock()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// checkProxyPassthrough compare the host to the list of regex</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *passthrough)</span> <span class="title">checkProxyPassthrough</span><span class="params">(ctx context.Context, e <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> p.proxypassthrough == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, rgx := <span class="keyword">range</span> p.proxypassthrough &#123;</span><br><span class="line">        <span class="keyword">if</span> rgx.MatchString(e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// checkDetectionMechanisms compare the url to the detection mechanisms regex</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(p *passthrough)</span> <span class="title">checkDetectionMechanisms</span><span class="params">(ctx context.Context, e <span class="keyword">string</span>)</span> <span class="title">bool</span></span> &#123;</span><br><span class="line">    <span class="keyword">if</span> p.detectionmechanisms == <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> _, rgx := <span class="keyword">range</span> p.detectionmechanisms &#123;</span><br><span class="line">        <span class="keyword">if</span> rgx.MatchString(e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Go/" rel="tag"># Go</a>
+          
+            <a href="/tags/源码解析/" rel="tag"># 源码解析</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/24/Learn-Go-Context/" rel="next" title="GoPackage-Context">
+                <i class="fa fa-chevron-left"></i> GoPackage-Context
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/24/Learn-curl-and-wget/" rel="prev" title="Curl 和 Wget">
+                Curl 和 Wget <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#所在路径"><span class="nav-text">所在路径</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本参数和函数解析"><span class="nav-text">基本参数和函数解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整文件解析"><span class="nav-text">完整文件解析</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">85.1k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
