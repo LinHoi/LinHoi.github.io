@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DNS,Go开源项目," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Translate CoreDNS Manual什么是CoreDNSCoreDNS是用go语言编写的DNS服务器。CoreDNS是由插件驱动的。插件相当于CoreDNS的API，你可以编写自定义的API来添加功能。但首先，你需要熟悉go语言和DNS的工作原理。">
+<meta name="keywords" content="DNS,Go开源项目">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CoreDNS 指南">
+<meta property="og:url" content="http://yoursite.com/2019/08/24/Translate-CoreDNS-Manual/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="Translate CoreDNS Manual什么是CoreDNSCoreDNS是用go语言编写的DNS服务器。CoreDNS是由插件驱动的。插件相当于CoreDNS的API，你可以编写自定义的API来添加功能。但首先，你需要熟悉go语言和DNS的工作原理。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-31T15:44:29.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CoreDNS 指南">
+<meta name="twitter:description" content="Translate CoreDNS Manual什么是CoreDNSCoreDNS是用go语言编写的DNS服务器。CoreDNS是由插件驱动的。插件相当于CoreDNS的API，你可以编写自定义的API来添加功能。但首先，你需要熟悉go语言和DNS的工作原理。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/24/Translate-CoreDNS-Manual/"/>
+
+
+
+
+
+  <title>CoreDNS 指南 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/24/Translate-CoreDNS-Manual/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CoreDNS 指南</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-24T23:29:12+08:00">
+                2019-08-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-31T23:44:29+08:00">
+                2019-08-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNS/" itemprop="url" rel="index">
+                    <span itemprop="name">DNS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,056 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Translate-CoreDNS-Manual"><a href="#Translate-CoreDNS-Manual" class="headerlink" title="Translate CoreDNS Manual"></a>Translate CoreDNS Manual</h1><h2 id="什么是CoreDNS"><a href="#什么是CoreDNS" class="headerlink" title="什么是CoreDNS"></a>什么是CoreDNS</h2><p>CoreDNS是用go语言编写的DNS服务器。<br>CoreDNS是由插件驱动的。插件相当于CoreDNS的API，你可以编写自定义的API来添加功能。<br>但首先，你需要熟悉go语言和DNS的工作原理。</p>
+<a id="more"></a>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="源码安装"><a href="#源码安装" class="headerlink" title="源码安装"></a>源码安装</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir -p <span class="variable">$GOPATH</span>/src/github.com/coredns</span><br><span class="line">$ <span class="built_in">cd</span> <span class="variable">$GOPATH</span>/src/github.com/coredns/</span><br><span class="line">$ wget https://github.com/coredns/coredns/archive/v1.6.2.tar.gz</span><br><span class="line">$ tar -zxvf v1.6.2.tar.gz</span><br><span class="line">$ mv coredns-1.6.2 coredns</span><br><span class="line">$ <span class="built_in">cd</span> coredns</span><br><span class="line">$ make</span><br></pre></td></tr></table></figure>
+<h3 id="检测版本"><a href="#检测版本" class="headerlink" title="检测版本"></a>检测版本</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ ./coredns -version</span><br><span class="line">$ CoreDNS-1.6.2</span><br><span class="line">$ linux/amd64, go1.12.5,</span><br></pre></td></tr></table></figure>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h3 id="在1053端口开启服务"><a href="#在1053端口开启服务" class="headerlink" title="在1053端口开启服务"></a>在1053端口开启服务</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@A coredns]<span class="comment"># ./coredns -dns.port=1053</span></span><br><span class="line">.:1053</span><br><span class="line">2019-08-27T15:36:35.491+08:00 [INFO] CoreDNS-1.6.2</span><br><span class="line">2019-08-27T15:36:35.491+08:00 [INFO] linux/amd64, go1.12.5, </span><br><span class="line">CoreDNS-1.6.2</span><br><span class="line">linux/amd64, go1.12.5,</span><br></pre></td></tr></table></figure>
+<h3 id="客户端连接"><a href="#客户端连接" class="headerlink" title="客户端连接"></a>客户端连接</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">[root@A coredns]<span class="comment"># dig @localhost -p 1053 a whoami.example.org</span></span><br><span class="line"></span><br><span class="line">; &lt;&lt;&gt;&gt; DiG 9.9.4-RedHat-9.9.4-74.el7_6.1 &lt;&lt;&gt;&gt; @localhost -p 1053 a whoami.example.org</span><br><span class="line">; (2 servers found)</span><br><span class="line">;; global options: +cmd</span><br><span class="line">;; Got answer:</span><br><span class="line">;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 15693</span><br><span class="line">;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 3</span><br><span class="line">;; WARNING: recursion requested but not available</span><br><span class="line"></span><br><span class="line">;; OPT PSEUDOSECTION:</span><br><span class="line">; EDNS: version: 0, flags:; udp: 4096</span><br><span class="line">;; QUESTION SECTION:</span><br><span class="line">;whoami.example.org.		IN	A</span><br><span class="line"></span><br><span class="line">;; ADDITIONAL SECTION:</span><br><span class="line">whoami.example.org.	0	IN	AAAA	::1</span><br><span class="line">_udp.whoami.example.org. 0	IN	SRV	0 0 60562 .</span><br><span class="line"></span><br><span class="line">;; Query time: 1 msec</span><br><span class="line">;; SERVER: ::1<span class="comment">#1053(::1)</span></span><br><span class="line">;; WHEN: Tue Aug 27 16:08:21 CST 2019</span><br><span class="line">;; MSG SIZE  rcvd: 135</span><br></pre></td></tr></table></figure>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>一旦CoreDNS解析配置并启动，它会运行各个服务器。每个服务器都有自己的服务域和监听端口，而且拥有自己的插件链。<br>CoreDNS处理处理一个DNS查询时，会经过以下步骤：  </p>
+<ol>
+<li>如果多个服务都在监听DNS查询端口，会选择服务域后缀最长匹配的服务器。比如有服务器A，服务域为example.com;服务器B，服务域为a.example.com，两者都监听53端口。现在有DNS在53端口查询www.a.example.org, 则会有B服务器处理该查询。</li>
+<li>确认服务器后，会遍历服务器配置文件中配置的插件，默认的遍历顺序在plugin.cfg文件中设置。  </li>
+<li>每个插件会检查查询请求，并决定是否处理这个请求，此时可能有以下情况发生<ul>
+<li>插件处理该查询</li>
+<li>插件不处理该查询</li>
+<li>插件处理该查询，但在中途调用插件链中的下一个插件，处理落空</li>
+<li>插件处理该查询，添加hint，后调用下一个插件</li>
+</ul>
+</li>
+</ol>
+<p>插件处理一个查询表示插件会对客户端做出响应。  </p>
+<h3 id="查询被处理"><a href="#查询被处理" class="headerlink" title="查询被处理"></a>查询被处理</h3><p>插件处理查询，返回给客户端一个响应(或其他行为)。查询处理到此结束，不会调用下一个插件</p>
+<h3 id="查询不被处理"><a href="#查询不被处理" class="headerlink" title="查询不被处理"></a>查询不被处理</h3><p>如果插件决定不处理该查询，会调用下一个插件，如果插件链中的最后一个插件也不处理该查询，CoreDNS返回 SERVFALL给 客户端。</p>
+<h3 id="查询处理落空"><a href="#查询处理落空" class="headerlink" title="查询处理落空"></a>查询处理落空</h3><p>插件处理查询，但该插件的后端返回信息告知需要其他插件进行处理。如果处理落空，下一个插件会被调用。一个具有该行为的插件是 host，host插件首先检查/etc/hosts中的表项，如果它发现一个结果，那就返回该结果，如果没有，那就落空，由下一个插件处理该查询。</p>
+<h3 id="查询被处理，并添加hint"><a href="#查询被处理，并添加hint" class="headerlink" title="查询被处理，并添加hint"></a>查询被处理，并添加hint</h3><p>插件处理查询，并添加hint，之后调用下一个插件。下一个插件能看到给客户端的响应信息。</p>
+<h3 id="未注册插件"><a href="#未注册插件" class="headerlink" title="未注册插件"></a>未注册插件</h3><p>未注册拆件不处理DNS数据，但可能以其他方式影响CoreDNS的行为。</p>
+<h3 id="插件解析"><a href="#插件解析" class="headerlink" title="插件解析"></a>插件解析</h3><p>一个插件包含 Setup、Registration、Handler 部分。  </p>
+<ol>
+<li>Setup   ：解析插件配置和插件指令。  </li>
+<li>Handler ：包含处理请求的代码，并实现所有逻辑。</li>
+<li>Registration： 将插件注册到CoreDNS，该步骤发生在CoreDNS进行编译的时候。所有的注册插件都可以被服务器使用，至于在运行时调用哪个插件则在Corefile中配置。</li>
+</ol>
+<h3 id="插件文档"><a href="#插件文档" class="headerlink" title="插件文档"></a>插件文档</h3><p><a href="https://coredns.io/plugins" target="_blank" rel="noopener">https://coredns.io/plugins</a></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><p>CoreDNS中有许多模块可以配置。<br>首先，决定哪些插件可以编译到CoreDNS中，编译后的二进制文件包含 plugin.cfg中所有插件。添加或删除插件需要重新编译CoreDNS。<br>通常采用Corefile文件来配置CoreDNS。当CoreDNS启动时，如果-conf参数没有指定，它会在当前目录查找Corefile文件。Corefile文件中包含若干个服务器模块，每个服务器会列举它所用到的插件。<br>插件的在插件链中的顺序又plugin.cfg决定，与Corefile中配置的顺序无关。  </p>
+<p>Corefile中的注释以 # 开头。</p>
+<h3 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h3><p>Corefile中支持环境变量，语法是{$ENV_VAR}</p>
+<h3 id="导入其他文件"><a href="#导入其他文件" class="headerlink" title="导入其他文件"></a>导入其他文件</h3><p>参见import插件，该插件可以在Corefile中使用</p>
+<h4 id="可重用代码段（Snippet）"><a href="#可重用代码段（Snippet）" class="headerlink" title="可重用代码段（Snippet）"></a>可重用代码段（Snippet）</h4><p>定义可重用代码段（Reusable Snippets），并通过import导入<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># define a snippet</span></span><br><span class="line">(snip) &#123;</span><br><span class="line">    prometheus</span><br><span class="line">    <span class="built_in">log</span></span><br><span class="line">    errors</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">. &#123;</span><br><span class="line">    whoami</span><br><span class="line">    import snip</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="服务器模块"><a href="#服务器模块" class="headerlink" title="服务器模块"></a>服务器模块</h3><p>每个服务器模块以服务器授权的服务域开头。在服务域或 一连串的服务域后(以空格分离)，跟一个服务器模块，并用{}包围。<br>例：以下服务器配置中 . 表示所有服务域，故该服务器可以处理所有dns请求<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">. &#123;</span><br><span class="line">    <span class="comment"># Plugins defined here.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>服务器模块可以选择一个监听端口，默认监听端口为53。端口号与服务域以：间隔。<br>例：以下服务器监听1053端口<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.:1053 &#123;</span><br><span class="line">    <span class="comment"># Plugins defined here.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：如果确定了监听端口，CoreDNS启动时的 -dns.port选项无效。</p>
+</blockquote>
+<p>如果在一个服务域匹配两个以上端口，则开始时Corefile会报错<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.:1054 &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.:1054 &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="指定协议"><a href="#指定协议" class="headerlink" title="指定协议"></a>指定协议</h4><p>在服务域前添加协议以指定协议<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dns://    标准的dns协议，为默认选项</span><br><span class="line">tls:// <span class="keyword">for</span> DNS over TLS.</span><br><span class="line">grpc:// <span class="keyword">for</span> DNS over gRPC.</span><br></pre></td></tr></table></figure></p>
+<h3 id="插件-1"><a href="#插件-1" class="headerlink" title="插件"></a>插件</h3><p>每个服务器模块指定一系列的插件供该服务器使用，最简单的用法是，直接在{}内添加插件名称。<br>例：添加chaos插件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">. &#123;</span><br><span class="line">    chaos</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>chaos以CH class响应查询，通过以上配置，CoreDNS会响应自己的版本号。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ dig @localhost -p 1053 CH version.bind TXT</span><br><span class="line">...</span><br><span class="line">;; ANSWER SECTION:</span><br><span class="line">version.bind.		0	CH	TXT	<span class="string">"CoreDNS-1.0.5"</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>多数插件允许以指定形式增加配置。<br>例：</p>
+<blockquote>
+<p>Syntax<br> chaos [VERSION] [AUTHORS…]<br> VERSION is the version to return. Defaults to CoreDNS-<version>, if not set.<br> AUTHORS is what authors to return. No default.</version></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">. &#123;</span><br><span class="line">    chaos CoreDNS-001 info@coredns.io</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也有插件可以将配置信息写到{}中<br>例：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">. &#123;</span><br><span class="line">    plugin &#123;</span><br><span class="line">       <span class="comment"># Plugin Block</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以结合以上配置，生成如下Corefile，该Corefile配置了4个服务域，监听2个端口<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">coredns.io:5300 &#123;</span><br><span class="line">    file db.coredns.io</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">example.io:53 &#123;</span><br><span class="line">    <span class="built_in">log</span></span><br><span class="line">    errors</span><br><span class="line">    file db.example.io</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">example.net:53 &#123;</span><br><span class="line">    file db.example.net</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.:53 &#123;</span><br><span class="line">    kubernetes</span><br><span class="line">    forward . 8.8.8.8</span><br><span class="line">    <span class="built_in">log</span></span><br><span class="line">    errors</span><br><span class="line">    cache</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="外部插件"><a href="#外部插件" class="headerlink" title="外部插件"></a>外部插件</h3><p>默认的CoreDNS不会编译外部插件，要激活外部插件，你需要自己编译CoreDNS。</p>
+<h3 id="可能的错误"><a href="#可能的错误" class="headerlink" title="可能的错误"></a>可能的错误</h3><p>health插件的文档中这样写道：这个插件只需要激活一次。你可能会认为下面的Corefile是合法的：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">health</span><br><span class="line"></span><br><span class="line">. &#123;</span><br><span class="line">    whoami</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但实际情况是，上述Corefile会报错：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"Corefile:3 - Error during parsing: Unknown directive '.'"</span>.</span><br></pre></td></tr></table></figure></p>
+<p>这里发生什么了？health看上去像一个服务域，解析器想要一个插件名称，但下一个标签却是”.”,  . 不是插件。实际上Corefile应该这样写：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">. &#123;</span><br><span class="line">    whoami</span><br><span class="line">    health</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>health文档的意思是，一旦health被检测到，它就是CoreDNS全局可用的，就算在某个服务器中你并没有声明health插件。</p>
+<h2 id="Setups"><a href="#Setups" class="headerlink" title="Setups"></a>Setups</h2><p>你可以在该章节找到一系列CoreDNS的配置。所有的设置都默认你不是root用户，因此不能监听53端口。在此我们以1053端口为代替（通过 -dns.port选项）。在每次设置中，都会默认读取Corefile中的配置。所以并不需要在启动时添加 -conf选项。因此下面两个命令是相同的：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./coredns -dns.port=1053 -conf Corefile</span><br><span class="line">./coredns -dns.port=1053</span><br></pre></td></tr></table></figure></p>
+<p>所有的nds查询可以通过dig工具生成，dig是调试dns的黄金标准。完整的命令如下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig -p 1053 @localhost +noall +answer &lt;name&gt; &lt;<span class="built_in">type</span>&gt;</span><br></pre></td></tr></table></figure></p>
+<p>但我们在下面的配置简略了命令，所有 dig www.example.org A 的完整命令是<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig -p 1053 @localhost +noall +answer www.example.org A</span><br></pre></td></tr></table></figure></p>
+<h3 id="来自文件的权威服务"><a href="#来自文件的权威服务" class="headerlink" title="来自文件的权威服务"></a>来自文件的权威服务</h3><p>本次设置会使用file 插件，并请注意 redis插件能够从一个Redis数据库进行权威服务。让我们开始使用file插件进行设置吧！<br>我们建立一个称为DNS zone 的文件，你可以指定该文件为任意名称，file插件并不会在意，<br>我们放在文件中的数据将作用于 example.org服务域。<br>在当前目录新建一个名为 db.example.org 的文件，并写入以下内容：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ORIGIN</span> example.org.</span><br><span class="line">@	3600 IN	SOA sns.dns.icann.org. noc.dns.icann.org. (</span><br><span class="line">				2017042745 ; serial</span><br><span class="line">				7200       ; refresh (2 hours)</span><br><span class="line">				3600       ; retry (1 hour)</span><br><span class="line">				1209600    ; expire (2 weeks)</span><br><span class="line">				3600       ; minimum (1 hour)</span><br><span class="line">				)</span><br><span class="line"></span><br><span class="line">	3600 IN NS a.iana-servers.net.</span><br><span class="line">	3600 IN NS b.iana-servers.net.</span><br><span class="line"></span><br><span class="line">www     IN A     127.0.0.1</span><br><span class="line">        IN AAAA  ::1</span><br></pre></td></tr></table></figure></p>
+<p>最后两行定义www.example.org 拥有 127.0.0.1和 ::1(IPv6)两个地址。<br>下一步，新建一个最小Corefile文件，用于处理指向该服务域的dns查询，并添加log插件用于激活查询日志：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">example.org &#123;</span><br><span class="line">    file db.example.org</span><br><span class="line">    <span class="built_in">log</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>启动CoreDNS并利用dig 工具进行查询<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ dig www.example.org AAAA</span><br><span class="line"></span><br><span class="line">www.example.org.    3600    IN  AAAA    ::1</span><br></pre></td></tr></table></figure></p>
+<p>可见设置生效了，因为log插件，我们可以看到查询被记录下来了：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">::1 - [22/Feb/2018:10:21:01 +0000] <span class="string">"AAAA IN www.example.org. udp 45 false 4096"</span> NOERROR qr,aa,rd,ra 121 170.195µs</span><br><span class="line"></span><br><span class="line"><span class="comment">#1.6.2 版本中日志如下：供参考</span></span><br><span class="line">2019-08-28T09:30:07.315+08:00 [INFO] [::1]:51676 - 59518 <span class="string">"AAAA IN www.example.org. udp 44 false 4096"</span> NOERROR qr,aa,rd 162 0.000241614s</span><br></pre></td></tr></table></figure></p>
+<p>以上日志显示返回地址的后端(::1),以及返回时间。其他记录的信息还有：查询类型(AAAA)，查询类(IN)，查询名称(www.example.org) ，使用的协议(udp), 请求的字节数，DO位状态以及UDP缓存大小。以上这些是从请求中解析的数据。NOERROR标志响应的开始，意为返回的Response Code，紧接的”qr,aa,rd,ra”是响应的标记集，响应的大小是121字节，最后是得到响应所用时间。  </p>
+<h3 id="Forward-转发"><a href="#Forward-转发" class="headerlink" title="Forward(转发)"></a>Forward(转发)</h3><p>CoreDNS可以通过forward 插件转发通信到recursor(DNS服务器)。下面，我们会使用forward插件，并聚焦最基本的设置：转发通信到Google Public DNS(8.8.8.8)和Quad9 DNS(9.9.9.9)。<br>我们只需要在Corefile中进行配置即可，如果我们希望所有到CoreDNS的DNS查询转发到8.8.8.8或9.9.9.9，那可以这样配置：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">. &#123;</span><br><span class="line">    forward . 8.8.8.8 9.9.9.9</span><br><span class="line">    <span class="built_in">log</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意，你可以指定要向上转发的域名查询，例如<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">forward example.com 8.8.8.8 9.9.9.9</span><br></pre></td></tr></table></figure></p>
+<p>只会向上转发在example.com域名中的子域名。<br>开启CoreDNS并用dig进行查询：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ dig www.example.org AAAA</span><br><span class="line">www.example.org.	25837	IN	AAAA	2606:2800:220:1:248:1893:25c8:194</span><br></pre></td></tr></table></figure></p>
+<p>记录日志如下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:1 - [22/Feb/2018:10:34:39 +0000] 36325 <span class="string">"AAAA IN www.example.org. udp 45 false 4096"</span> NOERROR qr,rd,ra,ad 73 1.859369ms</span><br></pre></td></tr></table></figure></p>
+<h3 id="转发域名到不同的上游"><a href="#转发域名到不同的上游" class="headerlink" title="转发域名到不同的上游"></a>转发域名到不同的上游</h3><p>如果你希望对example.com域名的解析转发到8.8.8.8,而其他域名由/etc/resolv.conf解析，可以这样配置Corefile：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">example.org &#123;</span><br><span class="line">    forward . 8.8.8.8</span><br><span class="line">    <span class="built_in">log</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">. &#123;</span><br><span class="line">    forward . /etc/resolv.conf</span><br><span class="line">    <span class="built_in">log</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h3><h4 id="federation"><a href="#federation" class="headerlink" title="federation"></a>federation</h4><h4 id="Autopath"><a href="#Autopath" class="headerlink" title="Autopath"></a>Autopath</h4><h3 id="Metric"><a href="#Metric" class="headerlink" title="Metric"></a>Metric</h3><h3 id="caching"><a href="#caching" class="headerlink" title="caching"></a>caching</h3><h3 id="Rrecursive-Resolver"><a href="#Rrecursive-Resolver" class="headerlink" title="Rrecursive Resolver"></a>Rrecursive Resolver</h3><p>CoreDNS并没有一个本地的递归解析器，但libunbound具有这种功能。为了让这种配置生效，你需要激活unbound插件，并重新编译CoreDNS。具体命令和配置如下：</p>
+<ul>
+<li>在plug.cfg文件添加 unbound:github.com/coredns/unbound</li>
+<li>$ go generate</li>
+<li>$ make<br>注意： unbound 插件需要编译cgo，这意味着coredns二进制文件现在链接了libunbound，不再是一个静态二进制文件。<br>之后，你可以激活unbound<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">. &#123;</span><br><span class="line">    unbound</span><br><span class="line">    cache</span><br><span class="line">    <span class="built_in">log</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>cache插件被包含在里面，这样unbound内置的cache被禁用，而cache插件能正常工作。  </p>
+<h2 id="编写插件"><a href="#编写插件" class="headerlink" title="编写插件"></a>编写插件</h2><p>我们已经看过了一系列的插件配置，那如何写自己的插件呢？<br>你可以在plugin.md 和README.md找到一些有用信息。<br>通常创建一个最小插件你需要以下文件：</p>
+<ol>
+<li>setup.go和setup_test.go<br> 该文件实现对Corefile配置的解析，一旦在Corefile中发现插件名称，就会调用该插件的setup函数。</li>
+<li>plugin_name.go 和plug_name_test.go:<br> 该文件包含处理DNS查询的逻辑，test.go包含用于测试插件是否正常工作的单元测试代码</li>
+<li>README.md:<br> 插件说明文档</li>
+<li>LICENSE 文件：</li>
+</ol>
+<h3 id="调用插件"><a href="#调用插件" class="headerlink" title="调用插件"></a>调用插件</h3><p>当CoreDNS要调用一个插件，它会调用ServerDNS方法，ServerDNS有三个参数：</p>
+<ol>
+<li>context.Context</li>
+<li>dns.ResponseWriter : 客户端连接</li>
+<li>*dns.Msg : 客户端请求</li>
+</ol>
+<p>ServerDNS返回两个值：一个响应code和一个error，error在errors插件被使用时会被记录到日志中。  </p>
+<p>响应code告诉CoreDNS，插件链是否写入应答，如果没写入，会由CoreDNS处。根据code的值，我们重利用DNS return codes(来自dns package)。<br>对于以下code：  </p>
+<blockquote>
+<p>SERVFAIL (dns.RcodeServerFailure)<br>  REFUSED (dns.RcodeRefused)<br>  FORMERR (dns.RcodeFormatError)<br>  NOTIMP (dns.RcodeNotImplemented)<br>COreDNS会进行特殊处理，并假设没有数据写入给客户端。对于其他code，CoreDNS认为插件已经写入数据给客户端。  </p>
+</blockquote>
+<h3 id="来自插件的日志-logging"><a href="#来自插件的日志-logging" class="headerlink" title="来自插件的日志(logging)"></a>来自插件的日志(logging)</h3><p>如果你希望插件也可以写入日志，你需要使用log package。Coredn并不实现log层。标准输出如下：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log.Printf(<span class="string">"[LEVEL] ..."</span>)</span><br><span class="line"><span class="comment"># 其中LEVEL可以是：INFO、WARNING或ERROR</span></span><br></pre></td></tr></table></figure></p>
+<p>通常在返回错误时loggging应该留给更高层处理。但是。如果你希望消化错误并通知用户，在插件中写入日志也是一种选择。</p>
+<h3 id="Metrics-数据记录？？？"><a href="#Metrics-数据记录？？？" class="headerlink" title="Metrics (数据记录？？？)"></a>Metrics (数据记录？？？)</h3><h3 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h3><p>每个插件都应该有一个说明文档</p>
+<h3 id="Fallthrough"><a href="#Fallthrough" class="headerlink" title="Fallthrough"></a>Fallthrough</h3><h2 id="如何添加插件"><a href="#如何添加插件" class="headerlink" title="如何添加插件"></a>如何添加插件</h2><p>一个插件以ServerDNS()方法进行定义。ServerDNS中传入请求(request),然后返回响应(responds)给客户端或者传递给下一插件。如果没有插件处理请求，返回SERVFAIL。<br>下面将以whoami插件为例讲解如何添加插件，whoami是CoreDNS自带插件，如果Corefile没有指定，whoami会默认加载。<br>首先一个问题是：我的插件要做什么呢？ 。在这里whoami插件的目的是返回客户端的IP、使用协议(UDP，TCP)和请求端口给客户端。<br>第二个问题是：我的插件要叫什么名字？而这里我们的插件名称是whoami。  </p>
+<h3 id="插件-2"><a href="#插件-2" class="headerlink" title="插件"></a>插件</h3><p>一个插件包含以下部分：</p>
+<ol>
+<li>插件注册（registration）</li>
+<li>插件解析（setup）</li>
+<li>ServerDNS() 和 Name() 方法<br>有了这些部分，我们就可以加载并使用它。</li>
+</ol>
+<h3 id="Registration"><a href="#Registration" class="headerlink" title="Registration"></a>Registration</h3><p>setup.go文件复制处理注册，在setup.go中init函数长这样：<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">	caddy.RegisterPlugin(<span class="string">"whoami"</span>, caddy.Plugin&#123;</span><br><span class="line">		ServerType: <span class="string">"dns"</span>,</span><br><span class="line">		Action:     setupWhoami,</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>CoreDNS 采用Caddy服务框架，在caddy.RegisterPlugin中传入的第一个参数是插件名称字符串。<br>ServerType为”dns”，这是因为CoreDNS是一个DNS服务器;Caddy也支持HTTP服务器。Action指定setup函数，用于解析Corefile。Its job is to return a type that implements the plugin.Handler interface.<br>通过以上init()函数，每当Corefile解析器读到”whoami”,setupWhoami函数就会被调用。</p>
+<h3 id="Setup-函数"><a href="#Setup-函数" class="headerlink" title="Setup 函数"></a>Setup 函数</h3><p>由于whoami插件不需要参数，所以setup函数非常简单：<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setupWhoami</span><span class="params">(c *caddy.Controller)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	c.Next() <span class="comment">// 'whoami'</span></span><br><span class="line">	<span class="keyword">if</span> c.NextArg() &#123;</span><br><span class="line">		<span class="keyword">return</span> plugin.Error(<span class="string">"whoami"</span>, c.ArgErr())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	dnsserver.GetConfig(c).AddPlugin(<span class="function"><span class="keyword">func</span><span class="params">(next plugin.Handler)</span> <span class="title">plugin</span>.<span class="title">Handler</span></span> &#123;</span><br><span class="line">		<span class="keyword">return</span> Whoami&#123;Next: next&#125; <span class="comment">// Set the Next field, so the plugin chaining works.</span></span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>*caddy.Controller接收Corefile的符号(tokens)并作用于这些符号。这里我们只检测whoami符号之后是否没有指定参数。如果你需要做更多设置，可能会用到c.Val()和c.Args()以及friends。<br>whoami完整的setup.go 文件如下：<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> whoami</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"github.com/coredns/coredns/core/dnsserver"</span></span><br><span class="line">	<span class="string">"github.com/coredns/coredns/plugin"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/caddyserver/caddy"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">init</span><span class="params">()</span></span> &#123;</span><br><span class="line">	caddy.RegisterPlugin(<span class="string">"whoami"</span>, caddy.Plugin&#123;</span><br><span class="line">		ServerType: <span class="string">"dns"</span>,</span><br><span class="line">		Action:     setup,</span><br><span class="line">	&#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setup</span><span class="params">(c *caddy.Controller)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">	c.Next() <span class="comment">// 'whoami'</span></span><br><span class="line">	<span class="keyword">if</span> c.NextArg() &#123;</span><br><span class="line">		<span class="keyword">return</span> plugin.Error(<span class="string">"whoami"</span>, c.ArgErr())</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	dnsserver.GetConfig(c).AddPlugin(<span class="function"><span class="keyword">func</span><span class="params">(next plugin.Handler)</span> <span class="title">plugin</span>.<span class="title">Handler</span></span> &#123;</span><br><span class="line">		<span class="keyword">return</span> Whoami&#123;&#125;</span><br><span class="line">	&#125;)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">当然，你也需要编写setup.go的测试代码setup_test.go  </span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>golang</span><br><span class="line"><span class="keyword">package</span> whoami</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"testing"</span></span><br><span class="line"></span><br><span class="line">	<span class="string">"github.com/caddyserver/caddy"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestSetup</span><span class="params">(t *testing.T)</span></span> &#123;</span><br><span class="line">	c := caddy.NewTestController(<span class="string">"dns"</span>, <span class="string">`whoami`</span>)</span><br><span class="line">	<span class="keyword">if</span> err := setup(c); err != <span class="literal">nil</span> &#123;</span><br><span class="line">		t.Fatalf(<span class="string">"Expected no errors, but got: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	c = caddy.NewTestController(<span class="string">"dns"</span>, <span class="string">`whoami example.org`</span>)</span><br><span class="line">	<span class="keyword">if</span> err := setup(c); err == <span class="literal">nil</span> &#123;</span><br><span class="line">		t.Fatalf(<span class="string">"Expected errors, but got: %v"</span>, err)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="ServerDNS-和-Name"><a href="#ServerDNS-和-Name" class="headerlink" title="ServerDNS() 和 Name()"></a>ServerDNS() 和 Name()</h3><p>首先让我们看下不重要的Name()方法。Name()方法用来让其他插件确认一个指定插件是否被加载，该方法仅仅返回字符串”whoami”。<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Name implements the Handler interface.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(wh Whoami)</span> <span class="title">Name</span><span class="params">()</span> <span class="title">string</span></span> &#123; <span class="keyword">return</span> <span class="string">"whoami"</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>接下来就是重头戏：ServerDNS方法，我们会一行一行解析该方法。<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ServeDNS implements the plugin.Handler interface.</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(wh Whoami)</span> <span class="title">ServeDNS</span><span class="params">(ctx context.Context, w dns.ResponseWriter, r *dns.Msg)</span> <span class="params">(<span class="keyword">int</span>, error)</span></span> &#123;</span><br><span class="line">	state := request.Request&#123;W: w, Req: r&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该函数传入了三个参数：</p>
+<ol>
+<li>w是 client side ，在w中写入数据后会返回给client响应(response)。所有的客户端连接属性都可以从dns.ResponseWriter中恢复出来。</li>
+<li>r是进来的查询(query)。<br>ServerDNS方法返回一个int和一个error，int类型参数是DNS RCODE，其值可能是:dns.RcodeServerFailure, dns.RcodeNotImplemented, dns.RcodeSuccess, etc…。一个成功的返回值说明插件已经写入数据。<br>request.Request是一个辅助结构体，用于提取和缓存一些客户端信息,比如 EDNS0 records 和DNSSEC OK bit。<br>接下来我们配置返回信息：<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">a := &amp;dns.Msg&#123;&#125;</span><br><span class="line">a.SetReply(r)</span><br><span class="line">a.Compress = <span class="literal">true</span></span><br><span class="line">a.Authoritative = <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>我们创建了一个新的dns.Msg(一个message)称之为a，并复制r中内容，a将返回。此外对a进行一些处理之后，开启信息压缩。<br>之后我们通过state这个辅助结构体检测传入信息，查看可以返回什么。  </p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">ip := state.IP()</span><br><span class="line"><span class="keyword">var</span> rr dns.RR</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span> state.Family() &#123;</span><br><span class="line"><span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">    rr = &amp;dns.A&#123;&#125;</span><br><span class="line">    rr.(*dns.A).Hdr = dns.RR_Header&#123;</span><br><span class="line">    					Name: state.QName(),</span><br><span class="line">            			Rrtype: dns.TypeA,</span><br><span class="line">            			Class: state.QClass()&#125;</span><br><span class="line">    rr.(*dns.A).A = net.ParseIP(ip).To4()</span><br><span class="line"><span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">    rr = &amp;dns.AAAA&#123;&#125;</span><br><span class="line">    rr.(*dns.AAAA).Hdr = dns.RR_Header&#123;</span><br><span class="line">    						Name: state.QName(),</span><br><span class="line">            				Rrtype: dns.TypeAAAA, </span><br><span class="line">            				Class: state.QClass()&#125;</span><br><span class="line">    rr.(*dns.AAAA).AAAA = net.ParseIP(ip)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>IP()返回客户端的IP地址。Family()返回使用的IP类型(IPv4,IPv6)。依据family我们可能产生一个A或AAAArecord和客户端地址。注意，如果我们没有指定一个TTL（超时时间）则其值为0，说明这些record不会被缓存。<br>接下来，编码客户端的源端口和使用协议：<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">srv := &amp;dns.SRV&#123;&#125;</span><br><span class="line">srv.Hdr = dns.RR_Header&#123;Name: <span class="string">"_"</span> + state.Proto() + <span class="string">"."</span> + state.QName(),</span><br><span class="line">            Rrtype: dns.TypeSRV, Class: state.QClass()&#125;</span><br><span class="line">port, _ := strconv.Atoi(state.Port())</span><br><span class="line">srv.Port = <span class="keyword">uint16</span>(port)</span><br><span class="line">srv.Target = <span class="string">"."</span></span><br></pre></td></tr></table></figure></p>
+<p>用SRV records进行编码，在域名前添加”_tcp”或”_udp”前缀，SRV记录中的端口号重用了客户端端口号。<br>所以我们会产生这样的信息：   </p>
+<blockquote>
+<p>_tcp.example.org. 0 IN SRV 0 0 <portnr>。  </portnr></p>
+</blockquote>
+<p>在ServerDNS方法的最后，我们创建完整的信息，并发送：<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">a.Extra = []dns.RR&#123;rr, srv&#125;</span><br><span class="line"></span><br><span class="line">state.SizeAndDo(a)</span><br><span class="line">w.WriteMsg(a)</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>, <span class="literal">nil</span></span><br></pre></td></tr></table></figure></p>
+<p>首先将rr和srv这两个资源记录(resource records)添加到应答信息a.Extra中。<br>之后调用state.SizeOnDo(a),用于在信息中设置正确的EDNS0记录并进行截断位处理。<br>最后调用w的WriteMsg方法，将信息写回给客户端。<br>ServerDNS处理成功，返回0和nil。</p>
+<h3 id="挂载插件"><a href="#挂载插件" class="headerlink" title="挂载插件"></a>挂载插件</h3><p>编辑plugin.cfg,并添加以下一行：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whoami:whoami</span><br></pre></td></tr></table></figure></p>
+<p>在生成可执行二进制文件时：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">go generate</span><br><span class="line">go build</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用插件"><a href="#使用插件" class="headerlink" title="使用插件"></a>使用插件</h3><p>参照前文</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DNS/" rel="tag"># DNS</a>
+          
+            <a href="/tags/Go开源项目/" rel="tag"># Go开源项目</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/24/GO源码解析-dispatcher/" rel="next" title="Go源码解析-dispatcher">
+                <i class="fa fa-chevron-left"></i> Go源码解析-dispatcher
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/31/Learn-CoreDNS/" rel="prev" title="CoreDNS 重要成分解析">
+                CoreDNS 重要成分解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Translate-CoreDNS-Manual"><span class="nav-text">Translate CoreDNS Manual</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是CoreDNS"><span class="nav-text">什么是CoreDNS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#源码安装"><span class="nav-text">源码安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#检测版本"><span class="nav-text">检测版本</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-text">测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在1053端口开启服务"><span class="nav-text">在1053端口开启服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端连接"><span class="nav-text">客户端连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件"><span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查询被处理"><span class="nav-text">查询被处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询不被处理"><span class="nav-text">查询不被处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询处理落空"><span class="nav-text">查询处理落空</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查询被处理，并添加hint"><span class="nav-text">查询被处理，并添加hint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#未注册插件"><span class="nav-text">未注册插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插件解析"><span class="nav-text">插件解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插件文档"><span class="nav-text">插件文档</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置"><span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境变量"><span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入其他文件"><span class="nav-text">导入其他文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可重用代码段（Snippet）"><span class="nav-text">可重用代码段（Snippet）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务器模块"><span class="nav-text">服务器模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#指定协议"><span class="nav-text">指定协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#插件-1"><span class="nav-text">插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外部插件"><span class="nav-text">外部插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可能的错误"><span class="nav-text">可能的错误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Setups"><span class="nav-text">Setups</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#来自文件的权威服务"><span class="nav-text">来自文件的权威服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Forward-转发"><span class="nav-text">Forward(转发)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转发域名到不同的上游"><span class="nav-text">转发域名到不同的上游</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes"><span class="nav-text">Kubernetes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#federation"><span class="nav-text">federation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Autopath"><span class="nav-text">Autopath</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metric"><span class="nav-text">Metric</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#caching"><span class="nav-text">caching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rrecursive-Resolver"><span class="nav-text">Rrecursive Resolver</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写插件"><span class="nav-text">编写插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调用插件"><span class="nav-text">调用插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#来自插件的日志-logging"><span class="nav-text">来自插件的日志(logging)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Metrics-数据记录？？？"><span class="nav-text">Metrics (数据记录？？？)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文档"><span class="nav-text">文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Fallthrough"><span class="nav-text">Fallthrough</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何添加插件"><span class="nav-text">如何添加插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插件-2"><span class="nav-text">插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Registration"><span class="nav-text">Registration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Setup-函数"><span class="nav-text">Setup 函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ServerDNS-和-Name"><span class="nav-text">ServerDNS() 和 Name()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载插件"><span class="nav-text">挂载插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用插件"><span class="nav-text">使用插件</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">91.2k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

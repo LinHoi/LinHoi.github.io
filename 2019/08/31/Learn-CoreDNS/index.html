@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="DNS,CoreDNS," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="dnsserverrequestfunc Proto1func Proto(w dns.ResponseWriter) string 传输所用的协议，udp或者tcp type Request12345678type Request struct &amp;#123;    Req *dns.Msg    W   dns.ResponseWriter    // Optional lowercased z">
+<meta name="keywords" content="DNS,CoreDNS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CoreDNS 重要成分解析">
+<meta property="og:url" content="http://yoursite.com/2019/08/31/Learn-CoreDNS/index.html">
+<meta property="og:site_name" content="Hikari">
+<meta property="og:description" content="dnsserverrequestfunc Proto1func Proto(w dns.ResponseWriter) string 传输所用的协议，udp或者tcp type Request12345678type Request struct &amp;#123;    Req *dns.Msg    W   dns.ResponseWriter    // Optional lowercased z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-31T15:47:59.656Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CoreDNS 重要成分解析">
+<meta name="twitter:description" content="dnsserverrequestfunc Proto1func Proto(w dns.ResponseWriter) string 传输所用的协议，udp或者tcp type Request12345678type Request struct &amp;#123;    Req *dns.Msg    W   dns.ResponseWriter    // Optional lowercased z">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/08/31/Learn-CoreDNS/"/>
+
+
+
+
+
+  <title>CoreDNS 重要成分解析 | Hikari</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寻光之旅</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/31/Learn-CoreDNS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CoreDNS 重要成分解析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-31T23:29:12+08:00">
+                2019-08-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-08-31T23:47:59+08:00">
+                2019-08-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DNS/" itemprop="url" rel="index">
+                    <span itemprop="name">DNS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  810 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="dnsserver"><a href="#dnsserver" class="headerlink" title="dnsserver"></a>dnsserver</h2><h2 id="request"><a href="#request" class="headerlink" title="request"></a>request</h2><h3 id="func-Proto"><a href="#func-Proto" class="headerlink" title="func Proto"></a>func Proto</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Proto</span><span class="params">(w dns.ResponseWriter)</span> <span class="title">string</span></span></span><br></pre></td></tr></table></figure>
+<p>传输所用的协议，udp或者tcp</p>
+<h3 id="type-Request"><a href="#type-Request" class="headerlink" title="type Request"></a>type Request</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Request <span class="keyword">struct</span> &#123;</span><br><span class="line">    Req *dns.Msg</span><br><span class="line">    W   dns.ResponseWriter</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Optional lowercased zone of this query.</span></span><br><span class="line">    Zone <span class="keyword">string</span></span><br><span class="line">    <span class="comment">// contains filtered or unexported fields</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="func-Request-IP"><a href="#func-Request-IP" class="headerlink" title="func (*Request) IP"></a>func (*Request) IP</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *Request)</span> <span class="title">IP</span><span class="params">()</span> <span class="title">string</span></span></span><br></pre></td></tr></table></figure>
+<p>获取发起dns请求的客户端ip地址  </p>
+<h3 id="func-Request-LocalAddr"><a href="#func-Request-LocalAddr" class="headerlink" title="func (*Request) LocalAddr"></a>func (*Request) LocalAddr</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *Request)</span> <span class="title">LocalAddr</span><span class="params">()</span> <span class="title">string</span></span></span><br></pre></td></tr></table></figure>
+<p>LocalAddr returns the net.Addr of the server handling the current request.</p>
+<h3 id="func-Request-LocalIP"><a href="#func-Request-LocalIP" class="headerlink" title="func (*Request) LocalIP"></a>func (*Request) LocalIP</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *Request)</span> <span class="title">LocalIP</span><span class="params">()</span> <span class="title">string</span></span></span><br></pre></td></tr></table></figure>
+<p>LocalIP gets the (local) IP address of server handling the request.</p>
+<h3 id="func-Request-LocalPort"><a href="#func-Request-LocalPort" class="headerlink" title="func (*Request) LocalPort"></a>func (*Request) LocalPort</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *Request)</span> <span class="title">LocalPort</span><span class="params">()</span> <span class="title">string</span></span></span><br></pre></td></tr></table></figure>
+<p>LocalPort gets the local port of the server handling the request.</p>
+<h3 id="func-Request-Name"><a href="#func-Request-Name" class="headerlink" title="func (*Request) Name"></a>func (*Request) Name</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *Request)</span> <span class="title">Name</span><span class="params">()</span> <span class="title">string</span></span></span><br></pre></td></tr></table></figure>
+<p>Name returns the name of the question in the request. Note this name will always have a closing dot and will be lower cased. After a call Name the value will be cached. To clear this caching call Clear. If the request is malformed the root zone is returned.</p>
+<h3 id="func-Request-QName"><a href="#func-Request-QName" class="headerlink" title="func (*Request) QName"></a>func (*Request) QName</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(r *Request)</span> <span class="title">QName</span><span class="params">()</span> <span class="title">string</span></span></span><br></pre></td></tr></table></figure>
+<p>QName returns the name of the question in the request. If the request is malformed the root zone is returned.</p>
+<h2 id="dns"><a href="#dns" class="headerlink" title="dns"></a>dns</h2><h3 id="type-Msg"><a href="#type-Msg" class="headerlink" title="type Msg"></a>type Msg</h3><p>Msg 列举DNS信息<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Msg <span class="keyword">struct</span> &#123;</span><br><span class="line">    MsgHdr</span><br><span class="line">    Compress <span class="keyword">bool</span>       <span class="string">`json:"-"`</span> <span class="comment">// If true, the message will be compressed when converted to wire format.</span></span><br><span class="line">    Question []Question <span class="comment">// Holds the RR(s) of the question section.</span></span><br><span class="line">    Answer   []RR       <span class="comment">// Holds the RR(s) of the answer section.</span></span><br><span class="line">    Ns       []RR       <span class="comment">// Holds the RR(s) of the authority section.</span></span><br><span class="line">    Extra    []RR       <span class="comment">// Holds the RR(s) of the additional section.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="type-RR"><a href="#type-RR" class="headerlink" title="type RR"></a>type RR</h3><p>RR(resource record) 资源记录<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">type</span> RR <span class="keyword">interface</span> &#123;</span><br><span class="line">    <span class="comment">// Header returns the header of an resource record. The header contains</span></span><br><span class="line">    <span class="comment">// everything up to the rdata.</span></span><br><span class="line">    Header() *RR_Header</span><br><span class="line">    <span class="comment">// String returns the text representation of the resource record.</span></span><br><span class="line">    String() <span class="keyword">string</span></span><br><span class="line">    <span class="comment">// contains filtered or unexported methods</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="type-MsgHdr"><a href="#type-MsgHdr" class="headerlink" title="type MsgHdr"></a>type MsgHdr</h3><p>MsgHdr is a a manually-unpacked version of (id, bits).<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> MsgHdr <span class="keyword">struct</span> &#123;</span><br><span class="line">    Id                 <span class="keyword">uint16</span></span><br><span class="line">    Response           <span class="keyword">bool</span></span><br><span class="line">    Opcode             <span class="keyword">int</span></span><br><span class="line">    Authoritative      <span class="keyword">bool</span></span><br><span class="line">    Truncated          <span class="keyword">bool</span></span><br><span class="line">    RecursionDesired   <span class="keyword">bool</span></span><br><span class="line">    RecursionAvailable <span class="keyword">bool</span></span><br><span class="line">    Zero               <span class="keyword">bool</span></span><br><span class="line">    AuthenticatedData  <span class="keyword">bool</span></span><br><span class="line">    CheckingDisabled   <span class="keyword">bool</span></span><br><span class="line">    Rcode              <span class="keyword">int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="type-Question"><a href="#type-Question" class="headerlink" title="type Question"></a>type Question</h3><p>question包含一个dns询问<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Question <span class="keyword">struct</span> &#123;</span><br><span class="line">    Name   <span class="keyword">string</span> <span class="string">`dns:"cdomain-name"`</span> <span class="comment">// "cdomain-name" specifies encoding (and may be compressed)</span></span><br><span class="line">    Qtype  <span class="keyword">uint16</span></span><br><span class="line">    Qclass <span class="keyword">uint16</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="type-Name"><a href="#type-Name" class="headerlink" title="type Name"></a>type Name</h3><p>dns.name<br><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Name <span class="keyword">string</span></span><br><span class="line"><span class="comment">//Name is a DNS domain name.</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(n Name)</span> <span class="title">String</span><span class="params">()</span> <span class="title">string</span></span></span><br><span class="line"><span class="function">//<span class="title">String</span> <span class="title">returns</span> <span class="title">the</span> <span class="title">string</span> <span class="title">representation</span> <span class="title">for</span> <span class="title">the</span> <span class="title">name</span> <span class="title">n</span>.</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="type-Server"><a href="#type-Server" class="headerlink" title="type Server"></a>type Server</h3><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Server <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="comment">// Address to listen on, ":dns" if empty.</span></span><br><span class="line">    Addr <span class="keyword">string</span></span><br><span class="line">    <span class="comment">// if "tcp" or "tcp-tls" (DNS over TLS) it will invoke a TCP listener, otherwise an UDP one</span></span><br><span class="line">    Net <span class="keyword">string</span></span><br><span class="line">    <span class="comment">// TCP Listener to use, this is to aid in systemd's socket activation.</span></span><br><span class="line">    Listener net.Listener</span><br><span class="line">    <span class="comment">// TLS connection configuration</span></span><br><span class="line">    TLSConfig *tls.Config</span><br><span class="line">    <span class="comment">// UDP "Listener" to use, this is to aid in systemd's socket activation.</span></span><br><span class="line">    PacketConn net.PacketConn</span><br><span class="line">    <span class="comment">// Handler to invoke, dns.DefaultServeMux if nil.</span></span><br><span class="line">    Handler Handler</span><br><span class="line">    <span class="comment">// Default buffer size to use to read incoming UDP messages. If not set</span></span><br><span class="line">    <span class="comment">// it defaults to MinMsgSize (512 B).</span></span><br><span class="line">    UDPSize <span class="keyword">int</span></span><br><span class="line">    <span class="comment">// The net.Conn.SetReadTimeout value for new connections, defaults to 2 * time.Second.</span></span><br><span class="line">    ReadTimeout time.Duration</span><br><span class="line">    <span class="comment">// The net.Conn.SetWriteTimeout value for new connections, defaults to 2 * time.Second.</span></span><br><span class="line">    WriteTimeout time.Duration</span><br><span class="line">    <span class="comment">// TCP idle timeout for multiple queries, if nil, defaults to 8 * time.Second (RFC 5966).</span></span><br><span class="line">    IdleTimeout <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="title">time</span>.<span class="title">Duration</span></span></span><br><span class="line"><span class="function">    // <span class="title">Secret</span><span class="params">(s)</span> <span class="title">for</span> <span class="title">Tsig</span> <span class="title">map</span>[&lt;<span class="title">zonename</span>&gt;]&lt;<span class="title">base64</span> <span class="title">secret</span>&gt;. <span class="title">The</span> <span class="title">zonename</span> <span class="title">must</span> <span class="title">be</span> <span class="title">in</span> <span class="title">canonical</span> <span class="title">form</span> <span class="params">(lowercase, fqdn, see RFC 4034 Section 6.2)</span>.</span></span><br><span class="line"><span class="function">    <span class="title">TsigSecret</span> <span class="title">map</span>[<span class="title">string</span>]<span class="title">string</span></span></span><br><span class="line"><span class="function">    // <span class="title">If</span> <span class="title">NotifyStartedFunc</span> <span class="title">is</span> <span class="title">set</span> <span class="title">it</span> <span class="title">is</span> <span class="title">called</span> <span class="title">once</span> <span class="title">the</span> <span class="title">server</span> <span class="title">has</span> <span class="title">started</span> <span class="title">listening</span>.</span></span><br><span class="line"><span class="function">    <span class="title">NotifyStartedFunc</span> <span class="title">func</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    // <span class="title">DecorateReader</span> <span class="title">is</span> <span class="title">optional</span>, <span class="title">allows</span> <span class="title">customization</span> <span class="title">of</span> <span class="title">the</span> <span class="title">process</span> <span class="title">that</span> <span class="title">reads</span> <span class="title">raw</span> <span class="title">DNS</span> <span class="title">messages</span>.</span></span><br><span class="line"><span class="function">    <span class="title">DecorateReader</span> <span class="title">DecorateReader</span></span></span><br><span class="line"><span class="function">    // <span class="title">DecorateWriter</span> <span class="title">is</span> <span class="title">optional</span>, <span class="title">allows</span> <span class="title">customization</span> <span class="title">of</span> <span class="title">the</span> <span class="title">process</span> <span class="title">that</span> <span class="title">writes</span> <span class="title">raw</span> <span class="title">DNS</span> <span class="title">messages</span>.</span></span><br><span class="line"><span class="function">    <span class="title">DecorateWriter</span> <span class="title">DecorateWriter</span></span></span><br><span class="line"><span class="function">    // <span class="title">Maximum</span> <span class="title">number</span> <span class="title">of</span> <span class="title">TCP</span> <span class="title">queries</span> <span class="title">before</span> <span class="title">we</span> <span class="title">close</span> <span class="title">the</span> <span class="title">socket</span>. <span class="title">Default</span> <span class="title">is</span> <span class="title">maxTCPQueries</span> <span class="params">(unlimited <span class="keyword">if</span> -1)</span>.</span></span><br><span class="line"><span class="function">    <span class="title">MaxTCPQueries</span> <span class="title">int</span></span></span><br><span class="line"><span class="function">    // <span class="title">Whether</span> <span class="title">to</span> <span class="title">set</span> <span class="title">the</span> <span class="title">SO_REUSEPORT</span> <span class="title">socket</span> <span class="title">option</span>, <span class="title">allowing</span> <span class="title">multiple</span> <span class="title">listeners</span> <span class="title">to</span> <span class="title">be</span> <span class="title">bound</span> <span class="title">to</span> <span class="title">a</span> <span class="title">single</span> <span class="title">address</span>.</span></span><br><span class="line"><span class="function">    // <span class="title">It</span> <span class="title">is</span> <span class="title">only</span> <span class="title">supported</span> <span class="title">on</span> <span class="title">go1</span>.11+ <span class="title">and</span> <span class="title">when</span> <span class="title">using</span> <span class="title">ListenAndServe</span>.</span></span><br><span class="line"><span class="function">    <span class="title">ReusePort</span> <span class="title">bool</span></span></span><br><span class="line"><span class="function">    // <span class="title">AcceptMsgFunc</span> <span class="title">will</span> <span class="title">check</span> <span class="title">the</span> <span class="title">incoming</span> <span class="title">message</span> <span class="title">and</span> <span class="title">will</span> <span class="title">reject</span> <span class="title">it</span> <span class="title">early</span> <span class="title">in</span> <span class="title">the</span> <span class="title">process</span>.</span></span><br><span class="line"><span class="function">    // <span class="title">By</span> <span class="title">default</span> <span class="title">DefaultMsgAcceptFunc</span> <span class="title">will</span> <span class="title">be</span> <span class="title">used</span>.</span></span><br><span class="line"><span class="function">    <span class="title">MsgAcceptFunc</span> <span class="title">MsgAcceptFunc</span></span></span><br><span class="line"><span class="function">    // <span class="title">contains</span> <span class="title">filtered</span> <span class="title">or</span> <span class="title">unexported</span> <span class="title">fields</span></span></span><br><span class="line"><span class="function">&#125;</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DNS/" rel="tag"># DNS</a>
+          
+            <a href="/tags/CoreDNS/" rel="tag"># CoreDNS</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/24/Translate-CoreDNS-Manual/" rel="next" title="CoreDNS 指南">
+                <i class="fa fa-chevron-left"></i> CoreDNS 指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/31/Learn-DNS/" rel="prev" title="CoreDNS配置文件解析">
+                CoreDNS配置文件解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/head.jpg"
+                alt="Lin Hui" />
+            
+              <p class="site-author-name" itemprop="name">Lin Hui</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/LinHoi" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:linhui-tarou@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#dnsserver"><span class="nav-text">dnsserver</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#request"><span class="nav-text">request</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Proto"><span class="nav-text">func Proto</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type-Request"><span class="nav-text">type Request</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Request-IP"><span class="nav-text">func (*Request) IP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Request-LocalAddr"><span class="nav-text">func (*Request) LocalAddr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Request-LocalIP"><span class="nav-text">func (*Request) LocalIP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Request-LocalPort"><span class="nav-text">func (*Request) LocalPort</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Request-Name"><span class="nav-text">func (*Request) Name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#func-Request-QName"><span class="nav-text">func (*Request) QName</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dns"><span class="nav-text">dns</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#type-Msg"><span class="nav-text">type Msg</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type-RR"><span class="nav-text">type RR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type-MsgHdr"><span class="nav-text">type MsgHdr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type-Question"><span class="nav-text">type Question</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type-Name"><span class="nav-text">type Name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#type-Server"><span class="nav-text">type Server</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Lin Hui</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">91.2k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

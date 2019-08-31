@@ -259,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/[学习总结]计算机网络_物理层/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/22/[学习总结]计算机网络_传输层/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Lin Hui">
@@ -278,7 +278,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/17/[学习总结]计算机网络_物理层/" itemprop="url">物理层</a></h1>
+                <a class="post-title-link" href="/2018/07/22/[学习总结]计算机网络_传输层/" itemprop="url">传输层</a></h1>
         
 
         <div class="post-meta">
@@ -290,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T13:57:12+08:00">
-                2018-07-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-22T15:53:12+08:00">
+                2018-07-22
               </time>
             
 
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-19T10:05:20+08:00">
-                2018-07-19
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-24T07:10:28+08:00">
+                2018-07-24
               </time>
             
           </span>
@@ -356,7 +356,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,032 字
+                  1,924 字
                 </span>
               
 
@@ -383,137 +383,864 @@
       
         
           
-            <h2 id="通信基础"><a href="#通信基础" class="headerlink" title="通信基础"></a>通信基础</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
-<li>数据、信号、码元</li>
-</ol>
+            <h2 id="传输层提供的功能"><a href="#传输层提供的功能" class="headerlink" title="传输层提供的功能"></a>传输层提供的功能</h2><h3 id="1-传输层的功能"><a href="#1-传输层的功能" class="headerlink" title="1 传输层的功能"></a>1 传输层的功能</h3><p>传输层位于网络层之上，为应用层提供通信服务，它是通信部分的最高层和用户功能的最低层。<br>传输层的功能：</p>
 <ul>
-<li>数据：传送信息的实体</li>
-<li>信号：数据的电气或电磁表现，是数据传输过程的存在形式</li>
-<li>码元：一个固定时长的信号波形</li>
+<li>提供进程之间的逻辑通信(端到端通信)</li>
+<li>复用：不同进程可以使用同一传输层协议传递数据</li>
+<li>分用：数据接收方能够将不同应用程序的数据正确交付</li>
+<li>差错检测：对报文的<strong>首部和数据部分</strong>进行差错检测</li>
+<li>提供两种传输协议：TCP和UDP</li>
 </ul>
-<ol>
-<li>信源、信道、信宿</li>
+<h3 id="2-传输层的寻址与端口"><a href="#2-传输层的寻址与端口" class="headerlink" title="2 传输层的寻址与端口"></a>2 传输层的寻址与端口</h3><ol>
+<li>端口的作用<br>端口用于标识主机中的应用进程</li>
+<li>端口号<br>端口号长度为16bit,能够表示65536(2<sup>16</sup>)个不同端口号<br>常用端口号： </li>
 </ol>
-<ul>
-<li>信源：产生数据的源头</li>
-<li>信宿：接受数据的终点</li>
-<li>信道：信号的传输介质</li>
-<li>通信交互方式：<ul>
-<li>单工通信：单向传输，一条信道</li>
-<li>半双工通信：双向传输，不可同时收发，两条信道</li>
-<li>全双工通信：双向传输，可同时收发，两条信道</li>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>应用程序</th>
+<th>FTP</th>
+<th>TELNET</th>
+<th>SMAP</th>
+<th>DNS</th>
+<th>TFTP</th>
+<th>HTTP</th>
+<th>SNMP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>端口号</td>
+<td>21</td>
+<td>23</td>
+<td>25</td>
+<td>53</td>
+<td>69</td>
+<td>80</td>
+<td>161</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li><p>套接字</p>
+<p> <font align="center"><strong>套接字=(主机号：端口号)</strong></font><br> 套接字唯一的标识了网络中一个主机和其上的一个进程</p>
+</li>
+</ol>
+<h3 id="3-无连接服务与面向连接服务"><a href="#3-无连接服务与面向连接服务" class="headerlink" title="3 无连接服务与面向连接服务"></a>3 无连接服务与面向连接服务</h3><ol>
+<li>TCP协议<br> TCP协议是面向连接的传输控制协议，提供可靠的传输服务，不提供广播或组播服务。应用场合有：FTP、HTTP和TELNET等</li>
+<li>UDP协议<br> UDP是无连接的非可靠的传输层协议，UDP具有较好的速度，应用场合有：TFTP、DNS、SNMP和RTP等</li>
+</ol>
+<h2 id="UDP协议"><a href="#UDP协议" class="headerlink" title="UDP协议"></a>UDP协议</h2><h3 id="1-UDP概述"><a href="#1-UDP概述" class="headerlink" title="1 UDP概述"></a>1 UDP概述</h3><p>UDP在IP数据报服务基础之上增加了复用和分用以及差错检测两个最基本服务。  UDP协议有以下优势：</p>
+<pre><code>- 无需建立连接：速度快
+- 无连接状态：不用维护连接状态
+- 分组开销小：TCP首部20字节，UDP首部8字节
+- 没有拥塞机制：网络中拥塞不会影响主机发送效率
+</code></pre><p>UDP常用于一次性传输较少量的数据，UDP不提供可靠传输，可靠性由应用层完成。</p>
+<h3 id="2-UDP的首部格式"><a href="#2-UDP的首部格式" class="headerlink" title="2 UDP的首部格式"></a>2 UDP的首部格式</h3><p>UDP数据报包含首部和数据部分，其中首部占8字节平分成四段，分别为：</p>
+<pre><code>- 源端口
+- 目的端口
+- UDP长度(包含首部和数据部分)
+- UDP校验和
+</code></pre><h3 id="3-UDP校验"><a href="#3-UDP校验" class="headerlink" title="3 UDP校验"></a>3 UDP校验</h3><p>伪首部：在UDP数据报前加上12字节的伪首部，形成临时UDP数据报，用于计算校验和，伪首部不传送或递交，其唯一功能就是计算校验和。<br>校验：IP数据报的校验只检验数据部分，而UDP的校验将首部和数据部分一起检验。<br>校验和计算：将临时UDP以16位为一个数，进行二进制反码运算求和，所得结果再求反即为校验和<br>反码：二进制数据第一位为符号位，符号位为‘0’表示正数，符号位为‘1’表示负数，正数的反码为其本身，负数的反码为其各个数位取反(符号位不变)。</p>
+<h2 id="TCP协议"><a href="#TCP协议" class="headerlink" title="TCP协议"></a>TCP协议</h2><h3 id="1-TCP协议特点"><a href="#1-TCP协议特点" class="headerlink" title="1 TCP协议特点"></a>1 TCP协议特点</h3><p>TCP协议是在不可靠的IP层之上提供可靠的数据传输的协议。<br>TCP协议特点：  </p>
+<pre><code>- 面向连接的传输层协议
+- TCP连接是点对点连接
+- 提供可靠的交付服务
+- 提供全双工通信
+- TCP是面向字节流的：TCP把应用程序交下来的数据看成无结构的字节流
+</code></pre><h3 id="2-TCP报文"><a href="#2-TCP报文" class="headerlink" title="2 TCP报文"></a>2 TCP报文</h3><p>TCP传输的数据单元是数据段，TCP数据段分为TCP首部和TCP数据两部分，TCP段作为IP数据报的数据部分封装。TCP首部前20字节是固定的，总长度是4N字节。<br>TCP报文段各字段含义：</p>
+<pre><code>- 源端口和目的端口：各占2字节
+- 序号：标记本段的第一个字节的序列
+- 确认字段：确认号=N，表示序号N-1前的数据都正确接收
+- 数据偏移:首部长度
+- 保留字段：
+- 紧急为URG
+- 确认位ACK：ACK=1时确认位有效
+- 推送位
+- 复位位RST
+- 同部位SYN：SYN=1 表示连接请求或连接接收报文
+- 终止位FIN：FIN=1表示要求释放连接
+- 窗口字段：
+- 校验和：检验首部和数据部分
+- 紧急指针字段
+- 选项字段
+- 填充字段
+</code></pre><h3 id="3-TCP连接管理"><a href="#3-TCP连接管理" class="headerlink" title="3 TCP连接管理"></a>3 TCP连接管理</h3><ol>
+<li><p>TCP连接建立<br> 三次握手：<br> <img src="/images/三次握手.png" alt="三次握手"><br> 第一步：客户机发起连接请求<br> 第二步：服务器同意建立连接后发回确认，为该连接分配缓冲和变量<br> 第三步：客户机收到确认报文后向服务器给出确认，为连接分配缓存和变量</p>
+<p> 关键字段：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SYN=1, seq=x</span><br><span class="line">SYN=1, ACK=1,seq=y,ack=x+1</span><br><span class="line">ACK=1, seq=x+1,ack=y+1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>TCP连接释放<br> 四次挥手：<br> <img src="/images/四次挥手.png" alt="四次挥手"><br> 第一步：客户机发送释放连接报文<br> 第二步：服务器收到释放报文后发出确认<br> 第三步：服务器发送连接释放报文<br> 第四步：客户机收到释放报文后，发出确认。</p>
+<p> 关键字段：</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FIN=1，seq=u</span><br><span class="line">ACK=1,seq=v,ack=u+1</span><br><span class="line">FIN=1,ACK=1,seq=w,ack=u+1</span><br><span class="line">ACK=1,seq=u+1.ack=w+1</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="TCP可靠传输"><a href="#TCP可靠传输" class="headerlink" title="TCP可靠传输"></a>TCP可靠传输</h3><ol>
+<li>序号：TCP首部的序号字段用来保证数据有序提交</li>
+<li>确认：TCP首部的确认号表示期望收到对方的下一个报文段的数据的第一的字节的序号</li>
+<li>重传：<ul>
+<li>超时:每发送一个报文段，为其设置计时器，计时器到期还未收到确认则重传该报文</li>
+<li>冗余ACK：接收方每收到一个比期望序列号大的失序报文段，发送一个冗余ACK(指明下一个期待字节的序号)给发送方，发送方收到三个冗余ACK就重传.</li>
 </ul>
 </li>
-</ul>
-<ol>
-<li>速率、波特、带宽</li>
 </ol>
-<ul>
-<li>速率(数据率)：数据传输速率：<ul>
-<li>码元传输速率：单位时间传输的码元数，单位为波特(Baud)</li>
-<li>信息传输速率：单位时间传输的二进制码元数(即比特数)，单位比特/秒(b/s)</li>
-</ul>
+<h3 id="TCP流量控制"><a href="#TCP流量控制" class="headerlink" title="TCP流量控制"></a>TCP流量控制</h3><p>流量控制：流量控制服务匹配发送方的发送速率和接收方的读取速率来防止发送方使接收方缓存溢出。TCP利用窗口机制来实现流量控制。<br>接收窗口rwnd：衡量接收方的接收容量，由TCP报文首部的窗口字段给出。<br>拥塞窗口cwnd：由当前网络的拥塞情况决定，反映网络的当前容量。<br>发送方的发送窗口大小为接收窗口和拥塞窗口中的最小值，反应。  </p>
+<h3 id="TCP拥塞控制"><a href="#TCP拥塞控制" class="headerlink" title="TCP拥塞控制"></a>TCP拥塞控制</h3><p>拥塞表现为通信时延的增加，拥塞控制就是防止过多的数据注入网络中。<br>拥塞控制和流量控制：<br>拥塞控制是全局性的过程，涉及所有主机和路由器。<br>流量控制是点对点的通信量控制，由接收端控制发送端。</p>
+<p>拥塞控制算法有两种：</p>
+<h4 id="1-慢开始和拥塞避免"><a href="#1-慢开始和拥塞避免" class="headerlink" title="1 慢开始和拥塞避免"></a>1 慢开始和拥塞避免</h4><ol>
+<li><p>慢开始算法<br> 拥塞窗口大小随着传输次数增加而呈2的指数倍增长，当拥塞窗口增大到慢开始门限(ssthresh)时改用拥塞避免算法。</p>
 </li>
-<li>带宽：单位时间内网络中两点间的最高数据率</li>
-</ul>
-<h3 id="奈奎斯特定理与香农定理"><a href="#奈奎斯特定理与香农定理" class="headerlink" title="奈奎斯特定理与香农定理"></a>奈奎斯特定理与香农定理</h3><ol>
-<li><p>奈奎斯特定理：<br> 理想低通信道下的极限数据传输率 = 2Wlog<sub>2</sub>V<br>其中W是理想低通信道的带宽,单位HZ，V是每个码元离散电平数目(如四位二进制有16种不同码元)</p>
+<li><p>拥塞避免算法<br>拥塞窗口大小随着传输次数线性增长，当出现网络拥塞时的窗口大小为cwnd，将慢开始门限降至cwnd的一半。</p>
 </li>
-<li><p>香农定理：<br> 信道的极限数据传输速率 = Wlog<sub>2</sub>(1+S/N)<br>信噪比 = 10log<sub>10</sub>(S/N) 单位(dB)</p>
+<li><p>网络拥塞的处理<br>发生拥塞时，将慢开始门限降至出现拥塞时的发送方cwnd的一半，再将拥塞窗口大小重新设为1，执行慢开始算法</p>
 </li>
 </ol>
-<h3 id="编码与调制"><a href="#编码与调制" class="headerlink" title="编码与调制"></a>编码与调制</h3><p>数据变换为模拟信号的过程称为调制，数据变换为数字信号的过程称为编码</p>
-<ol>
-<li>数字数据编码为数字信号</li>
+<h4 id="2-快重传和快恢复"><a href="#2-快重传和快恢复" class="headerlink" title="2 快重传和快恢复"></a>2 快重传和快恢复</h4><ol>
+<li><p>快重传<br>当发送方连续接到3个重复的ACK，直接重传该ACK对应报文段。</p>
+</li>
+<li><p>快恢复<br>当收到3个冗余ACK时，将慢开始门限设为此时cwnd值的一半，并从慢开始门限处继续执行拥塞避免算法</p>
+</li>
 </ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/21/[学习总结]操作系统_网络层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/21/[学习总结]操作系统_网络层/" itemprop="url">网络层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-21T06:57:12+08:00">
+                2018-07-21
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-22T08:24:33+08:00">
+                2018-07-22
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,629 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="网络层功能"><a href="#网络层功能" class="headerlink" title="网络层功能"></a>网络层功能</h2><h3 id="1-异构网络互联"><a href="#1-异构网络互联" class="headerlink" title="1 异构网络互联"></a>1 异构网络互联</h3><p>网络互联通常指用路由器进行网络互联和路由选择，在TCP/IP体系中，参加互联的计算机网络使用相同的IP协议，组成一个虚拟互联网络，该网络对互联的具体网络异构细节是透明的。</p>
+<h3 id="2-路由与转发"><a href="#2-路由与转发" class="headerlink" title="2 路由与转发"></a>2 路由与转发</h3><p>路由器主要完成两个功能：路由选择(确定哪一条路径)和分组转发(分组到达时所采取的行动)</p>
+<h3 id="3-拥塞控制"><a href="#3-拥塞控制" class="headerlink" title="3 拥塞控制"></a>3 拥塞控制</h3><p>通信子网中，由于出现过量的分组而引起网络性能下降的现象称为拥塞。  </p>
+<p>判断：<br>网络负载增加而网络吞吐量明显小于正常吞吐量则网络进入”轻度拥塞”状态；若网络吞吐量随着网络负载的增加反而下降，网络进入拥塞状态；若网络吞吐量下降到零，则网络进入死锁状态。</p>
+<p>流量控制和拥塞控制：<br>流量控制只涉及发送端和接收端，通过控制发送端的数据发送速率，使接收端及时接收。拥塞控制是全局问题，涉及网络中所有主机、路由器和导致网络传输能力下降的所有因素。  </p>
+<p>拥塞控制方法：  </p>
 <ul>
-<li>非归零码</li>
-<li>曼切斯特编码</li>
-<li>差分曼切斯特编码</li>
+<li>开环控制：事先考虑拥塞因素，预防拥塞产生，是一种静态方法。</li>
+<li>闭环控制：事先不做处理，检测到拥塞再处理，是一种动态方法。</li>
 </ul>
-<ol>
-<li>数字数据调制为模拟数据</li>
-</ol>
-<ul>
-<li>幅移键控</li>
-<li>频移键控</li>
-<li>相移键控</li>
-<li>正交振幅调制</li>
-</ul>
-<ol>
-<li>模拟数据编码为数字数据</li>
-<li>模拟数据编码为模拟信号</li>
-</ol>
-<h3 id="电路交换、报文交换、分组交换"><a href="#电路交换、报文交换、分组交换" class="headerlink" title="电路交换、报文交换、分组交换"></a>电路交换、报文交换、分组交换</h3><ol>
-<li>电路交换: 数据传输前，两结点间建立专用物理通信路径</li>
-<li>报文交换：利用报文进行存储转发</li>
-<li>分组交换：利用分组进行存储转发<br>！<a href="/images/数据交换方式.png">数据交换方式</a>  </li>
-</ol>
-<h3 id="数据报与虚电路"><a href="#数据报与虚电路" class="headerlink" title="数据报与虚电路"></a>数据报与虚电路</h3><p>分组交换分为面向无连接的数据报方式和面向连接的虚电路方式</p>
+<h2 id="路由算法"><a href="#路由算法" class="headerlink" title="路由算法"></a>路由算法</h2><h3 id="1-静态路由和动态路由"><a href="#1-静态路由和动态路由" class="headerlink" title="1 静态路由和动态路由"></a>1 静态路由和动态路由</h3><p><strong>静态路由算法</strong>：网络管理员手工配置路由信息<br><strong>动态路由算法</strong>：路由器之之间彼此交换路由信息，按照一定的算法获得最优寻路效果</p>
+<h3 id="2-距离-向量路由算法"><a href="#2-距离-向量路由算法" class="headerlink" title="2 距离-向量路由算法"></a>2 距离-向量路由算法</h3><p>距离-向量路由算法中，所有节点定期将它们的整个路由选择表传送给所有直接相邻结点。路由选择表包括：每条路径的目的地和路径的距离(跳数)</p>
+<h3 id="3-链路状态路由算法"><a href="#3-链路状态路由算法" class="headerlink" title="3 链路状态路由算法"></a>3 链路状态路由算法</h3><p>链路状态路由中，每个结点都有完全的网络拓扑图，当链路状态发生变化时，结点通过广播方式向所有结点告知与自己直接相连的链路信息。<br><strong>距离-向量路由算法和链路状态路由算法比较</strong>：</p>
 <div class="table-container">
 <table>
 <thead>
 <tr>
 <th></th>
-<th>数据报服务</th>
-<th>虚电路服务</th>
+<th>距离-向量路由算法</th>
+<th>链路状态路由算法</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>连接的建立</td>
-<td>不要</td>
-<td>必须有</td>
+<td>交流对象</td>
+<td>直接相邻结点</td>
+<td>其他所有结点</td>
 </tr>
 <tr>
-<td>目的地址</td>
-<td>每个分组都有完整的目的地址</td>
-<td>仅在建立连接阶段使用，之后每个分组使用长度较短的虚电路号</td>
+<td>交流内容</td>
+<td>自己到网络中所有其他结点的信息</td>
+<td>与自己直接相连的链路信息</td>
 </tr>
 <tr>
-<td>路由选择</td>
-<td>每个分组独立地进行路由选择和转发</td>
-<td>属于同一条虚电路的分组按照同一路由转发</td>
-</tr>
-<tr>
-<td>分组顺序</td>
-<td>不保证分组的有序到达</td>
-<td>保证分组的有序到达</td>
-</tr>
-<tr>
-<td>可靠性</td>
-<td>不保证可靠通信可靠性由用户主机来保证</td>
-<td>可靠性由网络保证</td>
-</tr>
-<tr>
-<td>对网络故障的适应性</td>
-<td>出故障的结点丢失分组，其他分组路径选择发生变化，可正常传输</td>
-<td>所有经过故障结点的虚电路均不能正常工作</td>
-</tr>
-<tr>
-<td>差错处理和流量控制</td>
-<td>由用户主机进行流量控制，不保证数据报的可靠性</td>
-<td>可由分组交换网负责，也可由用户主机负责</td>
+<td>路由环路</td>
+<td>有可能出现</td>
+<td>无</td>
 </tr>
 </tbody>
 </table>
 </div>
-<h2 id="传输介质"><a href="#传输介质" class="headerlink" title="传输介质"></a>传输介质</h2><h3 id="双绞线、同轴电缆、光纤与无线传输介质"><a href="#双绞线、同轴电缆、光纤与无线传输介质" class="headerlink" title="双绞线、同轴电缆、光纤与无线传输介质"></a>双绞线、同轴电缆、光纤与无线传输介质</h3><ol>
+<h3 id="4-层次路由"><a href="#4-层次路由" class="headerlink" title="4 层次路由"></a>4 层次路由</h3><p>路由选择按照层次方式进行以适应网路规模的扩大</p>
+<ol>
+<li>内部网关协议(IGP)：自治系统内部所使用的路由选择协议<ul>
+<li>RIP协议</li>
+<li>OSPF协议</li>
+</ul>
+</li>
+<li>外部网关协议(EGP):自治系统之间所使用的路由协议<ul>
+<li>BGP协议</li>
+</ul>
+</li>
+</ol>
+<h2 id="IPv4"><a href="#IPv4" class="headerlink" title="IPv4"></a>IPv4</h2><h3 id="1-IPv4分组"><a href="#1-IPv4分组" class="headerlink" title="1 IPv4分组"></a>1 IPv4分组</h3><ol>
+<li><p>IPv4分组格式<br>一个IP分组由首部和数据两部分组成，首部的前一部分长度固定为20(4*5)字节 </p>
+<p> <img src="/images/IP数据报.jpg" alt="IP"></p>
+<p> IP 首部重要字段：</p>
+<pre><code> - 版本：IP协议版本
+ - 首部长度：基本单位为4B(32位)
+ - 总长度：基本单位为B(即字节)，最大长度为2&lt;sup&gt;16&lt;/sup&gt;-1 = 65535 字节
+ - 标识：每产生一个数据报，标识加一；一个数据报的不同分片标识相同
+ - 标志：占3位，最低位为MF(more fragment),MF =1 表示还有分片，MF=0 表示最后一个分片；中间位为DF(Don&#39;t Fragment)，DF = 0 表示该数据报允许分片
+ - 片偏移：基本单位为8字节(64位)
+ - 首部检验和：只检验分组的首部，不检验数据部分
+ - 生产时间TTL：数据报可通过路由器数的最大值
+ - 协议：传输层协议
+</code></pre></li>
+<li><p>IP 数据报分片<br>MTU：最大传输单元，指链路层数据报所能承受的最大数据量，以太网的MTU为1500字节。</p>
+</li>
+<li><p>网络层转发分组的流程</p>
+</li>
+</ol>
+<h3 id="IPv4地址与NAT"><a href="#IPv4地址与NAT" class="headerlink" title="IPv4地址与NAT"></a>IPv4地址与NAT</h3><ol>
+<li><p>IPv4地址<br> <img src="/images/IP地址.jpg" alt="IP地址"><br>特殊IP地址：</p>
+<ul>
+<li>主机号全为0 表示本网络本身</li>
+<li>主机号全为1表示本网络的广播地址</li>
+<li>127.0.0.0用于环路自检，表示任意主机自身</li>
+<li>0.0.0.0表示本网络的本主机</li>
+<li>255.255.255.255 表示网络的广播地址</li>
+</ul>
+</li>
+<li><p>网络地址转换(NAT)<br>NAT：NAT通过将内网地址转化为公网地址，对外屏蔽内部IP地址。<br>NAT转换表：储存{本地IP地址：端口}到{全球IP地址：端口}的映射关系<br>NAT看得见端口，故工作在传输层</p>
+</li>
+</ol>
+<h3 id="子网划分与子网掩码、CIDR"><a href="#子网划分与子网掩码、CIDR" class="headerlink" title="子网划分与子网掩码、CIDR"></a>子网划分与子网掩码、CIDR</h3><ol>
+<li><p>子网划分<br>从主机位借用若干比特作为子网号，如三级IP地址={网络号，子网号，主机号}</p>
+</li>
+<li><p>子网掩码<br>子网掩码(二进制)与主机IP地址作 与操作 得到 主机网络号</p>
+</li>
+<li><p>无分类编址CIDR<br>CIDR：取消传统ABCD类网络划分，采用{网络前缀，主机号}的两级编址<br>路由聚合：将网络前缀相同的连续IP地址组成新的CIDR地址块<br>最长前缀匹配：使用CIDR时查找路由表可能会得到多个匹配结果，应当在匹配结果中找具有最长网络前缀的路由。</p>
+</li>
+</ol>
+<h3 id="ARP协议、DHCP协议与ICMP协议"><a href="#ARP协议、DHCP协议与ICMP协议" class="headerlink" title="ARP协议、DHCP协议与ICMP协议"></a>ARP协议、DHCP协议与ICMP协议</h3><ol>
+<li><p>ARP协议(地址解析协议)：<br>每个主机本地高速缓存存放ARP表，用来维护IP地址到MAC地址的映射。A欲向B发数据时，查找ARP表，若找到，则将MAC地址写入MAC帧后发送；若找不到，则向局域网所有主机广播ARP请求，B收到请求后向A发出响应，A更新B的映射关系到ARP表，再次查询后将B的MAC地址写入MAC帧，发送数据。<br>ARP协议工作在网络层。</p>
+</li>
+<li><p>动态主机配置协议DHCP<br>DHCP 常用于给主机动态地分配IP地址，DHCP是基于UDP的应用层协议<br>DHCP工作原理：<br>需要IP的主机广播发现报文，DHCP服务器收到报文后回答此广播报文，为其分配地址，称为提供报文。<br>DHCP客户端和服务端通过广播方式进行交互。</p>
+</li>
+</ol>
+<h3 id="网际控制报文协议ICMP"><a href="#网际控制报文协议ICMP" class="headerlink" title="网际控制报文协议ICMP"></a>网际控制报文协议ICMP</h3><p>ICMP 是IP层协议，用来报告差错和异常情况。<br>ICMP报文种类：</p>
+<ul>
+<li>ICMP差错报告报文：<ul>
+<li>终点不可达</li>
+<li>源点抑制</li>
+<li>时间超时</li>
+<li>参数问题</li>
+<li>改变路由</li>
+</ul>
+</li>
+<li>ICMP询问报文<ul>
+<li>会送请求和回答报文</li>
+<li>时间戳请求和回答报文</li>
+<li>掩码地址请求和回答报文</li>
+<li>路由器询问和通告报文</li>
+<li>ICMP的应用：</li>
+</ul>
+</li>
+<li>PING：工作在应用层</li>
+<li>traceroute：工作在网络层</li>
+</ul>
+<h2 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h2><p>IPv6 采用128位地址</p>
+<h2 id="路由协议"><a href="#路由协议" class="headerlink" title="路由协议"></a>路由协议</h2><h3 id="自治系统"><a href="#自治系统" class="headerlink" title="自治系统"></a>自治系统</h3><p>自治系统(AS)：单一技术管理下的一组路由器，使用内部路由选择协议确定分组在AS内的路由，使用域间路由协议确定分组在AS之间的路由。</p>
+<h3 id="域内路由与域间路由"><a href="#域内路由与域间路由" class="headerlink" title="域内路由与域间路由"></a>域内路由与域间路由</h3><ol>
+<li>内部网关协议</li>
+</ol>
+<ul>
+<li>RIP协议</li>
+<li>OSPF协议</li>
+</ul>
+<ol>
+<li>外部网关协议</li>
+</ol>
+<ul>
+<li>BGP-4</li>
+</ul>
+<h3 id="RIP路由协议"><a href="#RIP路由协议" class="headerlink" title="RIP路由协议"></a>RIP路由协议</h3><p>RIP是一种分布式的基于距离向量的路由选择协议，是基于UDP的应用层协议<br>RIP 协议规定：  </p>
+<ul>
+<li>路由器维护自己到其他每一个路由器的距离记录(这样一组距离称为距离向量)</li>
+<li>每经过一个路由器跳数加一，最多允许15跳，距离为16时表示网络不可达。</li>
+<li>优先选择跳数小的路径</li>
+</ul>
+<p>RIP 协议优点：实现简单，开销小<br>RIP协议缺点：</p>
+<ul>
+<li>由于要交换完整路由表，网络规模越大，开销越大</li>
+<li>网络故障时会出现慢收敛现象，俗称“坏消息传的慢”</li>
+</ul>
+<h3 id="OSPF路由协议"><a href="#OSPF路由协议" class="headerlink" title="OSPF路由协议"></a>OSPF路由协议</h3><ol>
+<li>OSPF协议基本特点<br>开发最短路径优先(OSPF)协议是使用分布式链路状态路由算法的典型代表。<br>OSPF协议特点：</li>
+</ol>
+<ul>
+<li>使用泛红法向所有路由器发送信息</li>
+<li>发送信息为与本路由器相邻的所有路由器的链路状态</li>
+<li>链路发生变化时，路由器才用泛红法向所有路由器发送此消息，更新收敛块</li>
+<li>OSPF是网络层协议,使用IP数据报传送；而RIP是应用层协议，使用UDP传送。</li>
+<li>每隔一段时间刷新一次数据库中的链路状态</li>
+</ul>
+<h3 id="BGP路由协议"><a href="#BGP路由协议" class="headerlink" title="BGP路由协议"></a>BGP路由协议</h3><p>边界网关协议(BGP)是不同自治系统的路由器之间交换路由信息的协议。<br>BGP是基于TCP的应用层协议。<br>工作原理：每个自治系统选择一个“BGP”发言人，发言人之间要交换路由信息时，先建立TCP连接。<br>三种路由协议的比较：  </p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>RIP</th>
+<th>OSPF</th>
+<th>BGP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>类型</td>
+<td>内部</td>
+<td>内部</td>
+<td>外部</td>
+</tr>
+<tr>
+<td>路由算法</td>
+<td>距离-向量</td>
+<td>链路状态</td>
+<td>路径-向量</td>
+</tr>
+<tr>
+<td>传递协议</td>
+<td>UDP</td>
+<td>IP</td>
+<td>TCP</td>
+</tr>
+<tr>
+<td>路径选择</td>
+<td>跳数最少</td>
+<td>代价最低</td>
+<td>较好，非最佳</td>
+</tr>
+<tr>
+<td>交换结点</td>
+<td>和本结点相邻的路由器</td>
+<td>网络中全部路由器</td>
+<td>和本结点相邻的路由器</td>
+</tr>
+<tr>
+<td>交换内容</td>
+<td>自己的路由表</td>
+<td>与本路由器相邻的所有路由器的链路状态</td>
+<td>首次：整个路由表；非首次：有变化的部分</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="网络层设备"><a href="#网络层设备" class="headerlink" title="网络层设备"></a>网络层设备</h2><h3 id="路由器组成和功能"><a href="#路由器组成和功能" class="headerlink" title="路由器组成和功能"></a>路由器组成和功能</h3><p>路由器是一种具有多个输入输出端口的专用计算机，其任务是连接异构的网络并完成路由转发。<br>路由器是网络层设备，它实现了物理层、数据链路层和网络层。  </p>
+<p>路由器组成：</p>
+<ul>
+<li>路由选择：控制部分，其任务是根据路由选择协议构造路由表，并对路由表进行维护和更新。</li>
+<li>分组转发：<ul>
+<li>交换结构：处理分组</li>
+<li>一组输入端口：从比特流提取网络从数据</li>
+<li>一组输出端口：与输入端口进行相反操作</li>
+</ul>
+</li>
+</ul>
+<h3 id="路由表与路由转发"><a href="#路由表与路由转发" class="headerlink" title="路由表与路由转发"></a>路由表与路由转发</h3><p>路由表根据路由选择算法得出，用于路由选择。包含目的网络IP地址、子网掩码、下一跳IP地址和接口。<br>转发表由路由表得出，包含分组的目的地址和下一跳地址(MAC)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/19/[学习总结]计算机网络_数据链路层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/19/[学习总结]计算机网络_数据链路层/" itemprop="url">数据链路层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-19T10:09:12+08:00">
+                2018-07-19
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-21T00:17:42+08:00">
+                2018-07-21
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,578 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="数据链路层的功能"><a href="#数据链路层的功能" class="headerlink" title="数据链路层的功能"></a>数据链路层的功能</h2><h3 id="为网络层提供服务"><a href="#为网络层提供服务" class="headerlink" title="为网络层提供服务"></a>为网络层提供服务</h3><ol>
+<li>无确认的无连接服务</li>
+<li>有确认的无连接服务</li>
+<li>有确认的面向连接服务</li>
+</ol>
+<h3 id="链路管理"><a href="#链路管理" class="headerlink" title="链路管理"></a>链路管理</h3><p>数据链路层连接的建立、维持和释放过程称为链路管理</p>
+<ol>
+<li>帧定界、帧同步与透明传输</li>
+</ol>
+<ul>
+<li>帧定界：数据加首部和尾部构成帧，首尾用于帧的定界</li>
+<li>帧同步：接收端区分帧的起始和结束</li>
+<li>透明传输：若在数据中出现与定界符相同的比特组合，进行转意</li>
+</ul>
+<h3 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h3><p>限制发送方数据流量，使其处在接收方接受能力之内</p>
+<h3 id="差错控制"><a href="#差错控制" class="headerlink" title="差错控制"></a>差错控制</h3><p>差错控制用于确保接收方正确接受数据</p>
+<ul>
+<li>位错：帧中某位出现差错，通常采用循环冗余校验(CRC) 发现位错，通过自动重传请求(ARQ)来重传出错的帧</li>
+<li>帧错： 帧的丢失、重复或失序等，引入定时器和编号机制。</li>
+</ul>
+<h2 id="组帧"><a href="#组帧" class="headerlink" title="组帧"></a>组帧</h2><p>组帧主要解决帧定界、帧同步、透明传输问题。实现组帧的方法有以下四种</p>
+<h3 id="字符统计法"><a href="#字符统计法" class="headerlink" title="字符统计法"></a>字符统计法</h3><p>在帧头部使用一个计数字段来标明帧内字符数</p>
+<h3 id="字符填充的首尾定界符法"><a href="#字符填充的首尾定界符法" class="headerlink" title="字符填充的首尾定界符法"></a>字符填充的首尾定界符法</h3><p>使用特点的定界字符来定界一帧的开始和结束，使用转意字符来实现透明传输</p>
+<h3 id="比特填充的首尾标志法"><a href="#比特填充的首尾标志法" class="headerlink" title="比特填充的首尾标志法"></a>比特填充的首尾标志法</h3><p>用01111110(16进制为7E)来标志一帧的开始和结束。<br>透明传输实现：发送方信息中每遇到5个连续的‘1’则在其后插入一个‘0’，接受方每遇到5个连续的‘1’则自动删除其后的‘0’。</p>
+<h3 id="违规编码法"><a href="#违规编码法" class="headerlink" title="违规编码法"></a>违规编码法</h3><p>如，曼切斯特编码中使用未定义的高-高电平对和低-低电平对作为定界帧</p>
+<h2 id="差错控制-1"><a href="#差错控制-1" class="headerlink" title="差错控制"></a>差错控制</h2><h3 id="检错编码"><a href="#检错编码" class="headerlink" title="检错编码"></a>检错编码</h3><ol>
+<li>奇偶校验码</li>
+<li>循环冗余码(CRC):<br>发送方和接收方商定除数P，二进制数据A采用模2运算(加法不进位，减法不借位，类似异或)除以P，得到余数加在A末尾，并令其为B，将B传输给接收方，接收方将B除以P，若余数为0则传输未出错。</li>
+<li>纠错编码<br>最常见的纠错编码是海明码</li>
+</ol>
+<h2 id="流量控制与可靠传输机制"><a href="#流量控制与可靠传输机制" class="headerlink" title="流量控制与可靠传输机制"></a>流量控制与可靠传输机制</h2><h3 id="流量控制、可靠传输与滑动窗口机制"><a href="#流量控制、可靠传输与滑动窗口机制" class="headerlink" title="流量控制、可靠传输与滑动窗口机制"></a>流量控制、可靠传输与滑动窗口机制</h3><ol>
+<li>停止-等待协议流量控制基本原理<br>发送方每发一个帧要等待接收方应答才能继续发，接收方每接收一个帧都要反馈一个应答信号</li>
+<li>滑动窗口流量控制基本原理<br>发送方维护发送窗口，接收方维护接收窗口，发送窗口用来对发送方进行流量控制，接收窗口用来对接收数据帧进行控制。<br>滑动窗口特性：只有接受窗口向前滑动时(接受窗口发送确认帧)，发送窗口才能向前滑动；当滑动窗口大小为1，可保证帧的有序接受；数据链路层的滑动窗口大小在传输过程中是固定的。 </li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>发送窗口大小</th>
+<th>接受窗口大小</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>停止-等待协议</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>后退N帧协议</td>
+<td>&gt;1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>选择重传协议</td>
+<td>&gt;1</td>
+<td>&gt;1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol>
+<li>可靠传输机制</li>
+</ol>
+<ul>
+<li>确认：接受方对接收数据进行确认并告知发送方</li>
+<li>超时重传：</li>
+<li>自动重传请求(ARQ)：<ul>
+<li>停-等式</li>
+<li>后退N帧</li>
+<li>选择重传</li>
+</ul>
+</li>
+</ul>
+<h3 id="单帧滑动窗口与停止-等待协议"><a href="#单帧滑动窗口与停止-等待协议" class="headerlink" title="单帧滑动窗口与停止-等待协议"></a>单帧滑动窗口与停止-等待协议</h3><p>源站发送单个帧之后必须等待确认，在目的站的回答到达源站之前，源站不能发送其他数据帧</p>
+<h3 id="多帧滑动窗口与后退N帧协议-GBN"><a href="#多帧滑动窗口与后退N帧协议-GBN" class="headerlink" title="多帧滑动窗口与后退N帧协议(GBN)"></a>多帧滑动窗口与后退N帧协议(GBN)</h3><p>发送方发送N个帧，如果该N帧的前一个帧被判为出错或丢失，则发送方重传该出错帧及其后N帧。<br>发送窗口大小W<sub>T</sub>: 1&lt;= W<sub>T</sub>&lt;=2<sup>n</sup>-1 (n为对帧编码的比特数)： </p>
+<h3 id="多帧滑动窗口与选择重传协议-SR"><a href="#多帧滑动窗口与选择重传协议-SR" class="headerlink" title="多帧滑动窗口与选择重传协议(SR)"></a>多帧滑动窗口与选择重传协议(SR)</h3><p>一般情况下，发送窗口=接受窗口=2<sup>(n-1)</sup>,只对出错或超时的数据帧进行重传。<br>信道的效率：发送方从开始发送数据，到接收到第一个确认帧为止，称为一个发送周期，设为T，发送方在这个周期内共发送L比特的数据，发送方的数据传输率为C，则发送方用于发送有效数据的时间为L/C ,在这种情况下，信道的利用率为(L/C)/T。<br>信道吞吐率：信道利用率 * 发送方的发送速率。</p>
+<h2 id="介质访问控制"><a href="#介质访问控制" class="headerlink" title="介质访问控制"></a>介质访问控制</h2><p>介质访问控制的内容是：采取一定的措施，使任意两点之间的通信不会发送互相干扰的情况。</p>
+<h3 id="信道划分介质访问控制"><a href="#信道划分介质访问控制" class="headerlink" title="信道划分介质访问控制"></a>信道划分介质访问控制</h3><ol>
+<li>频分多路复用(FDM)<br>多路信号调制成不同频率载波后叠加成复合信号</li>
+<li>时分多路复用(TDM)<br>一条物理信道按时间分成若干时间片，轮流地分配给多个信号使用</li>
+<li>波分多路复用(WDM)<br>即光的频分多路复用</li>
+<li>码分多路复用(CDM)<br>码分多路复用靠不同的编码来区分各路原始信号。<br>码分多址(CDMA)是码分复用的一种方式<br>CMDA原理:<br>向量S表示A站的码片向量，T表示B站的码片向量,S和T均为m比特，则  <script type="math/tex; mode=display">S\cdot T=\frac{1}{m}\sum_{i=1}^mS_iT_i=0</script><script type="math/tex; mode=display">S\cdot S=\frac{1}{m}\sum_{i=1}^mS_iS_i=1</script>即不同站码片正交，相同码片规格化内积为1，码片与其反码规格化内积为-1</li>
+</ol>
+<h3 id="随机访问介质访问控制"><a href="#随机访问介质访问控制" class="headerlink" title="随机访问介质访问控制"></a>随机访问介质访问控制</h3><p>不采用集中控制方式解决发送信息的次序问题，胜利者通过争用获得信道，从而获得信息的发送权。</p>
+<ol>
+<li>ALOHA协议</li>
+</ol>
+<ul>
+<li>纯ALOHA协议：任意站点可以不经检测直接发送数据，若一段时间未收到确认，则等待一段时间再发送数据。</li>
+<li>时隙ALOHA协议：将时间划分为一段段等长的时隙，每个时隙开始时只能发送一个帧。其效率是纯ALOHA协议的两倍</li>
+</ul>
+<ol>
+<li>CSMA协议<br>在ALOHA协议基础上增加了载波监听装置<br>根据监听方式和处理方式不同，有3种CSMA协议</li>
+</ol>
+<ul>
+<li>1-坚持 CSMA：信道闲则发送数据，忙则等待并继续监听侦听，若发生冲突则随机一段时间后，再重新开始侦听</li>
+<li>非坚持 CSMA：信道闲则发送数据，忙则等待，并放弃侦听，等待一段时间后继续监听</li>
+<li>p-坚持CSMA：用于时分信道。信道忙则等待下一个时隙再侦听，闲则以概率P发送数据，以概率(1-p)推迟到下一个时隙。</li>
+</ul>
+<h3 id="CSMA-CD-协议"><a href="#CSMA-CD-协议" class="headerlink" title="CSMA/CD 协议"></a>CSMA/CD 协议</h3><p>CSMA/CD协议是CSMA协议的改进方案，CSMA/CD 只能进行半双工通信<br>CSMA/CD的工作流程：</p>
+<ul>
+<li>先听后发</li>
+<li>边听边发</li>
+<li>冲突停发</li>
+<li>随机重发</li>
+</ul>
+<p>计算相关：</p>
+<ul>
+<li>单程传播时延/总线传播时延：数据从源点发送到目的点接收所用时间</li>
+<li>争用期(冲突窗口/碰撞窗口)：数据的往返时间，两倍单程传播时延</li>
+<li>最小帧长：为了确保发送数据的同时能检测可能的冲突，数据帧有个最小长度<br>最小帧长=总线传播时延*数据传输速率*2</li>
+</ul>
+<h3 id="CSMA-CA-协议"><a href="#CSMA-CA-协议" class="headerlink" title="CSMA/CA 协议"></a>CSMA/CA 协议</h3><p>CSMA/CD用于有线局域网，CSMA/CA用于无线局域网</p>
+<h3 id="轮询访问介质访问协议：令牌传递协议"><a href="#轮询访问介质访问协议：令牌传递协议" class="headerlink" title="轮询访问介质访问协议：令牌传递协议"></a>轮询访问介质访问协议：令牌传递协议</h3><p>令牌在环形网上游荡，只有持有令牌的计算机才能发送数据。</p>
+<h2 id="局域网"><a href="#局域网" class="headerlink" title="局域网"></a>局域网</h2><h3 id="局域网的基本概念体系结构"><a href="#局域网的基本概念体系结构" class="headerlink" title="局域网的基本概念体系结构"></a>局域网的基本概念体系结构</h3><ol>
+<li>局域网三要素</li>
+</ol>
+<ul>
+<li>拓扑结构<ul>
+<li>星形</li>
+<li>环形</li>
+<li>总线形</li>
+<li>复合类型</li>
+</ul>
+</li>
+<li>传输介质<ul>
 <li>双绞线</li>
-<li>同轴电缆</li>
+<li>铜缆</li>
 <li>光纤</li>
-<li>无线传输介质</li>
+</ul>
+</li>
+<li>介质访问控制方式<ul>
+<li>CSMA/CD</li>
+<li>令牌总线</li>
+<li>令牌环</li>
+</ul>
+</li>
+</ul>
+<h3 id="以太网与IEEE-802-3"><a href="#以太网与IEEE-802-3" class="headerlink" title="以太网与IEEE 802.3"></a>以太网与IEEE 802.3</h3><ol>
+<li>以太网传输介质与网卡<br>传输介质：粗缆、细缆、双绞线、光纤<br>网卡：局域网中连接计算机和传输介质的接口，工作在物理层和数据链路层<br>Mac地址：介质访问控制地址用于控制主机在网络上的数据通信<br>广播：以太网中的数据以广播形式发送</li>
+<li>以太网的MAC帧</li>
+<li>高速以太网</li>
 </ol>
-<h3 id="物理层接口的特性"><a href="#物理层接口的特性" class="headerlink" title="物理层接口的特性"></a>物理层接口的特性</h3><ol>
-<li>机械特性：定义物理连接的边界点</li>
-<li>电气特性：规定信号电压高低和阻抗匹配等</li>
-<li>功能特性：指明电压意义和信号线用途等</li>
-<li>规程特性：定义物理接口的工作规范</li>
+<h3 id="IEEE-902-3"><a href="#IEEE-902-3" class="headerlink" title="IEEE 902.3"></a>IEEE 902.3</h3><p>IEEE 902.3是无线局域网的一系列协议标准</p>
+<h2 id="广域网"><a href="#广域网" class="headerlink" title="广域网"></a>广域网</h2><h3 id="广域网基本概念"><a href="#广域网基本概念" class="headerlink" title="广域网基本概念"></a>广域网基本概念</h3><p>广域网是覆盖范围很广的长距离网络。局域网主要使用协议在数据链路层而广域网主要使用协议在网络层。常见的广域网数据链路层协议有PPP协议和HDLC协议。</p>
+<h3 id="PPP协议"><a href="#PPP协议" class="headerlink" title="PPP协议"></a>PPP协议</h3><p>PPP协议是使用串行路线通信的面向字节协议。<br>PPP协议组成部分：</p>
+<ul>
+<li>链路控制协议LCP</li>
+<li>网络控制协议NCP：</li>
+<li>IP数据报封装到串行链路的方法<br>PPP协议是点对点的，不是总线形的，故无需采用CSMA/CD，帧长度页没有限制。PPP协议只支持全双工通信</li>
+</ul>
+<h3 id="HDLC协议"><a href="#HDLC协议" class="headerlink" title="HDLC协议"></a>HDLC协议</h3><p>HDCL协议是面向比特的数据链路层协议。与PPP协议不同，HDCL协议采用了编号和确认机制，可以实现可靠传输。</p>
+<h2 id="数据链路层设备"><a href="#数据链路层设备" class="headerlink" title="数据链路层设备"></a>数据链路层设备</h2><h3 id="网桥"><a href="#网桥" class="headerlink" title="网桥"></a>网桥</h3><p>两个以太网通过网桥连接，原来的每一个以太网称为网段，网桥工作在数据链路层的MAC层，可以使以太网成为隔离开的碰撞域</p>
+<ol>
+<li>透明网桥(选择的不是最佳路径)</li>
+<li>源路径网桥(选择的是最佳路径)</li>
 </ol>
-<h3 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h3><ol>
-<li>中继器：信号整形并放大(但是中继器的原理是将衰减信号再生，而不是放大)在转发。受信号延迟规范制约，中继器不能无限增加。</li>
-<li>集线器(Hub)：多端口中继器,只能够在半双工下工作，多个端口均分总带宽。</li>
+<h3 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h3><p>交换机是一个多端口网桥，可以隔离冲突域和广播域  </p>
+<ol>
+<li>原理：<br>检测数据帧的源和目的Mac地址，然后与系统内部动态查找表进行比较，如果MAC不再表中，则将该地址加入表中，并将数据帧发送到相应目的端口。</li>
+<li>特点</li>
 </ol>
+<ul>
+<li>工作在全双工方式</li>
+<li>独占传输媒体的带宽</li>
+</ul>
+<ol>
+<li>交换模式</li>
+</ol>
+<ul>
+<li>直通式</li>
+<li>存储转发式</li>
+</ul>
 
           
         
@@ -834,6 +1561,309 @@
 <li>传输层</li>
 <li>应用层</li>
 </ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/[学习总结]计算机网络_物理层/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Lin Hui">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/head.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/17/[学习总结]计算机网络_物理层/" itemprop="url">物理层</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T13:57:12+08:00">
+                2018-07-17
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-07-19T10:05:20+08:00">
+                2018-07-19
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,032 字
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="通信基础"><a href="#通信基础" class="headerlink" title="通信基础"></a>通信基础</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li>数据、信号、码元</li>
+</ol>
+<ul>
+<li>数据：传送信息的实体</li>
+<li>信号：数据的电气或电磁表现，是数据传输过程的存在形式</li>
+<li>码元：一个固定时长的信号波形</li>
+</ul>
+<ol>
+<li>信源、信道、信宿</li>
+</ol>
+<ul>
+<li>信源：产生数据的源头</li>
+<li>信宿：接受数据的终点</li>
+<li>信道：信号的传输介质</li>
+<li>通信交互方式：<ul>
+<li>单工通信：单向传输，一条信道</li>
+<li>半双工通信：双向传输，不可同时收发，两条信道</li>
+<li>全双工通信：双向传输，可同时收发，两条信道</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>速率、波特、带宽</li>
+</ol>
+<ul>
+<li>速率(数据率)：数据传输速率：<ul>
+<li>码元传输速率：单位时间传输的码元数，单位为波特(Baud)</li>
+<li>信息传输速率：单位时间传输的二进制码元数(即比特数)，单位比特/秒(b/s)</li>
+</ul>
+</li>
+<li>带宽：单位时间内网络中两点间的最高数据率</li>
+</ul>
+<h3 id="奈奎斯特定理与香农定理"><a href="#奈奎斯特定理与香农定理" class="headerlink" title="奈奎斯特定理与香农定理"></a>奈奎斯特定理与香农定理</h3><ol>
+<li><p>奈奎斯特定理：<br> 理想低通信道下的极限数据传输率 = 2Wlog<sub>2</sub>V<br>其中W是理想低通信道的带宽,单位HZ，V是每个码元离散电平数目(如四位二进制有16种不同码元)</p>
+</li>
+<li><p>香农定理：<br> 信道的极限数据传输速率 = Wlog<sub>2</sub>(1+S/N)<br>信噪比 = 10log<sub>10</sub>(S/N) 单位(dB)</p>
+</li>
+</ol>
+<h3 id="编码与调制"><a href="#编码与调制" class="headerlink" title="编码与调制"></a>编码与调制</h3><p>数据变换为模拟信号的过程称为调制，数据变换为数字信号的过程称为编码</p>
+<ol>
+<li>数字数据编码为数字信号</li>
+</ol>
+<ul>
+<li>非归零码</li>
+<li>曼切斯特编码</li>
+<li>差分曼切斯特编码</li>
+</ul>
+<ol>
+<li>数字数据调制为模拟数据</li>
+</ol>
+<ul>
+<li>幅移键控</li>
+<li>频移键控</li>
+<li>相移键控</li>
+<li>正交振幅调制</li>
+</ul>
+<ol>
+<li>模拟数据编码为数字数据</li>
+<li>模拟数据编码为模拟信号</li>
+</ol>
+<h3 id="电路交换、报文交换、分组交换"><a href="#电路交换、报文交换、分组交换" class="headerlink" title="电路交换、报文交换、分组交换"></a>电路交换、报文交换、分组交换</h3><ol>
+<li>电路交换: 数据传输前，两结点间建立专用物理通信路径</li>
+<li>报文交换：利用报文进行存储转发</li>
+<li>分组交换：利用分组进行存储转发<br>！<a href="/images/数据交换方式.png">数据交换方式</a>  </li>
+</ol>
+<h3 id="数据报与虚电路"><a href="#数据报与虚电路" class="headerlink" title="数据报与虚电路"></a>数据报与虚电路</h3><p>分组交换分为面向无连接的数据报方式和面向连接的虚电路方式</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>数据报服务</th>
+<th>虚电路服务</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连接的建立</td>
+<td>不要</td>
+<td>必须有</td>
+</tr>
+<tr>
+<td>目的地址</td>
+<td>每个分组都有完整的目的地址</td>
+<td>仅在建立连接阶段使用，之后每个分组使用长度较短的虚电路号</td>
+</tr>
+<tr>
+<td>路由选择</td>
+<td>每个分组独立地进行路由选择和转发</td>
+<td>属于同一条虚电路的分组按照同一路由转发</td>
+</tr>
+<tr>
+<td>分组顺序</td>
+<td>不保证分组的有序到达</td>
+<td>保证分组的有序到达</td>
+</tr>
+<tr>
+<td>可靠性</td>
+<td>不保证可靠通信可靠性由用户主机来保证</td>
+<td>可靠性由网络保证</td>
+</tr>
+<tr>
+<td>对网络故障的适应性</td>
+<td>出故障的结点丢失分组，其他分组路径选择发生变化，可正常传输</td>
+<td>所有经过故障结点的虚电路均不能正常工作</td>
+</tr>
+<tr>
+<td>差错处理和流量控制</td>
+<td>由用户主机进行流量控制，不保证数据报的可靠性</td>
+<td>可由分组交换网负责，也可由用户主机负责</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="传输介质"><a href="#传输介质" class="headerlink" title="传输介质"></a>传输介质</h2><h3 id="双绞线、同轴电缆、光纤与无线传输介质"><a href="#双绞线、同轴电缆、光纤与无线传输介质" class="headerlink" title="双绞线、同轴电缆、光纤与无线传输介质"></a>双绞线、同轴电缆、光纤与无线传输介质</h3><ol>
+<li>双绞线</li>
+<li>同轴电缆</li>
+<li>光纤</li>
+<li>无线传输介质</li>
+</ol>
+<h3 id="物理层接口的特性"><a href="#物理层接口的特性" class="headerlink" title="物理层接口的特性"></a>物理层接口的特性</h3><ol>
+<li>机械特性：定义物理连接的边界点</li>
+<li>电气特性：规定信号电压高低和阻抗匹配等</li>
+<li>功能特性：指明电压意义和信号线用途等</li>
+<li>规程特性：定义物理接口的工作规范</li>
+</ol>
+<h3 id="物理层设备"><a href="#物理层设备" class="headerlink" title="物理层设备"></a>物理层设备</h3><ol>
+<li>中继器：信号整形并放大(但是中继器的原理是将衰减信号再生，而不是放大)在转发。受信号延迟规范制约，中继器不能无限增加。</li>
+<li>集线器(Hub)：多端口中继器,只能够在半双工下工作，多个端口均分总带宽。</li>
+</ol>
 
           
         
@@ -2181,753 +3211,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/11/[设定]Galaxy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/11/[设定]Galaxy/" itemprop="url">设定稿</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-11T22:37:12+08:00">
-                2018-07-11
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T23:40:59+08:00">
-                2018-07-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设定稿/" itemprop="url" rel="index">
-                    <span itemprop="name">设定稿</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  806 字
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="时间理论"><a href="#时间理论" class="headerlink" title="时间理论"></a>时间理论</h2><h3 id="時恒定律"><a href="#時恒定律" class="headerlink" title="時恒定律"></a>時恒定律</h3><ol>
-<li>概念<br>　　時是物体（任何世界也是一个特殊物体）的固有属性，它是时间之上的第五维属性。一个未曾进行人为时间操作的世界称为父世界，在平行宇宙的观点下，父世界是单一世界，任何一个父世界的“时”总量是恒定的，可由“时律公式“计算。假如父世界进行超越时空、重返过去或未来的操作，父世界会被分裂为若干个子世界，子世界的时总量与父世界的相等，利用该原理可以检测一个世界是否进行过人为操作，在这里，世界并不仅包括大型的集合体，也包括个体，任何一个个体都可以称为一个独立的世界。一个世界进行时操作会对周围世界产生影响，影响程度可用时相关公式计算,一般情况下影响程度与时间和空间的距离成正比。</li>
-<li>时与物体<br>　　时属性是衡量物体存在的一个关键属性，对任意物体，时总量越多物体存在越稳定，时总量越少物体越不稳定，随着时操作的进行，父物体被分裂为多个子物体，时的量值也会衰减，当时的量值低于一定数值时，物体的存在将无法在时间和空间维度稳定维持，存在消失的风险。据此，时操作应该严格限制，通常对重要世界或物体的时操作是无法进行的，要进行此类操作需要世界级的执行权限，该权限可由个体申请，由银河联合委员会通过审议决定是否开放，其审议过程异常繁杂，无法再短时间完成。</li>
-<li>时监控站<br>　　时监控站由银河政府建立，位于五维空间（显然要监控五维属性，其存在维度就不能低于五维），目的在于监控目标世界的时量变化，。时监控站的筹备与建立耗时200年，是银河史上最大的工程之一。  </li>
-</ol>
-<p>….</p>
-<h2 id="通信网络理论"><a href="#通信网络理论" class="headerlink" title="通信网络理论"></a>通信网络理论</h2><h3 id="超空间中继站"><a href="#超空间中继站" class="headerlink" title="超空间中继站"></a>超空间中继站</h3><p>　　电磁波通信无法摆脱速度的限制，在超距离传输中的延时和距离成正比，若将信息传输到一光年之外处，会有一年的延迟，且为了应对电磁波衰减，必须建立数量极大的中继站，成本昂贵，电磁波通信注定其只能在一个小范围世界内使用，无法在全银河进行推广。<br>　　超空间理论的发展，为银河通信成为可能，其主要依据实体就是超空间中继站，任意两个超空间中继站间的传输延迟都可以控制在毫秒级。</p>
-<h3 id=""><a href="#" class="headerlink" title=" "></a> </h3><h2 id="机器人"><a href="#机器人" class="headerlink" title="机器人"></a>机器人</h2><h3 id="机器人的种类"><a href="#机器人的种类" class="headerlink" title="机器人的种类"></a>机器人的种类</h3><h3 id="机器人设计原则"><a href="#机器人设计原则" class="headerlink" title="机器人设计原则"></a>机器人设计原则</h3><h2 id="交通运输"><a href="#交通运输" class="headerlink" title="交通运输"></a>交通运输</h2><h3 id="超空间运输"><a href="#超空间运输" class="headerlink" title="超空间运输"></a>超空间运输</h3><h2 id="教育"><a href="#教育" class="headerlink" title="教育"></a>教育</h2><h3 id="大学"><a href="#大学" class="headerlink" title="大学"></a>大学</h3><h3 id="图书馆"><a href="#图书馆" class="headerlink" title="图书馆"></a>图书馆</h3><h3 id="教育网络"><a href="#教育网络" class="headerlink" title="教育网络"></a>教育网络</h3><h2 id="计算机技术"><a href="#计算机技术" class="headerlink" title="计算机技术"></a>计算机技术</h2><h3 id="超级计算机"><a href="#超级计算机" class="headerlink" title="超级计算机"></a>超级计算机</h3><h3 id="计算机规范"><a href="#计算机规范" class="headerlink" title="计算机规范"></a>计算机规范</h3><h2 id="农业"><a href="#农业" class="headerlink" title="农业"></a>农业</h2><h3 id="农业世界"><a href="#农业世界" class="headerlink" title="农业世界"></a>农业世界</h3><h3 id="运输通道"><a href="#运输通道" class="headerlink" title="运输通道"></a>运输通道</h3><h2 id="人类"><a href="#人类" class="headerlink" title="人类"></a>人类</h2><h3 id="新人类"><a href="#新人类" class="headerlink" title="新人类"></a>新人类</h3><h3 id="基因操作"><a href="#基因操作" class="headerlink" title="基因操作"></a>基因操作</h3><p>　　</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/09/[学习总结]操作系统_进程管理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/09/[学习总结]操作系统_进程管理/" itemprop="url">进程管理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T17:34:12+08:00">
-                2018-07-09
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-12T15:25:37+08:00">
-                2018-07-12
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/操作系统/" itemprop="url" rel="index">
-                    <span itemprop="name">操作系统</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,896 字
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><p>　　进程是进程实体的运行过程，是系统进行资源分配和调度的一个<strong>独立单位</strong>（注意与基本单位的区分）<br>　　进程实现操作系统的并发性和共享性，进程映像由：程序段、相关数据段和PCB构成，其中PCB是进程存在的唯一标志。<br>　　进程的特征包括：动态性、并发性、独立性、异步性、结构性</p>
-<h3 id="进程的转态和转换"><a href="#进程的转态和转换" class="headerlink" title="进程的转态和转换"></a>进程的转态和转换</h3><p>　　进程有以下五种状态：</p>
-<ol>
-<li>运行状态</li>
-<li>就绪状态</li>
-<li>阻塞（等待）状态</li>
-<li>创建状态</li>
-<li>结束状态</li>
-</ol>
-<p>　　五种状态的转化关系如图<br><img src="/images/2-1.png" alt="状态转化"></p>
-<h3 id="进程控制"><a href="#进程控制" class="headerlink" title="进程控制"></a>进程控制</h3><ol>
-<li><p>进程创建</p>
-<ul>
-<li>为新进程申请PCB</li>
-<li>为进程分配资源</li>
-<li>初始化PCB</li>
-<li>将进程插入到就绪队列</li>
-</ul>
-</li>
-<li><p>进程的终止</p>
-<ul>
-<li>检索PCB，读取进程状态</li>
-<li>若进程处于执行状态，终止该进程的执行</li>
-<li>终止子进程的执行（若有）</li>
-<li>释放该进程拥有的全部资源</li>
-<li>从队列中删除进程PCB</li>
-</ul>
-</li>
-<li><p>进程的阻塞</p>
-<ul>
-<li>找到将要阻塞进程的PCB</li>
-<li>若进程处于运行状态，则保护现场，将其状态转为阻塞状态，停止运行</li>
-<li>将PCB插入相应事件的等待队列</li>
-</ul>
-</li>
-<li><p>进程的唤醒</p>
-<ul>
-<li>找到进程PCB</li>
-<li>将进程从等待队列移出，置为就绪状态</li>
-<li>PCB插入就绪队列，等待调度</li>
-</ul>
-</li>
-<li><p>进程切换</p>
-<ul>
-<li>保存处理机上下文</li>
-<li>更新PCB</li>
-<li>将PCB插入相应队列</li>
-<li>选择另外一个进程，更新PCB</li>
-<li>更新内存管理的数据结构</li>
-<li>恢复处理机上下文</li>
-</ul>
-</li>
-</ol>
-<h3 id="进程的组织"><a href="#进程的组织" class="headerlink" title="进程的组织"></a>进程的组织</h3><ol>
-<li><p>进程控制块<br>　　PCB常驻内存，是进程实体的一部分，是进程存在的唯一标志。PCB主要包含以下内容</p>
-<ol>
-<li>）进程描述信息：PID，UID</li>
-<li>）进程控制和管理信息：进程当前状态、进程优先级</li>
-<li>）资源分配清单</li>
-<li>）处理机相关信息：PWD等</li>
-</ol>
-</li>
-<li><p>程序段<br>　　能被调度到CPU执行的程序代码段</p>
-</li>
-<li><p>数据段<br>　　程序加工处理的原始数据或是程序执行时产生的中间或最终结果</p>
-</li>
-</ol>
-<h3 id="进程的通信"><a href="#进程的通信" class="headerlink" title="进程的通信"></a>进程的通信</h3><ol>
-<li>共享内存：使用PV操作对共享空间进行读/写</li>
-<li>消息传递：直接通信和间接通信</li>
-<li>管道通信：连接读进程和写进程，以实现它们之间的通信，管道通信是半双工通信</li>
-</ol>
-<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><ol>
-<li>线程概念<br>　　线程是轻量级进程，引入目的是为了提高操作系统并发性能。它是程序执行流的最小单元，不拥有系统资源</li>
-</ol>
-<p>２. 进程和线程的比较</p>
-<pre><code>- 调度：线程是独立调度的基本单位，进程是拥有资源的基本单位，同一进程中，线程的切换不会引起进程调度。
-- 拥有资源：进程是拥有资源的基本单位，线程不拥于资源
-- 并发性：进程可并发执行，线程也可并发执行
-- 系统开销：
-- 地址空间和其他资源：进程的地址空间之间相互独立，同一进程的各个线程共享进程资源
-- 通信：进程间通信需要同步和互斥手段，线程间通信可以通过直接读写进程数据段
-</code></pre><ol>
-<li><p>线程的属性</p>
-<ul>
-<li>线程不拥有系统资源</li>
-<li>不同线程可以执行相同程序</li>
-<li>同一进程的线程共享进程资源</li>
-<li>线程是处理机的调度基本单位</li>
-<li>线程生命周期会经历阻塞，、就绪、和运行等各种状态</li>
-</ul>
-</li>
-<li><p>线程实现方式</p>
-<ul>
-<li>用户级线程：对内核透明</li>
-<li>内核级线程</li>
-</ul>
-</li>
-<li><p>多线程模型</p>
-<ul>
-<li>多对一模型：多个用户级线程映射到一个内核级线程，当一个线程在使用内核服务是被阻塞，整个进程都会被阻塞</li>
-<li>一对一模型：一个线程的阻塞妨碍另一个线程继续执行</li>
-<li>多对多模型</li>
-</ul>
-</li>
-</ol>
-<h2 id="处理机调度"><a href="#处理机调度" class="headerlink" title="处理机调度"></a>处理机调度</h2><h3 id="调度的概念"><a href="#调度的概念" class="headerlink" title="调度的概念"></a>调度的概念</h3><ol>
-<li>调度的基本概念<br> 处理机调度是指从就绪队列中，按照一定的算法选择一个进程并将处理机分配给它运行，以实现进程并发地执行</li>
-<li>调度的层级<ul>
-<li>作业调度（高级调度）：从外存挑选作业，为其分配内存、IO设备等资源，并建立进程，使进程获得竞争处理机的机会</li>
-<li>中级调度（内存调度）：将处于挂起状态且已具备运行条件的就绪进程，重新调入内存，挂在就绪队列上</li>
-<li>进程调度（低级调度）：按照某种策略从从就绪队列中选择一个进程，为其分配处理机</li>
-</ul>
-</li>
-</ol>
-<h3 id="进程调度方式"><a href="#进程调度方式" class="headerlink" title="进程调度方式"></a>进程调度方式</h3><ol>
-<li>非剥夺调度方式</li>
-<li>剥夺调度方式</li>
-</ol>
-<h3 id="调度的基本准则"><a href="#调度的基本准则" class="headerlink" title="调度的基本准则"></a>调度的基本准则</h3><ol>
-<li>CPU利用率</li>
-<li>系统吞吐量：单位时间CPU完成的作业数量</li>
-<li>周转时间：从作业提交到作业完成所经历的时间</li>
-<li>等待时间：进程处于等待处理机状态时间之和</li>
-<li>响应时间：从用户提交请求到系统首次响应所用时间</li>
-</ol>
-<h3 id="调度算法"><a href="#调度算法" class="headerlink" title="调度算法"></a>调度算法</h3><ol>
-<li>先来先服务（FCFS）调度算法</li>
-<li>短作业优先（SJF）调度算法</li>
-<li>优先级调度算法</li>
-<li>高响应比优先调度算法</li>
-<li>时间片轮转调度算法</li>
-<li>多级反馈队列调度算法</li>
-</ol>
-<h2 id="进程同步"><a href="#进程同步" class="headerlink" title="进程同步"></a>进程同步</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
-<li><p>临界资源<br> 一次只允许一个进程访问的资源称为临界资源，访问临界资源的那段代码称为临界区</p>
-</li>
-<li><p>同步<br> 同步也称之为直接制约关系，是进程之间的制约关系</p>
-</li>
-<li><p>互斥<br>　　互斥也称之为间接制约关系，进程互斥的共享临界资源。<br> 同步机制遵循准则：</p>
-<ul>
-<li>空闲让进</li>
-<li>忙则等待</li>
-<li>有限等待</li>
-<li>让权等待</li>
-</ul>
-</li>
-</ol>
-<h3 id="实现临界区互斥的基本方法"><a href="#实现临界区互斥的基本方法" class="headerlink" title="实现临界区互斥的基本方法"></a>实现临界区互斥的基本方法</h3><ol>
-<li><p>软件实现方法</p>
-<ul>
-<li>单标志法：设置变量turn，用于指示被允许进入临界区的进程编号</li>
-<li>双标志法先检查：设置数组flag[i]，若值为false表示Pi未进入临界区，否则相反。</li>
-<li>双标志法后检查：先设置自己的标志为true再检测对方状态标志</li>
-<li>Peterson’s Algorithm：设置flag标志和turn标志</li>
-</ul>
-</li>
-<li><p>硬件实现方法</p>
-<ul>
-<li>中断屏蔽方法</li>
-<li>硬件指令方法</li>
-</ul>
-</li>
-</ol>
-<h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><ol>
-<li>整型信号量<br> 表示资源数目的整型量S</li>
-<li>记录型信号量<br> 代表资源数目的整型信号量value和进程链表L</li>
-<li><p>利用信号量实现同步  </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">semaphore S=<span class="number">0</span>       <span class="comment">//初始化信号量</span></span><br><span class="line">P1()&#123;</span><br><span class="line">    ...</span><br><span class="line">    x;             <span class="comment">//语句x</span></span><br><span class="line">    V(S);          <span class="comment">//告诉P2，语句x已经执行</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">P2()&#123;</span><br><span class="line">    ...</span><br><span class="line">    P(S);          <span class="comment">//检测x是否完成</span></span><br><span class="line">    y;             <span class="comment">//检查无误，运行y语句</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>利用信号量实现进程互斥    </p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">semaphore S =<span class="number">1</span></span><br><span class="line">P1()&#123;</span><br><span class="line">    ...</span><br><span class="line">    P(S);</span><br><span class="line">    进程P1的临界区；</span><br><span class="line">    V(S);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">P2&#123;</span><br><span class="line">    ...</span><br><span class="line">    P(S);</span><br><span class="line">    进程P2的临界区；</span><br><span class="line">    V(S);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>总结：<br>在互斥问题中，如果某个行为需要用到某种资源，就在那个行为之前Ｐ那种资源一次；如果某种行为会提供某种资源，就在那个行为之后Ｖ那种资源一次。ＰＶ操作紧夹临界区</p>
-<h3 id="管程"><a href="#管程" class="headerlink" title="管程"></a>管程</h3><p>略</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/08/[学习总结]操作系统_操作系统概述/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Lin Hui">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/head.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hikari">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/08/[学习总结]操作系统_操作系统概述/" itemprop="url">操作系统概述</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-08T17:34:12+08:00">
-                2018-07-08
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于&#58;</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2018-07-10T00:30:04+08:00">
-                2018-07-10
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/操作系统/" itemprop="url" rel="index">
-                    <span itemprop="name">操作系统</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  768 字
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="操作系统基本概念"><a href="#操作系统基本概念" class="headerlink" title="操作系统基本概念"></a>操作系统基本概念</h2><h3 id="操作系统的概念"><a href="#操作系统的概念" class="headerlink" title="操作系统的概念"></a>操作系统的概念</h3><p>　　操作系统是指控制和管理整个计算机系统的硬件和软件资源，并合理地组织调度计算机的工作和资源的分配，以提供给用户和其他软件方便的接口和环境的集合。它是计算机系统中最基本的系统软件。</p>
-<h3 id="操作系统的特征"><a href="#操作系统的特征" class="headerlink" title="操作系统的特征"></a>操作系统的特征</h3><ol>
-<li>并发：计算机系统中同时存在多个运行着的程序</li>
-<li>共享：系统中的资源可供多个并发执行的进程共同使用。有互斥共享和同时共享两种方式</li>
-<li>虚拟：将一个物理实体变为多个逻辑对应物，如虚拟处理器、虚拟内存、虚拟IO设备</li>
-<li>异步：进程的执行并不是一贯到底，而是走走停停，以不可预知的速度向前推进</li>
-</ol>
-<h3 id="操作系统的目标和功能"><a href="#操作系统的目标和功能" class="headerlink" title="操作系统的目标和功能"></a>操作系统的目标和功能</h3><ol>
-<li>操作系统作为计算机系统资源的管理者<ul>
-<li>处理器管理</li>
-<li>存储器管理</li>
-<li>文件管理</li>
-<li>设备管理</li>
-</ul>
-</li>
-<li><p>操作系统作为用户与计算机硬件系统之间的接口</p>
-<ul>
-<li>命令接口<ul>
-<li>联机命令接口</li>
-<li>脱机命令接口</li>
-</ul>
-</li>
-<li>程序接口</li>
-</ul>
-</li>
-<li><p>操作系统用做扩充设备：覆盖了软件的机器称为扩充机器或虚拟机</p>
-</li>
-</ol>
-<h3 id="操作系统的运行环境"><a href="#操作系统的运行环境" class="headerlink" title="操作系统的运行环境"></a>操作系统的运行环境</h3><ol>
-<li><p>操作系统的运行机制<br>　　CPU执行两种不同的程序：一种是系统内部程序，另一种是用户程序或系统外层运用程序。操作系统具体划分为核心态和用户态用于实现这两种程序。<br>　　操作系统内核实现以下四方面内容：</p>
-<ul>
-<li>时钟管理</li>
-<li>中断机制</li>
-<li>原语</li>
-<li>系统控制的数据结构及处理</li>
-</ul>
-</li>
-<li><p>中断和异常的概念<br>　　通过中断或异常处理，CPU从用户态进入和心态。<br>　　中断：指来自CPU执行指令以外的事件发生，如IO中断、时钟中断<br>　　异常：源自CPU执行指令内部的事件：如地址越界、算法溢出等。<br>　　中断发生在进程之间、异常发生在进程内部。</p>
-</li>
-</ol>
-<h3 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h3><p>　　系统调用是用户在程序执行过程中调用操作系统所提供的一些子功能，系统调用运行在核心态。<br>　　特权指令运行在核心态，访管指令运行在用户态，访管指令用于从用户态切换到核心态。</p>
-<h3 id="操作系统体系结构"><a href="#操作系统体系结构" class="headerlink" title="操作系统体系结构"></a>操作系统体系结构</h3><ol>
-<li>大内核：操作系统的主要功能模块都作为一个紧密联系的整体云心在核心态</li>
-<li>微内核：将内核中的最基本功能保留在内核，将不需要在核心态执行的功能移动到用户态，微内核需要频繁的在核心态和用户态间切换，所有系统开销比较大。</li>
-</ol>
-<h3 id="疑难点"><a href="#疑难点" class="headerlink" title="疑难点"></a>疑难点</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">并发与并行</span><br><span class="line">特权指令与非特权指令</span><br></pre></td></tr></table></figure>
-<p>　　　　</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2982,7 +3265,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-count">57</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2993,7 +3276,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -3004,7 +3287,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -3071,7 +3354,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">85.1k</span>
+    <span title="Site words total count">91.2k</span>
   
 </div>
 
